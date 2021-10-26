@@ -1,0 +1,12 @@
+.content{
+    margin-top:70px;
+}
+
+.table td:not(:first-child), .table th{
+    vertical-align: middle;
+}
+
+.ck-editor__editable_inline {
+    min-height: 175px;
+    margin-bottom: 5%;
+}

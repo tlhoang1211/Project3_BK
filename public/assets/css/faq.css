@@ -1,0 +1,123 @@
+/* Style the button that is used to open and close the collapsible_faq content */
+.collapsible_faq {
+    background-color: #6d7379;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.collapsible_faq:after {
+    border: none;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.activ, .collapsible_faq:hover {
+    background-color: #555;
+}
+
+/* Style the collapsible_faq content. Note: hidden by default */
+.content_faq {
+    padding: 0 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #ffffff;
+}
+
+p {
+    margin-top: 20px;
+}
+
+/* Add icons */
+.collapsible_faq:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.activ:after {
+    content: "\2212"; /* Unicode character for "minus" sign (-) */
+}
+
+/*-------*/
+.extra_footer {
+    background-color: white;
+    display: inline-flex;
+    width: 100%;
+}
+
+.section-header__text {
+    margin-top: 20px;
+    color: #000;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    font-size: 40px !important;
+    font-weight: 500;
+    text-transform: capitalize;
+    font-family: 'Playfair Display', serif;
+}
+
+.image.rounded {
+    padding: 32px 0;
+}
+
+.text-desc .font-weight-bold {
+    font-size: 17px;
+}
+
+.text-desc .text-normal {
+    font-size: 15px;
+}
+
+.text-desc {
+    line-height: 30px;
+    font-family: Open Sans;
+    font-style: normal;
+}
+
+.text-desc span {
+    display: block;
+    font-size: 14px;
+    line-height: 19px;
+}
+
+.top_line {
+    border-bottom: 2px solid #6d7379;
+    margin-top: -10px;
+}
+
+.list_choice {
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.list_choice a:hover {
+    color: #3a87ad;
+}
+
+.col-md-4 {
+    display: inline-grid;
+    width: 32.7%;
+    padding-bottom: 50px;
+}
+
+ul.a {
+    list-style: none;
+}
+
+ul.a li:before {
+    content: "\e65d";
+    font-family: Themify;
+    display: inline-block;
+    padding-top: 5px;
+    margin-left: -1.3em;
+    width: 1.3em;
+}
