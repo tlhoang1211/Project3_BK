@@ -91,7 +91,7 @@
                                         <ul>
                                             @foreach($products_in_cart as $product_item)
                                                 <li>
-                                                    <a href="{{route('product_detail',$product_item['product']->first()->id)}}">
+                                                    <a href="{{route('product_detail',$product_item['product']->first()->slug)}}">
                                                         <figure><img
                                                                 src={{$product_item['product']->first()->firstThumbnail}} data-src="{{$product_item['product']->first()->firstThumbnail}}"
                                                                 alt="" width="50" height="50" class="lazy"></figure>
