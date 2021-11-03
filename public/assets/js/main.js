@@ -222,17 +222,18 @@
     $(".numbers-row").append("<div class=\"inc button_inc\">+</div><div class=\"dec button_inc\">-</div>");
     $(".button_inc").on("click", function ()
     {
+        let newVal;
         const $button = $(this);
         const oldValue = $button.parent().find("input").val();
-        if ($button.text() == "+")
+        if ($button.text() === "+")
         {
-            const newVal = parseFloat(oldValue) + 1;
+            newVal = parseFloat(oldValue) + 1;
         } else
         {
             // Don't allow decrementing below zero
             if (oldValue > 1)
             {
-                const newVal = parseFloat(oldValue) - 1;
+                newVal = parseFloat(oldValue) - 1;
             } else
             {
                 newVal = 0;
@@ -242,6 +243,10 @@
     });
 
     /* Cart dropdown */
+    $(".dropdown-cart").click(() =>
+    {
+        window.location.href = "/cart/page";
+    })
     $(".dropdown-cart, .dropdown-access").hover(function ()
     {
         $(this).find(".dropdown-menu").stop(true, true).delay(50).fadeIn(300);
