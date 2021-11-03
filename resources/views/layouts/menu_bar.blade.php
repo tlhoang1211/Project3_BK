@@ -81,11 +81,12 @@
                 <div class="col-xl-3 col-lg-2 col-md-3">
                     <ul class="top_tools">
                         <li>
-
                             <div class="dropdown dropdown-cart">
-                                <a href="{{route('cart')}}"
-                                   class="cart_bt">@if ($products_in_cart != null)
-                                        <strong> {{count($product_cart)}}</strong>@endif</a>
+                                <a href="{{route('cart')}}" class="cart_bt">
+                                    @if ($products_in_cart != null)
+                                        <strong> {{count($product_cart)}}</strong>
+                                    @endif
+                                </a>
                                 @if ($products_in_cart != null)
                                     <div class="dropdown-menu">
                                         <ul>
@@ -121,11 +122,11 @@
                                         <ul>
                                             <li>
                                                 <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn
-                                                    hàng</a>
+                                                                                                    hàng</a>
                                             </li>
                                             <li>
                                                 <a href="{{route('mypurchase')}}"><i class="ti-package"></i>Đơn hàng của
-                                                    tôi</a>
+                                                                                                            tôi</a>
                                             </li>
                                             <li>
                                                 <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
