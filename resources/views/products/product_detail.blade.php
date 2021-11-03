@@ -10,9 +10,6 @@
 
 
     <script>
-        const success_noti = ``;
-        const failed_noti = `<div class="alert failed"> <span class="alert-icon"><i class="fas fa-times"></i></span> <span class="alert-content"> <span class="alert-close"><i class="fas fa-times"></i></span> <span class="alert-title">Failed</span> <span class="alert-subtitle"> View details <ul class="little-list"> <li>New account has been created</li> <li>New provider has been created</li> </ul> </span> </span> </div>`;
-
         $(document).ready(function ()
         {
             $(".add_to_cart").on("click", function (e)
