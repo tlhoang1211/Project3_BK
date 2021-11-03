@@ -1,7 +1,7 @@
 (function ($) {
 
 	"use strict";
-		
+
 	// Sticky nav
 	var $headerStick = $('.Sticky');
 	$(window).on("scroll", function () {
@@ -41,7 +41,7 @@
 			$('.categories').removeClass('menu');
 		}
 	}).resize();
-	
+
 	// Mobile Mmenu
 	var $menu = $("#menu").mmenu({
 		"extensions": ["pagedim-black"],
@@ -56,7 +56,7 @@
 		offCanvas: {
 		  pageSelector: "#page"
 	   },
-		navbars: [{position:'bottom',content: ['<a href="#0">© 2020 Allaia</a>']}]}, 
+		navbars: [{position:'bottom',content: ['<a href="#0">© 2020 Allaia</a>']}]},
 		{
 		// configuration
 		clone: true,
@@ -66,7 +66,7 @@
 			}
 		}
 	});
-	
+
 	// Menu
 	$('a.open_close').on("click", function () {
 		$('.main-menu').toggleClass('show');
@@ -78,7 +78,7 @@
 	$('a.show-submenu-mega').on("click", function () {
 		$(this).next().toggleClass("show_mega");
 	});
-	
+
 	$('a.btn_search_mob').on("click", function () {
 		$('.search_mob_wp').slideToggle("fast");
 	});
@@ -127,7 +127,7 @@
 			}
 		}
 	});
-	
+
 	// Carousels
 	$('.carousel_centered').owlCarousel({
 		center: true,
@@ -213,7 +213,7 @@
 		}
 		$button.parent().find("input").val(newVal);
 	});
-	
+
 	/* Cart dropdown */
 	$('.dropdown-cart, .dropdown-access').hover(function () {
 		$(this).find('.dropdown-menu').stop(true, true).delay(50).fadeIn(300);
@@ -235,32 +235,15 @@
 	$('.opacity-mask').each(function(){
 		$(this).css('background-color', $(this).attr('data-opacity-mask'));
 	});
-	
+
 	/* Animation on scroll */
 	new WOW().init();
-	
+
 	// Forgot Password
 	$("#forgot").on("click", function () {
 		$("#forgot_pw").fadeToggle("fast");
 	});
-	
-	// Top panel on click: add to cart, search header
-	var $topPnl = $('.top_panel');
-	var $pnlMsk = $('.layer');
-	
-	$('.btn_add_to_cart a').on('click', function(){
-		$topPnl.addClass('show');
-		$pnlMsk.addClass('layer-is-visible');
-	});
-	$('a.search_panel').on('click', function(){
-		$topPnl.addClass('show');
-		$pnlMsk.addClass('layer-is-visible');
-	});
-	$('a.btn_close_top_panel').on('click', function(){
-		$topPnl.removeClass('show');
-		$pnlMsk.removeClass('layer-is-visible');
-	});
-	
+
 	//Footer collapse
 	var $headingFooter = $('footer h3');
 	$(window).resize(function() {
@@ -273,7 +256,7 @@
 	$headingFooter.on("click", function () {
 		$(this).toggleClass('opened');
 	});
-	
+
 	/* Footer reveal */
 	if ($(window).width() >= 1024) {
 		$('footer.revealed').footerReveal({
@@ -306,7 +289,7 @@
          $('.tooltip-1').tooltip({html: true});
         }
     }).resize();
-    
+
     // Modal Sign In
 	$('#sign-in').magnificPopup({
 		type: 'inline',
@@ -320,7 +303,7 @@
 		closeMarkup: '<button title="%title%" type="button" class="mfp-close"></button>',
 		mainClass: 'my-mfp-zoom-in'
 	});
-	
+
 	// Image popups
 	$('.magnific-gallery').each(function () {
 		$(this).magnificPopup({
@@ -333,7 +316,7 @@
 			removalDelay: 500, //delay removal by X to allow out-animation
 			callbacks: {
 				beforeOpen: function () {
-					// just a hack that adds mfp-anim class to markup 
+					// just a hack that adds mfp-anim class to markup
 					this.st.image.markup = this.st.image.markup.replace('mfp-figure', 'mfp-figure mfp-with-anim');
 					this.st.mainClass = this.st.el.attr('data-effect');
 				}
@@ -353,6 +336,6 @@
             $(".popup_wrapper").fadeOut(300);
         })
     }, 1500);
-	
 
-})(window.jQuery); 
+
+})(window.jQuery);
