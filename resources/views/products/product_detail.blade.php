@@ -776,60 +776,6 @@
 
     <div id="toTop"></div><!-- Back to top button -->
 
-    {{--<div class="top_panel">--}}
-    {{--    <div class="container header_panel">--}}
-    {{--        <a href="#0" class="btn_close_top_panel"><i class="ti-close"></i></a>--}}
-    {{--        <label>1 product added to cart</label>--}}
-    {{--    </div>--}}
-    {{--    <!-- /header_panel -->--}}
-    {{--        <div class="item">--}}
-    {{--        <div class="container">--}}
-    {{--            <div class="row">--}}
-    {{--                <div class="col-md-7">--}}
-    {{--                    <div class="item_panel">--}}
-    {{--                        <figure>--}}
-    {{--                            <img src="{{$product->firstThumbnail}}"--}}
-    {{--                                 data-src="{{$product->firstThumbnail}}" class="lazy" alt="">--}}
-    {{--                        </figure>--}}
-    {{--                        <h4>{{$product->name}}</h4>--}}
-    {{--                        <div class="price_panel"><span class="new_price">{{$product->formatPrice}}</span>--}}
-    {{--                            --}}{{--                                <span class="percentage">-20%</span> <span class="old_price">$160.00</span>--}}
-    {{--                        </div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--                <div class="col-md-5 btn_panel">--}}
-    {{--                    <a href="{{route('cart')}}" class="btn_1 outline">Xem giỏ hàng</a> <a href="#checkout"--}}
-    {{--                                                                                          class="btn_1">Checkout</a>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-    {{--    <!-- /item -->--}}
-    {{--    <div class="container related">--}}
-    {{--        <h4>Who bought this product also bought</h4>--}}
-    {{--        <div class="row">--}}
-    {{--            @foreach($eloquent_product as $product_e)--}}
-    {{--                <div class="col-md-4">--}}
-    {{--                    <div class="item_panel">--}}
-    {{--                        <a href="{{route('product_detail',$product_e->slug)}}">--}}
-    {{--                            <figure>--}}
-    {{--                                <img src="{{$product_e->firstThumbnail}}"--}}
-    {{--                                     data-src="{{$product_e->firstThumbnail}}" alt="" class="lazy">--}}
-    {{--                            </figure>--}}
-    {{--                        </a>--}}
-    {{--                        <a href="#0">--}}
-    {{--                            <h5>{{$product_e->name}}</h5>--}}
-    {{--                        </a>--}}
-    {{--                        <div class="price_panel"><span class="new_price">{{$product_e->formatPrice}}</span></div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--            @endforeach--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-    {{--    <!-- /related -->--}}
-    {{--</div>--}}
-    <!-- /add_cart_panel -->
-
     <!-- Size modal -->
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="size-modal" id="size-modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
