@@ -96,7 +96,7 @@
                             </div>
                             <div class="buttons">
                                 <button href="" type="submit" class="btn_1">Filter</button>
-                                <a href="#0" class="btn_1 gray" id="reset_filter">Reset</a>
+                                <a href="{{route("product_list")}}" class="btn_1 gray" id="reset_filter">Reset</a>
                             </div>
                         </form>
                     </div>
