@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Receipt extends Model
 {
-    public function customers(){
-        return $this->belongsToMany(Account::class);
+    public function customer()
+    {
+        return $this->belongsTo(Account::class, 'customerId');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(OrderDetail::class);
     }
 }

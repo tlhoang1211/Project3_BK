@@ -1,5 +1,7 @@
 <?php
 
+use App\City;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -12,27 +14,28 @@ class CitySeeder extends Seeder
      */
     public function run()
     {
-        $data_check = \App\City::all()->first();
-        if ($data_check != null) {
+        $data_check = City::all()->first();
+        if ($data_check != null)
+        {
             Schema::disableForeignKeyConstraints();
-            \App\City::query()->truncate();
+            City::query()->truncate();
             Schema::enableForeignKeyConstraints();
         }
 
         $roles = array(
             array(
-                'name' => 'HaNoi',
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now(),
-                'status' => 1
-                ),
+                'name'       => 'HaNoi',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'status'     => 1
+            ),
             array(
-                'name' => 'HoChiMinh',
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now(),
-                'status' => 1
-                ),
+                'name'       => 'HoChiMinh',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'status'     => 1
+            ),
         );
-        \App\City::insert($roles);
+        City::insert($roles);
     }
 }

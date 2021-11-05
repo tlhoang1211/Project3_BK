@@ -15,9 +15,10 @@ class CreateOrderDetailsTable extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('productId');
+            $table->foreignId('product_id');
+            $table->foreignId('receipt_id')->constrained()->cascadeOnDelete();
             $table->string('volume');
-            $table->string('quantity');
+            $table->integer('quantity');
             $table->double('price');
             $table->timestamps();
         });

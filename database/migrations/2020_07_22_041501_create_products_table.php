@@ -15,17 +15,17 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('brand_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('origin_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('group_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('slug');
-            $table->unsignedBigInteger('brand_id');
             $table->string('sex');
             $table->string('concentration');
             $table->string('volume');
-            $table->unsignedBigInteger('origin_id');
             $table->string('recommended_age');
             $table->string('released_year');
             $table->string('inventor_name');
-//            $table->string('incense_group');
             $table->string('incense_level');
             $table->string('aroma_level');
             $table->double('price');
@@ -33,7 +33,6 @@ class CreateProductsTable extends Migration
             $table->string('recommended_time');
             $table->text('description');
             $table->text('thumbnail');
-//            $table->string('slug');
             $table->integer('status');
             $table->timestamps();
         });

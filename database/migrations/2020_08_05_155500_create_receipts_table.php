@@ -15,7 +15,7 @@ class CreateReceiptsTable extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-            $table->string('customerId');
+            $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->double('total_money');
             $table->string('ship_name');
             $table->text('name_address');
