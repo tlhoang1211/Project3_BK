@@ -41,6 +41,7 @@ Route::get('/contact', function () {
     return view('service.contact');
 });
 
+//User routes
 Route::get('/user/account/profile', function () {
     $account = session()->get("current_account");
     return view('account', compact('account'));
@@ -49,6 +50,13 @@ Route::get('/user/account/profile', function () {
 Route::put('/user/account/profile_update/{id}', function (\Illuminate\Http\Request $request, $id) {
     dd($request);
 })->name('account_update');
+
+Route::get('/user/purchase', function () {
+    $account = session()->get("current_account");
+    dd($account);
+    return view('purchase',compact('account'));
+})->name('mypurchase');
+//==================================================================================================================
 
 Route::get('/product/{slug}', 'ProductController@index')->name('product_detail');
 
@@ -65,11 +73,6 @@ Route::get('/male_product', 'ProductController@male_product')->name('male_produc
 Route::get('/female_product', 'ProductController@female_product')->name('female_product');
 
 Route::get('/unisex_product', 'ProductController@unisex_product')->name('unisex_product');
-
-Route::get('/user/purchase', function () {
-    $account = session()->get("current_account");
-    return view('purchase',compact('account'));
-})->name('mypurchase');
 
 Route::get('/leave_review', function () {
     return view('leave_review');
