@@ -18,7 +18,8 @@ class ProductController extends Controller
         $style_arr = explode(',', $product_style);
 //        dd($style_arr);
         $item_query = Product::where('status', '1')->where('slug', '!=', $product->slug);
-        foreach ($style_arr as $style) {
+        foreach ($style_arr as $style)
+        {
             $item_query->orWhere('style', '=', '%' . $style . '%');
         }
         $eloquent_product = $item_query->take(3)->get();
@@ -40,19 +41,23 @@ class ProductController extends Controller
         $datas = new Array_();
 
 
-        if ($request->has('origin') && $request->origin != "0") {
+        if ($request->has('origin') && $request->origin != "0")
+        {
             $query->where('origin_id', $request->origin);
             $datas->origin = $request->origin;
         }
-        if ($request->has('brand') && $request->brand != "0") {
+        if ($request->has('brand') && $request->brand != "0")
+        {
             $query->where('brand_id', $request->brand);
             $datas->brand = $request->brand;
         }
-        if ($request->has('inventor') && $request->inventor != null && strlen($request->inventor) > 0) {
+        if ($request->has('inventor') && $request->inventor != null && strlen($request->inventor) > 0)
+        {
             $query->where('inventor_name', 'like', '%' . $request->inventor . '%');
             $datas->inventor = $request->inventor;
         }
-        if ($request->has('product_name') && $request->product_name != null && strlen($request->product_name) > 0) {
+        if ($request->has('product_name') && $request->product_name != null && strlen($request->product_name) > 0)
+        {
             $query->where('name', 'like', '%' . $request->product_name . '%');
             $datas->product_name = $request->product_name;
         }
@@ -84,39 +89,39 @@ class ProductController extends Controller
     {
 //        dd($request);
         $request->validate([
-            'name' => 'required',
-            'brand_id' => 'required|integer',
-            'origin_id' => 'required|integer',
-            'sex' => 'required',
-            'concentration' => 'required',
-            'volume' => 'required',
-            'inventor_name' => 'required',
-            'recommended_age' => 'required',
-            'released_year' => 'required',
-            'incense_level' => 'required',
-            'aroma_level' => 'required',
-            'price' => 'required',
-            'style' => 'required',
+            'name'             => 'required',
+            'brand_id'         => 'required|integer',
+            'origin_id'        => 'required|integer',
+            'sex'              => 'required',
+            'concentration'    => 'required',
+            'volume'           => 'required',
+            'inventor_name'    => 'required',
+            'recommended_age'  => 'required',
+            'released_year'    => 'required',
+            'incense_level'    => 'required',
+            'aroma_level'      => 'required',
+            'price'            => 'required',
+            'style'            => 'required',
             'recommended_time' => 'required',
-            'thumbnails' => 'required',
-            'description' => 'required',
+            'thumbnails'       => 'required',
+            'description'      => 'required',
         ], [
-            'name.required' => 'Tên hãng là cần thiết',
-            'brand_id.required' => 'Bắt buộc phải có hãng sản phẩm',
-            'origin_id.required' => 'Bắt buộc phải có xuất xứ',
-            'sex.required' => 'Bắt buộc phải có giới tính ',
-            'concentration.required' => 'Bắt buộc phải có nồng độ',
-            'volume.required' => 'Bắt buộc phải có  dung lượng',
-            'inventor_name.required' => 'Bắt buộc phải có tên nhà phát minh',
-            'recommended_age.required' => 'Bắt buộc phải có tuổi đề nghị',
-            'released_year.required' => 'Bắt buộc phải có năm ra mắt',
-            'incense_level.required' => 'Bắt buộc phải có độ lưu hương',
-            'aroma_level.required' => 'Bắt buộc phải có ảnh đại diện',
-            'price.required' => 'Bắt buộc phải có giá tiền',
-            'style.required' => 'Bắt buộc phải có ảnh đại diện',
+            'name.required'             => 'Tên hãng là cần thiết',
+            'brand_id.required'         => 'Bắt buộc phải có hãng sản phẩm',
+            'origin_id.required'        => 'Bắt buộc phải có xuất xứ',
+            'sex.required'              => 'Bắt buộc phải có giới tính ',
+            'concentration.required'    => 'Bắt buộc phải có nồng độ',
+            'volume.required'           => 'Bắt buộc phải có  dung lượng',
+            'inventor_name.required'    => 'Bắt buộc phải có tên nhà phát minh',
+            'recommended_age.required'  => 'Bắt buộc phải có tuổi đề nghị',
+            'released_year.required'    => 'Bắt buộc phải có năm ra mắt',
+            'incense_level.required'    => 'Bắt buộc phải có độ lưu hương',
+            'aroma_level.required'      => 'Bắt buộc phải có ảnh đại diện',
+            'price.required'            => 'Bắt buộc phải có giá tiền',
+            'style.required'            => 'Bắt buộc phải có ảnh đại diện',
             'recommended_time.required' => 'Bắt buộc phải có thời gian khuyến nghị',
-            'thumbnails.required' => 'Bắt buộc phải có ảnh sản phẩm',
-            'description.required' => 'Cần thêm mô tả hãng',
+            'thumbnails.required'       => 'Bắt buộc phải có ảnh sản phẩm',
+            'description.required'      => 'Cần thêm mô tả hãng',
         ]);
 
         $product = new Product();
@@ -134,12 +139,14 @@ class ProductController extends Controller
         $product->aroma_level = $request->aroma_level;
         $product->price = $request->price;
         $product->style = $request->style;
-        foreach ($request->recommended_time as $time) {
+        foreach ($request->recommended_time as $time)
+        {
             $product->recommended_time .= $time . ",";
         }
 
         $product->description = $request->description;
-        foreach ($request->thumbnails as $thumb) {
+        foreach ($request->thumbnails as $thumb)
+        {
             $product->thumbnail .= $thumb . ",";
         }
 //        $product->thumbnail = ;
@@ -166,33 +173,42 @@ class ProductController extends Controller
         $volume = $request->volume;
         // kiểm tra sản phẩm theo id truyền lên.
         $product = Product::where('status', '=', '1')->where('id', '=', $id)->get();
-        if ($product == null) {
+        if ($product == null)
+        {
             return view('404');
         }
         // lấy thông tin giỏ hàng từ trong session.
         $shopping_cart = Session::get('shoppingCart');
 
-        if ($shopping_cart == null) {
+        if ($shopping_cart == null)
+        {
             // thì tạo mới giỏ hàng là một mảng các key và value
             $shopping_cart = array(); // key và value
         }
         $cartItem = null;
 
-        if (array_key_exists($id, $shopping_cart)) {
+        if (array_key_exists($id, $shopping_cart))
+        {
             $cartItem = $shopping_cart[$id];
         }
 
-        if ($cartItem == null) {
+        if ($cartItem == null)
+        {
             // nếu không, tạo mới một cart item.
             $cartItem = [
                 'product' => $product,
             ];
             $cartItem['type'][$volume] = $quantity;
-        } else {
+        }
+        else
+        {
             // nếu có, cộng số lượng sản phẩm thêm.
-            if (array_key_exists($volume, $shopping_cart[$id]['type'])) {
+            if (array_key_exists($volume, $shopping_cart[$id]['type']))
+            {
                 $cartItem['type'][$volume] += $quantity;
-            } else {
+            }
+            else
+            {
                 $cartItem['type'][$volume] = $quantity;
             }
         }
@@ -213,7 +229,8 @@ class ProductController extends Controller
         $quantity = $request->get('quantity');
         // kiểm tra sản phẩm theo id truyền lên.
         $product = Product::find($id);
-        if ($product == null) {
+        if ($product == null)
+        {
             // nếu không tồn tại sản phẩm đưa về trang lỗi ko tìm thấy.
             return view('404');
         }
@@ -221,24 +238,29 @@ class ProductController extends Controller
         // lấy thông tin giỏ hàng từ trong session.
         $shoppingCart = Session::get('shoppingCart');
         // nếu session ko có thông tin giỏ hàng
-        if ($shoppingCart == null) {
+        if ($shoppingCart == null)
+        {
             // thì tạo mới giỏ hàng là một mảng các key và value
             $shoppingCart = array(); // key và value
         }
         // kiểm xem sản phẩm có trong giỏ hàng hay không.
         $cartItem = null;
-        if (array_key_exists($id, $shoppingCart)) {
+        if (array_key_exists($id, $shoppingCart))
+        {
             $cartItem = $shoppingCart[$id];
         }
-        if ($cartItem == null) {
+        if ($cartItem == null)
+        {
             // nếu không, tạo mới một cart item.
             $cartItem = array(
-                'productId' => $product->id,
-                'productName' => $product->name,
+                'productId'    => $product->id,
+                'productName'  => $product->name,
                 'productPrice' => $product->price,
-                'quantity' => $quantity
+                'quantity'     => $quantity
             );
-        } else {
+        }
+        else
+        {
             // nếu có, cộng số lượng sản phẩm thêm 1.
             $cartItem['quantity'] += $quantity;
         }
@@ -258,13 +280,16 @@ class ProductController extends Controller
 
         $product_search = Product::where('status', '=', '1')->where('slug', 'LIKE', '%' . $keyword . '%');
 
-        if ($request->has('sex')) {
+        if ($request->has('sex'))
+        {
             $product_search->where('sex', '=', $request->sex);
         }
-        if ($request->has('origin')) {
+        if ($request->has('origin'))
+        {
             $product_search->where('origin_id', '=', $request->origin);
         }
-        if ($request->has('brand')) {
+        if ($request->has('brand'))
+        {
             $product_search->where('brand_id', '=', $request->brand);
         }
 
@@ -305,10 +330,12 @@ class ProductController extends Controller
         $product_query = Product::where('status', '=', '1');
 
 //        dd($products);
-        if ($request->has('origin')) {
+        if ($request->has('origin'))
+        {
             $product_query->where('origin_id', '=', $request->origin);
         }
-        if ($request->has('brand')) {
+        if ($request->has('brand'))
+        {
             $product_query->where('brand_id', '=', $request->brand);
         }
         $products = $product_query->where('sex', '=', 'Nam')->paginate(9)->appends(request()->query());
@@ -317,10 +344,14 @@ class ProductController extends Controller
         $origins = Origin::where('status', '=', '1')->get();
         $brand_amount = [];
         $origin_amount = array();
-        foreach ($brands as $brand) {
-            foreach ($brand->products as $brand_product) {
-                if ($brand_product->sex == "Nam") {
-                    if ($brand_amount[$brand->id][$brand_product->id] = null) {
+        foreach ($brands as $brand)
+        {
+            foreach ($brand->products as $brand_product)
+            {
+                if ($brand_product->sex == "Nam")
+                {
+                    if ($brand_amount[$brand->id][$brand_product->id] = null)
+                    {
                         $brand_amount[$brand->id][$brand_product->id] = 0;
                     }
                     $brand_amount[$brand->id][$brand_product->id] += 1;
@@ -329,10 +360,14 @@ class ProductController extends Controller
         }
 //        dd($brand_amount);
 //        dd(count($brand_amount));
-        foreach ($origins as $origin) {
-            foreach ($origin->products as $origin_product) {
-                if ($origin_product->sex == "Nam") {
-                    if ($origin_amount[$origin->id][$origin_product->id] = null) {
+        foreach ($origins as $origin)
+        {
+            foreach ($origin->products as $origin_product)
+            {
+                if ($origin_product->sex == "Nam")
+                {
+                    if ($origin_amount[$origin->id][$origin_product->id] = null)
+                    {
                         $origin_amount[$origin->id][$origin_product->id] = 0;
                     }
                     $origin_amount[$origin->id][$origin_product->id] += 1;
@@ -352,39 +387,39 @@ class ProductController extends Controller
     {
 //        dd($request);
         $request->validate([
-            'name' => 'required',
-            'brand_id' => 'required|integer',
-            'origin_id' => 'required|integer',
-            'sex' => 'required',
-            'concentration' => 'required',
-            'volume' => 'required',
-            'inventor_name' => 'required',
-            'recommended_age' => 'required',
-            'released_year' => 'required',
-            'incense_level' => 'required',
-            'aroma_level' => 'required',
-            'price' => 'required',
-            'style' => 'required',
+            'name'             => 'required',
+            'brand_id'         => 'required|integer',
+            'origin_id'        => 'required|integer',
+            'sex'              => 'required',
+            'concentration'    => 'required',
+            'volume'           => 'required',
+            'inventor_name'    => 'required',
+            'recommended_age'  => 'required',
+            'released_year'    => 'required',
+            'incense_level'    => 'required',
+            'aroma_level'      => 'required',
+            'price'            => 'required',
+            'style'            => 'required',
             'recommended_time' => 'required',
-            'thumbnails' => 'required',
-            'description' => 'required',
+            'thumbnails'       => 'required',
+            'description'      => 'required',
         ], [
-            'name.required' => 'Tên hãng là cần thiết',
-            'brand_id.required' => 'Bắt buộc phải có hãng sản phẩm',
-            'origin_id.required' => 'Bắt buộc phải có xuất xứ',
-            'sex.required' => 'Bắt buộc phải có giới tính ',
-            'concentration.required' => 'Bắt buộc phải có nồng độ',
-            'volume.required' => 'Bắt buộc phải có  dung lượng',
-            'inventor_name.required' => 'Bắt buộc phải có tên nhà phát minh',
-            'recommended_age.required' => 'Bắt buộc phải có tuổi đề nghị',
-            'released_year.required' => 'Bắt buộc phải có năm ra mắt',
-            'incense_level.required' => 'Bắt buộc phải có độ lưu hương',
-            'aroma_level.required' => 'Bắt buộc phải có ảnh đại diện',
-            'price.required' => 'Bắt buộc phải có giá tiền',
-            'style.required' => 'Bắt buộc phải có ảnh đại diện',
+            'name.required'             => 'Tên hãng là cần thiết',
+            'brand_id.required'         => 'Bắt buộc phải có hãng sản phẩm',
+            'origin_id.required'        => 'Bắt buộc phải có xuất xứ',
+            'sex.required'              => 'Bắt buộc phải có giới tính ',
+            'concentration.required'    => 'Bắt buộc phải có nồng độ',
+            'volume.required'           => 'Bắt buộc phải có  dung lượng',
+            'inventor_name.required'    => 'Bắt buộc phải có tên nhà phát minh',
+            'recommended_age.required'  => 'Bắt buộc phải có tuổi đề nghị',
+            'released_year.required'    => 'Bắt buộc phải có năm ra mắt',
+            'incense_level.required'    => 'Bắt buộc phải có độ lưu hương',
+            'aroma_level.required'      => 'Bắt buộc phải có ảnh đại diện',
+            'price.required'            => 'Bắt buộc phải có giá tiền',
+            'style.required'            => 'Bắt buộc phải có ảnh đại diện',
             'recommended_time.required' => 'Bắt buộc phải có thời gian khuyến nghị',
-            'thumbnails.required' => 'Bắt buộc phải có ảnh sản phẩm',
-            'description.required' => 'Cần thêm mô tả hãng',
+            'thumbnails.required'       => 'Bắt buộc phải có ảnh sản phẩm',
+            'description.required'      => 'Cần thêm mô tả hãng',
         ]);
 
         $product = Product::find($id);
@@ -402,13 +437,15 @@ class ProductController extends Controller
         $product->aroma_level = $request->aroma_level;
         $product->price = $request->price;
         $product->style = $request->style;
-        foreach ($request->recommended_time as $time) {
+        foreach ($request->recommended_time as $time)
+        {
             $product->recommended_time .= $time . ",";
         }
 
         $product->description = $request->description;
         $product->thumbnail = "";
-        foreach ($request->thumbnails as $thumb) {
+        foreach ($request->thumbnails as $thumb)
+        {
             $product->thumbnail .= $thumb . ",";
         }
 //        $product->thumbnail = ;
@@ -425,10 +462,12 @@ class ProductController extends Controller
         $product_query = Product::where('status', '=', '1');
 
 //        dd($products);
-        if ($request->has('origin')) {
+        if ($request->has('origin'))
+        {
             $product_query->where('origin_id', '=', $request->origin);
         }
-        if ($request->has('brand')) {
+        if ($request->has('brand'))
+        {
             $product_query->where('brand_id', '=', $request->brand);
         }
         $products = $product_query->where('sex', '=', 'Nữ')->paginate(9)->appends(request()->query());
@@ -437,10 +476,14 @@ class ProductController extends Controller
         $origins = Origin::where('status', '=', '1')->get();
         $brand_amount = [];
         $origin_amount = array();
-        foreach ($brands as $brand) {
-            foreach ($brand->products as $brand_product) {
-                if ($brand_product->sex == "Nữ") {
-                    if ($brand_amount[$brand->id][$brand_product->id] = null) {
+        foreach ($brands as $brand)
+        {
+            foreach ($brand->products as $brand_product)
+            {
+                if ($brand_product->sex == "Nữ")
+                {
+                    if ($brand_amount[$brand->id][$brand_product->id] = null)
+                    {
                         $brand_amount[$brand->id][$brand_product->id] = 0;
                     }
                     $brand_amount[$brand->id][$brand_product->id] += 1;
@@ -449,10 +492,14 @@ class ProductController extends Controller
         }
 //        dd($brand_amount);
 //        dd(count($brand_amount));
-        foreach ($origins as $origin) {
-            foreach ($origin->products as $origin_product) {
-                if ($origin_product->sex == "Nữ") {
-                    if ($origin_amount[$origin->id][$origin_product->id] = null) {
+        foreach ($origins as $origin)
+        {
+            foreach ($origin->products as $origin_product)
+            {
+                if ($origin_product->sex == "Nữ")
+                {
+                    if ($origin_amount[$origin->id][$origin_product->id] = null)
+                    {
                         $origin_amount[$origin->id][$origin_product->id] = 0;
                     }
                     $origin_amount[$origin->id][$origin_product->id] += 1;
@@ -473,10 +520,12 @@ class ProductController extends Controller
         $product_query = Product::where('status', '=', '1');
 
 //        dd($products);
-        if ($request->has('origin')) {
+        if ($request->has('origin'))
+        {
             $product_query->where('origin_id', '=', $request->origin);
         }
-        if ($request->has('brand')) {
+        if ($request->has('brand'))
+        {
             $product_query->where('brand_id', '=', $request->brand);
         }
         $products = $product_query->where('sex', '=', 'Phi giới tính')->paginate(9)->appends(request()->query());
@@ -485,10 +534,14 @@ class ProductController extends Controller
         $origins = Origin::where('status', '=', '1')->get();
         $brand_amount = [];
         $origin_amount = array();
-        foreach ($brands as $brand) {
-            foreach ($brand->products as $brand_product) {
-                if ($brand_product->sex == "Phi giới tính") {
-                    if ($brand_amount[$brand->id][$brand_product->id] = null) {
+        foreach ($brands as $brand)
+        {
+            foreach ($brand->products as $brand_product)
+            {
+                if ($brand_product->sex == "Phi giới tính")
+                {
+                    if ($brand_amount[$brand->id][$brand_product->id] = null)
+                    {
                         $brand_amount[$brand->id][$brand_product->id] = 0;
                     }
                     $brand_amount[$brand->id][$brand_product->id] += 1;
@@ -497,10 +550,14 @@ class ProductController extends Controller
         }
 //        dd($brand_amount);
 //        dd(count($brand_amount));
-        foreach ($origins as $origin) {
-            foreach ($origin->products as $origin_product) {
-                if ($origin_product->sex == "Phi giới tính") {
-                    if ($origin_amount[$origin->id][$origin_product->id] = null) {
+        foreach ($origins as $origin)
+        {
+            foreach ($origin->products as $origin_product)
+            {
+                if ($origin_product->sex == "Phi giới tính")
+                {
+                    if ($origin_amount[$origin->id][$origin_product->id] = null)
+                    {
                         $origin_amount[$origin->id][$origin_product->id] = 0;
                     }
                     $origin_amount[$origin->id][$origin_product->id] += 1;
@@ -518,11 +575,15 @@ class ProductController extends Controller
 
     public function cart()
     {
-        return view('cart');
+        $account = session()->get("current_account");
+        return view('cart', compact("account"));
     }
-    public function cart_remove(Request $request){
+
+    public function cart_remove(Request $request)
+    {
         $cart = Session::get('shoppingCart'); // Second argument is a default value
-        if((array_key_exists($request->id, $cart)) !== false) {
+        if ((array_key_exists($request->id, $cart)) !== false)
+        {
             unset($cart[$request->id]);
         }
 //        dd($cart);
