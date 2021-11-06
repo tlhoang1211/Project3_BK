@@ -8,7 +8,7 @@ class Receipt extends Model
 {
     public function customer()
     {
-        return $this->belongsTo(Account::class, 'customerId');
+        return $this->belongsTo(Account::class, 'account_id');
     }
 
     public function orders()

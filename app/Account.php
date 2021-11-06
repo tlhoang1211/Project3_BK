@@ -20,4 +20,8 @@ class Account extends Model
         return $this->belongsTo(City::class);
     }
 
+   public function receipts()
+   {
+       return $this->hasMany(Receipt::class)->latest();
+   }
 }
