@@ -25,22 +25,31 @@ class OrderDetailSeeder extends Seeder
             Schema::enableForeignKeyConstraints();
         }
         $faker = Factory::create();
-        $product = Product::all();
+        $products = Product::all();
         $receipts = Receipt::all();
         $orderDetail = array();
-        for ($i = 0; $i < 20; $i++)
+
+        foreach ($receipts as $receipt)
         {
-            $item = [
-                'product_id' => $faker->randomElement($product)->id,
-                'receipt_id' => $faker->randomElement($receipts)->id,
-                'volume'     => $faker->randomElement(['10ml', '50ml', '90ml', '100ml']),
-                'quantity'   => $faker->numberBetween(1, 8),
-                'price'      => $faker->randomNumber(3) * 100,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ];
-            array_push($orderDetail, $item);
-        }
+            for ($i = 0; $i < rand(1, 7); $i++)
+            {
+                $volume = $faker->randomElement(['10ml', '50ml', '90ml', '100ml']);
+                $volume_number = doubleval((substr($volume, 0, -2)));
+                $quantity = $faker->numberBetween(1, 8);
+                $product = $faker->randomElement($products);
+
+                $item = [
+                    'product_id' => $product->id,
+                    'receipt_id' => $receipt->id,
+                    'volume'     => $volume,
+                    'quantity'   => $quantity,
+                    'price'      => $quantity * ($volume_number / 100.0) * $product->price,
+                    'created_at' => $receipt->created_at,
+                    'updated_at' => Carbon::now(),
+                ];
+                array_push($orderDetail, $item);
+            }
+        };
 
         OrderDetail::insert($orderDetail);
     }

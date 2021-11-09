@@ -11,8 +11,8 @@ class Account extends Model
 
     public $timestamps = true;
 
-    public function roles() {
-        return $this->belongsToMany(Role::class)->withTimestamps();
+    public function role() {
+        return $this->belongsTo(Role::class);
 //        return $this->belongsToMany('App\Role','account_role', 'role_id', 'account_id');
     }
     public function city(){

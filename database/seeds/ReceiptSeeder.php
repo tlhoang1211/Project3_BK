@@ -25,17 +25,17 @@ class ReceiptSeeder extends Seeder
         $faker = Factory::create();
 
         $receipts = array();
-        for ($i = 1; $i < 5; $i++)
+        for ($i = 1; $i < 7; $i++)
         {
             $item = [
-                'account_id'   => $faker->numberBetween(1, 2),
-                'total_money'  => $faker->randomNumber(4) * 100,
+                'account_id'   => $faker->numberBetween(2, 3),
+                'total_money'  => $faker->randomNumber(4) * 1000,
                 'ship_name'    => $faker->name,
                 'name_address' => $faker->address,
                 'phone'        => $faker->phoneNumber,
                 'note'         => $faker->realText(),
                 'status'       => $faker->numberBetween(0, 2),
-                'created_at'   => Carbon::now(),
+                'created_at'   => $faker->dateTimeThisDecade('now'),
                 'updated_at'   => Carbon::now(),
             ];
             array_push($receipts, $item);

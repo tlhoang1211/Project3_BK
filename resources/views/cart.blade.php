@@ -190,7 +190,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Address:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
+                            <textarea class="form-control" id="message-text">{{$account->address}}</textarea>
                         </div>
                     </form>
                 </div>

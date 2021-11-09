@@ -40,12 +40,16 @@
                     {
                         if (data["success"])
                         {
-                            console.log("Pressed!");
-                            $(".flash").addClass("animate--drop-in-fade-out");
-                            setTimeout(function ()
+                            (async () =>
                             {
-                                $(".flash").removeClass("animate--drop-in-fade-out");
-                            }, 3500);
+                                $(".flash").addClass("animate--drop-in-fade-out");
+                                setTimeout(() =>
+                                {
+                                    $(".flash").removeClass("animate--drop-in-fade-out");
+                                }, 3500);
+
+                                // location.reload();
+                            })();
                         } else if (data["error"])
                         {
                             console.log(data["error"]);
