@@ -56,7 +56,7 @@
                     @foreach ($products as $product)
                         @php
                             $product_detail = $product['product']->first();
-                            $price_basic = $product['product']->first()->price;
+                            $price_basic = $product_detail->price;
                             $product_volume = $product['type'];
                         @endphp
                         <tr>
@@ -73,31 +73,20 @@
                                 <strong>{{$product_detail->formatPrice}}</strong>
                             </td>
                             <td>
-                                @foreach($product_volume as $product_v => $product)
-                                    <strong>{{$product_v}}</strong><br>
+                                @foreach($product_volume as $volume => $quantity)
+                                    <strong>{{$volume}}</strong><br>
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($product_volume as $product_v => $product)
-                                    <strong>{{$product}}</strong><br>
+                                @foreach($product_volume as $volume => $quantity)
+                                    <strong>{{$quantity}}</strong><br>
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($product_volume as $product_v => $product)
-                                    @php $price = $price_basic; @endphp
-                                    @if ($product_v == "100ml")
-                                        @php    $price = $price * 100 / 100 @endphp
-                                    @elseif ($product_v == "90ml")
-                                        @php    $price = $price * 90 / 100 @endphp
-                                    @elseif ($product_v == "50ml")
-                                        @php    $price = $price * 50 / 100 @endphp
-                                    @elseif ($product_v == "10ml")
-                                        @php    $price = $price * 10 / 100 @endphp
-                                    @endif
-                                    {{--                            {{dd($price)}}--}}
+                                @foreach($product_volume as $volume => $quantity)
                                     @php
-                                        $subprice = $price * $product;
-                                          $total_price += $subprice;
+                                        $subprice = order_price($price_basic, $volume, $quantity);
+                                        $total_price += $subprice;
                                     @endphp
                                     {{number_format($subprice, '0', '3', '.') . ' ₫'}}<br>
                                 @endforeach
@@ -145,7 +134,7 @@
                         </ul>
 
                         {{--<a href="cart-2.html" class="btn_1 full-width cart">Xác nhận thanh toán</a>--}}
-                        <button type="button" class="btn_1 full-width cart" data-bs-toggle="modal"
+                        <button class="btn_1 full-width cart" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                             Xác nhận thanh toán
                         </button>
@@ -175,28 +164,47 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="ship_detail" method="POST" action="/new/receipt">
+                        @csrf
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Họ và tên:</label>
-                            <input type="text" class="form-control" id="recipient-name" value="{{$account->fullName}}">
+                            <input name="ship_name" type="text" class="form-control" id="recipient-name"
+                                   value="{{$account->fullName}}">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Email:</label>
-                            <input type="email" class="form-control" id="recipient-name" value="{{$account->email}}">
+                            <input readonly name="email" type="email" class="form-control" id="recipient-name"
+                                   value="{{$account->email}}">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Số điện thoại</label>
-                            <input type="text" class="form-control" id="recipient-name" value="{{$account->phoneNumber}}">
+                            <input name="phone" type="text" class="form-control" id="recipient-name"
+                                   value="{{$account->phoneNumber}}">
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Address:</label>
-                            <textarea class="form-control" id="message-text">{{$account->address}}</textarea>
+                            <textarea name="name_address" class="form-control"
+                                      id="message-text">{{$account->address}}</textarea>
                         </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Note:</label>
+                            <textarea name="note" class="form-control" id="message-text"></textarea>
+                        </div>
+                        <input hidden name="total_money" value="{{$total_price ?? 0}}">
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Place order</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" form="ship_detail" class="btn btn-primary">Đặt hàng</button>
                 </div>
             </div>
         </div>
