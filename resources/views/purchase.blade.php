@@ -2,11 +2,9 @@
 @section('specific_css')
     <link href="{{asset('assets/css/account.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/user_page.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
 @endsection
 @section('specific_js')
     <script src="{{asset('assets/js/custome_select.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
 @endsection
 @section('content')
     <div class="container margin_30">
@@ -128,10 +126,10 @@
                     <div class="purchase-list-page__empty-page-wrapper">
                         <div class="purchase-empty-order__container">
                             <table class="table table-hover table-bordered">
-                                <thead>
+                                <caption style="margin-left: 10px">Ấn vào hàng cụ thể để xem chi tiết hóa đơn</caption>
+                                <thead class="table-light">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Chi tiết</th>
                                     <th scope="col">Tổng quan</th>
                                     <th scope="col">Tổng giá trị</th>
                                     <th scope="col">Thời gian</th>
@@ -142,79 +140,82 @@
                                     @php
                                         $index = $loop->index + 1
                                     @endphp
-                                    <tr>
-                                        <td>{{$index}}</td>
+                                    <tr class="receipt_detail" data-toggle="modal"
+                                        data-target="#exampleModal{{$index}}">
+                                        <td height="90px">{{$index}}</td>
                                         <td>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn" data-toggle="modal"
-                                                    data-target="#exampleModalCenter{{$index}}"
-                                                    style="color: whitesmoke; background: #3A87AD"
-                                            >
-                                                Hiển thị chi tiết hóa đơn
-                                            </button>
-
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModalCenter{{$index}}" tabindex="-1"
-                                                 role="dialog"
-                                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content" style="min-width: 650px">
-
-                                                        {{-- Modal header --}}
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                id="exampleModalLongTitle{{$index}}">
-                                                                {{"Receipt #$index"}}
-                                                            </h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-
-                                                        <div class="modal-body">
-                                                            <table class="table table-bordered">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th scope="col">#</th>
-                                                                    <th scope="col">Sản phẩm</th>
-                                                                    <th scope="col">Thể tích</th>
-                                                                    <th scope="col">Số lượng</th>
-                                                                    <th scope="col">Tổng giá trị</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($receipt->orders as $order)
-                                                                    <tr>
-                                                                        <th scope="row">{{$loop->index+1}}</th>
-                                                                        <td>
-                                                                            <a href="{{route('product_detail', $order->product->slug)}}"> {{$order->product->name}} </a>
-                                                                        </td>
-                                                                        <td>{{$order->volume}}</td>
-                                                                        <td>{{$order->quantity}}</td>
-                                                                        <td>{{$order->format_price}}</td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div style="overflow: auto;max-height: 90px">
+                                                {!! $receipt->general_detail !!}
                                             </div>
                                         </td>
-                                        <td>{!! $receipt->general_detail !!}</td>
                                         <td>{!! $receipt->format_price !!}</td>
                                         <td>{{$receipt->created_at}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+
+                        @foreach ($receipts as $receipt)
+                            @php
+                                $index = $loop->index + 1
+                            @endphp
+                            <!-- Modal -->
+                                <div class="modal fade" id="exampleModal{{$index}}" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true"
+                                >
+                                    <div class="modal-dialog modal-dialog-centered"
+                                         style="min-width: 650px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"
+                                                    id="exampleModalLabel{{$index}}">
+                                                    Receipt #{{$index}}</h5>
+                                                <button type="button" class="btn-close"
+                                                        data-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Sản phẩm</th>
+                                                        <th scope="col">Thể tích</th>
+                                                        <th scope="col">Số lượng</th>
+                                                        <th scope="col">Tổng giá trị</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach ($receipt->orders as $order)
+                                                        <tr>
+                                                            <th scope="row">{{$loop->index+1}}</th>
+                                                            <td>
+                                                                <a href="{{route('product_detail', $order->product->slug)}}"> {{$order->product->name}} </a>
+                                                            </td>
+                                                            <td>{{$order->volume}}</td>
+                                                            <td>{{$order->quantity}}</td>
+                                                            <td>{{$order->format_price}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            {{--Render paginaiton link--}}
+                            <div class="receipts_pagination">
+                                {{ $receipts->links() }}
+                            </div>
+
                         </div>
                     </div>
                 </div>
