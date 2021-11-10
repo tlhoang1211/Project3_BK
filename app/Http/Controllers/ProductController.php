@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Brand;
+use App\OrderDetail;
 use App\Origin;
 use App\Product;
+use App\Receipt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Expr\Array_;
@@ -163,6 +165,59 @@ class ProductController extends Controller
         $origins = Origin::where('status', '=', '1')->orderBy('id', 'ASC')->get();
         $product = Product::where('status', '=', '1')->where('id', '=', $id)->first();
         return view('admin.products.edit', compact('product', 'brands', 'origins'));
+    }
+
+    public function cart_store(Request $request)
+    {
+        $cart = session()->get('shoppingCart');
+        $account = session()->get("current_account");
+
+        if ($cart != null)
+        {
+            // Validate shipment info
+            $attributes = $request->validate([
+                'ship_name'    => 'required|max:255|min:3',
+                'phone'        => 'required|max:13',
+                'name_address' => 'required|max:255',
+                'note'         => 'max:255',
+                'total_money'  => 'required',
+            ]);
+
+            $attributes['account_id'] = $account->id;
+            if (is_null($attributes['note'])) $attributes['note'] = 'No note';
+            $attributes['status'] = '0';
+
+//            dd($attributes);
+
+            // Add new receipt
+            $receipt = Receipt::create($attributes);
+
+            // Add order detail to the above receipt
+
+            foreach ($cart as $cart_item)
+            {
+                $product = $cart_item['product']->first();
+                $product_volume_quantity = $cart_item['type'];
+
+                foreach ($product_volume_quantity as $volume => $quantity)
+                {
+                    $order_detail = [];
+
+                    $order_detail['receipt_id'] = $receipt->id;
+                    $order_detail['product_id'] = $product->id;
+                    $order_detail['volume'] = $volume;
+                    $order_detail['quantity'] = $quantity;
+                    $order_detail['price'] = order_price($product->price, $volume, $quantity);
+
+                    OrderDetail::create($order_detail);
+                }
+            }
+
+            // Clear shopping cart
+            session()->forget('shoppingCart');
+
+            return redirect()->route('mypurchase');
+        }
     }
 
     public function add_to_cart(Request $request)

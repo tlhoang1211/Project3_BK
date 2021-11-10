@@ -71,7 +71,7 @@ Route::get('/unisex_product', 'ProductController@unisex_product')->name('unisex_
 
 //Cart routes
 Route::get('/cart/page', 'ProductController@cart')->name('cart');
-
+Route::post('/new/receipt', 'ProductController@cart_store')->name('cart');
 Route::get('/cart/page/{id}', 'ProductController@cart_remove')->name('cart_remove');
 //==================================================================================================================
 

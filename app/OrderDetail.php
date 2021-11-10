@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderDetail extends Model
 {
+    protected $guarded = ['id'];
+
     public function receipt()
     {
         return $this->belongsTo(Receipt::class);
