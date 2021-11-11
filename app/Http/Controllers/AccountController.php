@@ -54,10 +54,9 @@ class AccountController extends Controller
         $account->birthDate = $request->birthDate;
 
         $account->save();
-        $currentId = $account->id;
-//        dd($account->roles()->sync(1)->toSql());
-//        dd($account);
-        return redirect('/login');
+
+        Auth::login($account);
+        return redirect(session('previous_link'));
     }
 
     public function loginProgress(Request $request)
@@ -126,7 +125,6 @@ class AccountController extends Controller
         $account->email = $request->email;
         $account->birthDate = $request->birthDate;
         $account->status = $request->status;
-        dd($request);
         $account->save();
         return redirect(route('admin_account_list'));
     }
@@ -163,7 +161,6 @@ class AccountController extends Controller
 
     public function delete_multi(Request $request)
     {
-        $ids_array = new Array_();
         $ids = $request->ids;
         $ids_array = explode(',', $ids);
 //        return response()->json(['success'=>$ids_array]);
