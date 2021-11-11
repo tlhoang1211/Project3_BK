@@ -44,13 +44,13 @@ Route::get('/contact', function () {
 Route::get('/user/account/profile', function () {
     $account = auth()->user();
     return view('account', compact('account'));
-})->name('profile');
+})->name('profile')->middleware('auth');
 
 Route::put('/user/account/profile_update/{id}', function (\Illuminate\Http\Request $request, $id) {
     dd($request);
-})->name('account_update');
+})->name('account_update')->middleware('auth');
 
-Route::get('/user/purchase', 'UserController@orderList')->name('mypurchase');
+Route::get('/user/purchase', 'UserController@orderList')->name('mypurchase')->middleware('auth');
 //==================================================================================================================
 
 //Product routes
@@ -71,7 +71,7 @@ Route::get('/unisex_product', 'ProductController@unisex_product')->name('unisex_
 
 //Cart routes
 Route::get('/cart/page', 'ProductController@cart')->name('cart');
-Route::post('/new/receipt', 'ProductController@cart_store')->name('cart');
+Route::post('/new/receipt', 'ProductController@cart_store')->name('cart')->middleware('auth');
 Route::get('/cart/page/{id}', 'ProductController@cart_remove')->name('cart_remove');
 //==================================================================================================================
 

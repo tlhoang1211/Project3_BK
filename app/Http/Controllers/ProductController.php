@@ -170,7 +170,7 @@ class ProductController extends Controller
     public function cart_store(Request $request)
     {
         $cart = session()->get('shoppingCart');
-        $account = session()->get("current_account");
+        $account = auth()->user();
 
         if ($cart != null)
         {
@@ -630,8 +630,7 @@ class ProductController extends Controller
 
     public function cart()
     {
-        $account = session()->get("current_account");
-        return view('cart', compact("account"));
+        return view('cart');
     }
 
     public function cart_remove(Request $request)

@@ -14,6 +14,7 @@ class AccountController extends Controller
     public function index()
     {
         $cities = City::all();
+        session(['previous_link' => url()->previous()]);
         return view('login_register', compact('cities'));
     }
 
@@ -42,7 +43,7 @@ class AccountController extends Controller
         $account = new Account();
         $account->email = $request->email;
         $account->address = $request->address;
-        $account->passwordHash = md5($request->password . $request->firstName);
+        $account->password = md5($request->password . $request->firstName);
         $account->salt = $request->firstName;
         $account->fullName = $request->lastName . ' ' . $request->firstName;
         $account->phoneNumber = $request->phone;
@@ -87,7 +88,7 @@ class AccountController extends Controller
                 }
                 else
                 {
-                    return redirect('/');
+                    return redirect(session('previous_link'));
                 }
             }
         }
