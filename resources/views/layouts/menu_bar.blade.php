@@ -18,15 +18,6 @@
                                 <div id="menu">
                                     <ul>
                                         <li><span><a href="/product_list">SẢN PHẨM</a></span></li>
-                                        {{--                                        <li><span><a href="/collection">CÁC BỘ SƯU TẬP</a></span>--}}
-                                        {{--                                            <ul>--}}
-                                        {{--                                                <li><a href="listing-grid-1-full.html">A</a></li>--}}
-                                        {{--                                                <li><a href="listing-grid-2-full.html">B</a></li>--}}
-                                        {{--                                                <li><a href="listing-grid-3.html">C</a></li>--}}
-                                        {{--                                                <li><a href="listing-grid-5-sidebar-right.html">XEM TOÀN BỘ BST</a>--}}
-                                        {{--                                                </li>--}}
-                                        {{--                                            </ul>--}}
-                                        </li>
                                         <li><span><a href="{{route('male_product')}}">NAM</a></span>
                                             {{--                                            <ul>--}}
                                             {{--                                                <li><a href="listing-grid-6-sidebar-left.html">A</a></li>--}}
@@ -52,7 +43,8 @@
                 </div>
                 <div class="col-xl-2 col-lg-2 d-lg-flex align-items-center">
                     <div id="logo">
-                        <a href="{{route('home')}}"><img src={{asset('assets/img/logo.png')}} alt="" width="200"
+                        <a href="{{route('home')}}"><img alt="logo" src={{asset('assets/img/logo.png')}} alt=""
+                                                         width="200"
                                                          height="60" style="margin-left: -30px"></a>
                     </div>
                 </div>
@@ -114,22 +106,22 @@
                         {{--                        </li>--}}
                         <li>
                             <div class="dropdown dropdown-access">
-                                <a href="account.html" class="access_link"><span>Tài khoản</span></a>
+                                <a href="{{auth()->check() ? route('profile') : '#'}}" class="access_link"><span>Tài khoản</span></a>
                                 <div class="dropdown-menu">
                                     @auth()
                                         <strong
                                             style="font-size: 20px">{{auth()->user()->fullName}}</strong>
                                         <ul>
                                             <li>
-                                                <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn
-                                                                                                    hàng</a>
+                                                <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
                                             </li>
+                                            {{--<li>--}}
+                                            {{--    <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn--}}
+                                            {{--                                                        hàng</a>--}}
+                                            {{--</li>--}}
                                             <li>
                                                 <a href="{{route('mypurchase')}}"><i class="ti-package"></i>Đơn hàng của
                                                                                                             tôi</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
                                             </li>
                                             <li>
                                                 <a href="{{route('help')}}"><i class="ti-help-alt"></i>Trợ giúp</a>
