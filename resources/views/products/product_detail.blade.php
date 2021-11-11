@@ -40,16 +40,15 @@
                     {
                         if (data["success"])
                         {
-                            (async () =>
-                            {
-                                $(".flash").addClass("animate--drop-in-fade-out");
-                                setTimeout(() =>
-                                {
-                                    $(".flash").removeClass("animate--drop-in-fade-out");
-                                }, 3500);
+                            // console.log($('#cart_quantity')[0].innerHTML);
+                            {{--console.log(<?php echo count(session()->get('shoppingCart')); ?>);--}}
+                            {{--$('#cart_quantity')[0].innerHTML = <?php echo count(session()->get('shoppingCart')); ?>--}}
 
-                                // location.reload();
-                            })();
+                            $(".flash").addClass("animate--drop-in-fade-out");
+                            setTimeout(() =>
+                            {
+                                $(".flash").removeClass("animate--drop-in-fade-out");
+                            }, 3500);
                         } else if (data["error"])
                         {
                             console.log(data["error"]);
@@ -147,10 +146,10 @@
                                     <div class="col-xl-4 col-lg-5 col-md-6 col-6">
                                         <div class="custom-select-form">
                                             <select class="wide" name="volume">
-                                                <option value="10ml" selected>10ml</option>
+                                                <option value="10ml">10ml</option>
                                                 <option value="50ml">50ml</option>
                                                 <option value="90ml">90ml</option>
-                                                <option value="100ml">100ml</option>
+                                                <option value="100ml" selected>100ml</option>
                                             </select>
                                         </div>
                                     </div>

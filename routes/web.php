@@ -42,7 +42,7 @@ Route::get('/contact', function () {
 
 //User routes
 Route::get('/user/account/profile', function () {
-    $account = session()->get("current_account");
+    $account = auth()->user();
     return view('account', compact('account'));
 })->name('profile');
 

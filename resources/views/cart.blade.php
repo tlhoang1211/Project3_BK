@@ -134,33 +134,27 @@
                         </ul>
 
                         {{--<a href="cart-2.html" class="btn_1 full-width cart">Xác nhận thanh toán</a>--}}
-                        <button class="btn_1 full-width cart" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                        <a role="button" class="btn_1 full-width cart" data-bs-toggle="modal"
+                           href="#exampleModalToggle">
                             Xác nhận thanh toán
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
         @else
         Hiện tại bạn không có sản phẩm nào trong giỏ hàng
-        @endif
+    @endif
     <!-- /box_cart -->
 
-        {{-- Order comfirmation--}}
-    <!-- Button trigger modal -->
-        {{--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">--}}
-        {{--    Launch demo modal--}}
-        {{--</button>--}}
-
-
     </main>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Shipment detail modal -->
+    <div class="modal fade" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalToggleLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header" style="background: #3A87AD; margin-left: 0">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: whitesmoke">Shipment Detail</h5>
+                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: whitesmoke">Shipment Detail</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -209,5 +203,4 @@
             </div>
         </div>
     </div>
-    <!--/main-->
 @endsection

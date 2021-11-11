@@ -17,8 +17,8 @@ class CreateAccountsTable extends Migration
             $table->id();
             $table->foreignId('role_id')->default(1);
             $table->foreignId('city_id');
-            $table->string('email');
-            $table->string('passwordHash');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->string('salt');
             $table->string('fullName');
             $table->string('sex');
@@ -27,6 +27,7 @@ class CreateAccountsTable extends Migration
             $table->string('email_verified');
             $table->integer('status');
             $table->string('address');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

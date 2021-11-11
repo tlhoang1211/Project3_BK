@@ -28,7 +28,7 @@ class ReceiptSeeder extends Seeder
         for ($i = 1; $i < 7; $i++)
         {
             $item = [
-                'account_id'   => $faker->numberBetween(2, 3),
+                'account_id'   => 2,
                 'total_money'  => $faker->randomNumber(4) * 1000,
                 'ship_name'    => $faker->name,
                 'name_address' => $faker->address,

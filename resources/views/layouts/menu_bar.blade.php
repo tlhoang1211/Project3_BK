@@ -84,7 +84,7 @@
                             <div class="dropdown dropdown-cart">
                                 <a href="{{route('cart')}}" class="cart_bt">
                                     @if ($products_in_cart != null)
-                                        <strong> {{count($product_cart)}}</strong>
+                                        <strong id="cart_quantity">{{count($product_cart)}}</strong>
                                     @endif
                                 </a>
                                 @if ($products_in_cart != null)
@@ -116,9 +116,9 @@
                             <div class="dropdown dropdown-access">
                                 <a href="account.html" class="access_link"><span>Tài khoản</span></a>
                                 <div class="dropdown-menu">
-                                    @if(Session::has('current_account'))
+                                    @auth()
                                         <strong
-                                            style="font-size: 20px">{{Session::get('current_account')->fullName}}</strong>
+                                            style="font-size: 20px">{{auth()->user()->fullName}}</strong>
                                         <ul>
                                             <li>
                                                 <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn
@@ -147,8 +147,7 @@
                                         </ul>
                                     @else
                                         <a href="{{route('login')}}" class="btn_1">Đăng nhập/Đăng ký</a>
-                                    @endif
-
+                                    @endauth
                                 </div>
                             </div>
                             <!-- /dropdown-access-->

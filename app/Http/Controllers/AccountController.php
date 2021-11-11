@@ -6,6 +6,7 @@ use App\Account;
 use App\City;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AccountController extends Controller
@@ -60,41 +61,43 @@ class AccountController extends Controller
 
     public function loginProgress(Request $request)
     {
-        $request->validate([
-            'emailLogin'    => 'required',
-            'passwordLogin' => 'required',
+        $attribute = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
         ]);
-//        dd($request);
-        $condition = ['email' => $request->emailLogin, 'status' => "1",];
-//        dd($condition);
+
+        $condition = ['email' => $request->email, 'status' => "1",];
         $account = Account::where($condition)->get()->first();
-//        dd($account->roles);
-//        dd($request->password);
+
         if (isset($account))
         {
-            $passwordHash = $account->passwordHash;
+            $password = $account->password;
             $salt = $account->salt;
-//            dd(md5($request->password.$salt));
-//            dd($passwordHash);
-            if ($passwordHash == md5($request->passwordLogin . $salt))
+
+            if ($password == md5($attribute['password'] . $salt))
             {
-                session_start();
-                $account_session = $request->session();
-                $account_session->put('current_account', $account);
-                return redirect('/admin');
+//                session_start();
+//                $account_session = $request->session();
+//                $account_session->put('current_account', $account);
+                Auth::login($account);
+
+                if (auth()->user()->role->name == 'admin')
+                {
+                    return redirect('/admin');
+                }
+                else
+                {
+                    return redirect('/');
+                }
             }
-            return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
         }
-        else
-        {
-            return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
-        }
+        return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
     }
 
     public function logOut(Request $request)
     {
 
-        Session::forget('current_account');
+        Auth::logout();
         return redirect('/');
     }
 

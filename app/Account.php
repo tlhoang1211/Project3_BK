@@ -2,26 +2,34 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Account extends Model
+class Account extends Authenticatable
 {
-    protected $table = 'accounts';
-    protected $fillable = ['name'];
+    use Notifiable;
 
     public $timestamps = true;
+    protected $table = 'accounts';
+    protected $fillable = ['name', 'email', 'password'];
+    protected $hidden = ['password', 'remember_token'];
 
-    public function role() {
+    public function role(): BelongsTo
+    {
         return $this->belongsTo(Role::class);
 //        return $this->belongsToMany('App\Role','account_role', 'role_id', 'account_id');
     }
-    public function city(){
+
+    public function city(): BelongsTo
+    {
 //        return $this->hasOne()
         return $this->belongsTo(City::class);
     }
 
-   public function receipts()
-   {
-       return $this->hasMany(Receipt::class)->latest();
-   }
+    public function receipts(): HasMany
+    {
+        return $this->hasMany(Receipt::class)->latest();
+    }
 }

@@ -25,7 +25,7 @@ class AccountSeeder extends Seeder
 
         $user = Account::create(array(
             'role_id'        => 2,
-            'passwordHash'   => md5("admin" . "12345"),
+            'password'       => md5("admin" . "12345"),
             'salt'           => '12345',
             'fullName'       => 'adminer',
             'email'          => 'admin@admin',
@@ -41,7 +41,7 @@ class AccountSeeder extends Seeder
         ));
         $user = Account::create(array(
             'role_id'        => 1,
-            'passwordHash'   => md5("guest" . "56789"),
+            'password'       => md5("guest" . "56789"),
             'salt'           => '56789',
             'fullName'       => 'guest',
             'email'          => 'guest@guest',
@@ -58,7 +58,7 @@ class AccountSeeder extends Seeder
 //        $account = array(
 //            array(
 //                'userName' => 'admin',
-//                'passwordHash' => md5("admin"."12345"),
+//                'password' => md5("admin"."12345"),
 //                'salt' => '12345',
 //                'fullName' => 'adminer',
 //                'email' => 'admin@admin',
