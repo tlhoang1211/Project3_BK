@@ -1,13 +1,10 @@
 @extends('layouts.master')
 @section('specific_css')
     <link href="{{asset('assets/css/product_page.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/css/flash-notification.css')}}" rel="stylesheet">
 @endsection
 @section('specific_js')
-
     <script src="{{asset('assets/js/carousel_with_thumbs.js')}}"></script>
     <script src="{{asset('assets/js/read_more_read_less.js')}}"></script>
-
 
     <script>
         $(document).ready(function ()
@@ -24,7 +21,6 @@
                 const id = this.getAttribute("data");
                 const quantity = $("#quantity_1").val();
                 const volume = $("select[name=\"volume\"]").val();
-                console.log(volume);
 
                 $.ajax({
                     url: '{{route('add_to_cart')}}',
@@ -40,15 +36,24 @@
                     {
                         if (data["success"])
                         {
-                            // console.log($('#cart_quantity')[0].innerHTML);
-                            {{--console.log(<?php echo count(session()->get('shoppingCart')); ?>);--}}
-                            {{--$('#cart_quantity')[0].innerHTML = <?php echo count(session()->get('shoppingCart')); ?>--}}
-
-                            $(".flash").addClass("animate--drop-in-fade-out");
-                            setTimeout(() =>
-                            {
-                                $(".flash").removeClass("animate--drop-in-fade-out");
-                            }, 3500);
+                            toastr.options = {
+                                "closeButton": false,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-center",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "timeOut": "1000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            }
+                            toastr.success(data["success"]);
                         } else if (data["error"])
                         {
                             console.log(data["error"]);
@@ -71,16 +76,6 @@
     </script>
 @endsection
 @section('content')
-    {{--    Success noti--}}
-    <div class="flash">
-        <div class="flash__icon">
-            <i class="icon fa fa-check-circle-o">
-            </i></div>
-        <p class="flash__body">
-            Product(s) added
-        </p>
-    </div>
-
     <div id="page">
 
         {{--<div class="layer" style="z-index: 4"></div>--}}
@@ -144,14 +139,8 @@
                                            data-target="#size-modal"><i
                                                 class="ti-help-alt"></i></a></label>
                                     <div class="col-xl-4 col-lg-5 col-md-6 col-6">
-                                        <div class="custom-select-form">
-                                            <select class="wide" name="volume">
-                                                <option value="10ml">10ml</option>
-                                                <option value="50ml">50ml</option>
-                                                <option value="90ml">90ml</option>
-                                                <option value="100ml" selected>100ml</option>
-                                            </select>
-                                        </div>
+                                        <x-select :options="['100ml', '90ml', '50ml', '10ml']" selected="100ml"
+                                                  id="none"/>
                                     </div>
                                 </div>
                                 <div class="row">

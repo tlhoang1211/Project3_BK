@@ -35,8 +35,8 @@
     {{--	<link href={{ URL::asset('assets/css/bootstrap.custom.min.css') }} rel="stylesheet">--}}
     <link href={{ asset('assets/css/bootstrap.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/style.css') }} rel="stylesheet">
-
-
+    <link href={{ asset('assets/css/style.css') }} rel="stylesheet">
+    <link href={{ asset('assets/css/toastr.min.css') }} rel="stylesheet">
     <!-- SPECIFIC CSS -->
     @yield('specific_css')
 
@@ -186,7 +186,7 @@
 <script src={{asset('assets/js/common_scripts.min.js')}}></script>
 <script src={{asset('assets/js/main.js')}}></script>
 <script src={{asset('assets/js/bootstrap.bundle.min.js')}}></script>
-
+<script src={{asset('assets/js/toastr.min.js')}}></script>
 <!-- SPECIFIC SCRIPTS -->
 @yield('specific_js')
 
