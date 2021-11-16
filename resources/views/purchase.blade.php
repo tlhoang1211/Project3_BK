@@ -140,8 +140,8 @@
                                     @php
                                         $index = $loop->index + 1
                                     @endphp
-                                    <tr class="receipt_detail" data-toggle="modal"
-                                        data-target="#exampleModal{{$index}}">
+                                    <tr class="receipt_detail" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal{{$index}}">
                                         <td height="90px">{{$index}}</td>
                                         <td>
                                             <div style="overflow: auto;max-height: 90px">
@@ -159,56 +159,40 @@
                             @php
                                 $index = $loop->index + 1
                             @endphp
-                            <!-- Modal -->
-                                <div class="modal fade" id="exampleModal{{$index}}" tabindex="-1"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true"
-                                >
-                                    <div class="modal-dialog modal-dialog-centered"
-                                         style="min-width: 650px">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title"
-                                                    id="exampleModalLabel{{$index}}">
-                                                    Receipt #{{$index}}</h5>
-                                                <button type="button" class="btn-close"
-                                                        data-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                    <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Sản phẩm</th>
-                                                        <th scope="col">Thể tích</th>
-                                                        <th scope="col">Số lượng</th>
-                                                        <th scope="col">Tổng giá trị</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach ($receipt->orders as $order)
-                                                        <tr>
-                                                            <th scope="row">{{$loop->index+1}}</th>
-                                                            <td>
-                                                                <a href="{{route('product_detail', $order->product->slug)}}"> {{$order->product->name}} </a>
-                                                            </td>
-                                                            <td>{{$order->volume}}</td>
-                                                            <td>{{$order->quantity}}</td>
-                                                            <td>{{$order->format_price}}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Modal -->
+                                <x-modal.modal
+                                    id="exampleModal{{$index}}"
+                                    width="650px"
+                                    title="Receipt #{{$index}}"
+                                    closeText="Đóng"
+                                >
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Sản phẩm</th>
+                                            <th scope="col">Thể tích</th>
+                                            <th scope="col">Số lượng</th>
+                                            <th scope="col">Tổng giá trị</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($receipt->orders as $order)
+                                            <tr>
+                                                <th scope="row">{{$loop->index+1}}</th>
+                                                <td>
+                                                    <a href="{{route('product_detail', $order->product->slug)}}"> {{$order->product->name}} </a>
+                                                </td>
+                                                <td>{{$order->volume}}</td>
+                                                <td>{{$order->quantity}}</td>
+                                                <td>{{$order->format_price}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </x-modal.modal>
+
                             @endforeach
 
                             {{--Render paginaiton link--}}

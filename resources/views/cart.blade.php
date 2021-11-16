@@ -296,66 +296,57 @@
     </main>
     @auth
         <!-- Shipment detail modal -->
-        <div class="modal fade" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalToggleLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header" style="background: #3A87AD; margin-left: 0">
-                        <h5 class="modal-title" id="exampleModalToggleLabel" style="color: whitesmoke">Shipment
-                                                                                                       Detail</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <x-modal.modal id="exampleModalToggle"
+                       title="Shipment Detail"
+                       closeText="Hủy"
+        >
+            <form id="ship_detail" method="POST" action="/new/receipt">
+                @csrf
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                    <div class="modal-body">
-                        <form id="ship_detail" method="POST" action="/new/receipt">
-                            @csrf
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                @endif
 
-                            @php
-                                $account = auth()->user()
-                            @endphp
+                @php
+                    $account = auth()->user()
+                @endphp
 
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Họ và tên:</label>
-                                <input name="ship_name" type="text" class="form-control" id="recipient-name"
-                                       value="{{$account->fullName}}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Email:</label>
-                                <input readonly name="email" type="email" class="form-control" id="recipient-name"
-                                       value="{{$account->email}}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Số điện thoại</label>
-                                <input name="phone" type="text" class="form-control" id="recipient-name"
-                                       value="{{$account->phoneNumber}}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Address:</label>
-                                <textarea name="name_address" class="form-control"
-                                          id="message-text">{{$account->address}}</textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Note:</label>
-                                <textarea name="note" class="form-control" id="message-text"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" form="ship_detail" class="btn btn-primary">Đặt hàng</button>
-                    </div>
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Họ và tên:</label>
+                    <input name="ship_name" type="text" class="form-control" id="recipient-name"
+                           value="{{$account->fullName}}">
                 </div>
-            </div>
-        </div>
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Email:</label>
+                    <input readonly name="email" type="email" class="form-control" id="recipient-name"
+                           value="{{$account->email}}">
+                </div>
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Số điện thoại</label>
+                    <input name="phone" type="text" class="form-control" id="recipient-name"
+                           value="{{$account->phoneNumber}}">
+                </div>
+                <div class="mb-3">
+                    <label for="message-text" class="col-form-label">Address:</label>
+                    <textarea name="name_address" class="form-control"
+                              id="message-text">{{$account->address}}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="message-text" class="col-form-label">Note:</label>
+                    <textarea name="note" class="form-control" id="message-text"></textarea>
+                </div>
+            </form>
+
+            <x-slot name="acceptButton">
+                <button type="submit" form="ship_detail" class="btn btn-primary">Đặt hàng</button>
+            </x-slot>
+        </x-modal.modal>
     @endauth
 
 @endsection
