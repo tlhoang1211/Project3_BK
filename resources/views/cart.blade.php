@@ -61,6 +61,7 @@
                             if (product_id !== "total_price")
                             {
                                 const volumes = response[product_id];
+                                // Update subtotal value of all items
                                 for (const volume in volumes)
                                 {
                                     $(`div.item-price.${product_id}-${volume}`).text(volumes[volume]["subprice"]);
@@ -124,10 +125,18 @@
                                 else
                                 {
                                     // Replace old volume with the new one and its quantity
-                                    item_detail[new_volume]["quantity"] = quantity_input.val();
+                                    item_detail[new_volume] = {"quantity": quantity_input.val()};
                                     delete item_detail[old_volume];
+
+                                    // Update subtotal display element class to match current volume value
+                                    // (required to update subtotal value after changing the volume)
+                                    $(`div.item-price.${cart_item}-${old_volume}`)
+                                        .removeClass(`${cart_item}-${old_volume}`)
+                                        .addClass(`${cart_item}-${new_volume}`);
+
                                     // Update old volume to be deleted in next volume selection
                                     old_volume = new_volume;
+
 
                                     update_cart_in_server();
                                 }
@@ -239,7 +248,7 @@
                                 {{--Price of each cart item--}}
                                 @foreach($product_volume as $volume => $volume_detail)
                                     <div class='{{"item-price $product_detail->id-$volume"}}'>
-                                        {{$volume_detail['subprice']}}
+                                        {{format_money($volume_detail['subprice'])}}
                                     </div>
                                 @endforeach
                             </td>
@@ -265,7 +274,7 @@
                                 <span>Shipping :</span> 200.000 đ (Toàn quốc)
                             </li>
                             <li>
-                                <span>Total:</span> <span id="total-price">{{$total_price}}</span>
+                                <span>Total:</span> <span id="total-price">{{format_money($total_price)}}</span>
                             </li>
                         </ul>
 
@@ -338,7 +347,6 @@
                                 <label for="message-text" class="col-form-label">Note:</label>
                                 <textarea name="note" class="form-control" id="message-text"></textarea>
                             </div>
-                            <input hidden name="total_money" value="{{$total_price ?? 0}}">
                         </form>
                     </div>
                     <div class="modal-footer">

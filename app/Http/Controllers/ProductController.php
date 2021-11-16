@@ -182,9 +182,9 @@ class ProductController extends Controller
                 'phone'        => 'required|max:13',
                 'name_address' => 'required|max:255',
                 'note'         => 'max:255',
-                'total_money'  => 'required',
             ]);
 
+            $attributes['total_money'] = get_cart_total_price() ?? 0;
             $attributes['account_id'] = $account->id;
             if (is_null($attributes['note'])) $attributes['note'] = 'No note';
             $attributes['status'] = '0';
@@ -193,19 +193,19 @@ class ProductController extends Controller
             $receipt = Receipt::create($attributes);
 
             // Add order detail to the above receipt
-            foreach ($cart as $product_id => $volume_quantity)
+            foreach ($cart as $product_id => $volumes)
             {
                 $product = Product::find($product_id);
 
-                foreach ($volume_quantity as $volume => $quantity)
+                foreach ($volumes as $volume => $volume_detail)
                 {
                     $order_detail = [];
 
                     $order_detail['receipt_id'] = $receipt->id;
                     $order_detail['product_id'] = $product_id;
                     $order_detail['volume'] = $volume;
-                    $order_detail['quantity'] = $quantity;
-                    $order_detail['price'] = order_price($product->price, $volume, $quantity);
+                    $order_detail['quantity'] = $volume_detail['quantity'];
+                    $order_detail['price'] = order_price($product->price, $volume, $volume_detail['quantity']);
 
                     OrderDetail::create($order_detail);
                 }
@@ -651,7 +651,7 @@ class ProductController extends Controller
 
         // Update subprice of each item in the cart
         $cart = update_cart_item_price();
-        $cart['total_price'] = get_cart_total_price();
+        $cart['total_price'] = format_money(get_cart_total_price());
 
         return response()->json(['success' => $cart]);
     }

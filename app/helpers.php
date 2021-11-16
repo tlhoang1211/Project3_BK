@@ -38,7 +38,7 @@ function get_cart_total_price(): string
             $total_price += order_price($base_price, $volume, $volume_detail['quantity']);
         }
     }
-    return format_money($total_price);
+    return $total_price;
 }
 
 function order_price($base_price, $volume, $quantity)
