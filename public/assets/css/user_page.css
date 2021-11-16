@@ -1158,3 +1158,8 @@ input {
 .receipt_detail {
     cursor: pointer;
 }
+
+.item-price {
+    height: 32.5px;
+    line-height: 32.5px;
+}

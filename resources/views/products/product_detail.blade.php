@@ -52,19 +52,21 @@
                                 "hideEasing": "linear",
                                 "showMethod": "fadeIn",
                                 "hideMethod": "fadeOut"
-                            }
+                            };
                             toastr.success(data["success"]);
-                        } else if (data["error"])
+                        }
+                        else if (data["error"])
                         {
-                            console.log(data["error"]);
-                        } else
+                            toastr.error(data["error"]);
+                        }
+                        else
                         {
-                            alert("Lỗi!!");
+                            toastr.error("Lỗi chưa xác định!");
                         }
                     },
                     error: function (data)
                     {
-                        alert(data.responseText);
+                        toastr.error(data.responseText);
                     }
                 });
                 $.each(allVals, function (index, value)

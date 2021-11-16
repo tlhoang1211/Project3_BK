@@ -7,6 +7,8 @@ use App\OrderDetail;
 use App\Origin;
 use App\Product;
 use App\Receipt;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Expr\Array_;
@@ -84,7 +86,7 @@ class ProductController extends Controller
     {
         $brands = Brand::where('status', '=', '1')->orderBy('id', 'ASC')->get();
         $origins = Origin::where('status', '=', '1')->orderBy('id', 'ASC')->get();
-        return view('admin.products.create')->with(compact('brands', 'origins'));;
+        return view('admin.products.create')->with(compact('brands', 'origins'));
     }
 
     public function store(Request $request)
@@ -187,24 +189,20 @@ class ProductController extends Controller
             if (is_null($attributes['note'])) $attributes['note'] = 'No note';
             $attributes['status'] = '0';
 
-//            dd($attributes);
-
             // Add new receipt
             $receipt = Receipt::create($attributes);
 
             // Add order detail to the above receipt
-
-            foreach ($cart as $cart_item)
+            foreach ($cart as $product_id => $volume_quantity)
             {
-                $product = $cart_item['product']->first();
-                $product_volume_quantity = $cart_item['type'];
+                $product = Product::find($product_id);
 
-                foreach ($product_volume_quantity as $volume => $quantity)
+                foreach ($volume_quantity as $volume => $quantity)
                 {
                     $order_detail = [];
 
                     $order_detail['receipt_id'] = $receipt->id;
-                    $order_detail['product_id'] = $product->id;
+                    $order_detail['product_id'] = $product_id;
                     $order_detail['volume'] = $volume;
                     $order_detail['quantity'] = $quantity;
                     $order_detail['price'] = order_price($product->price, $volume, $quantity);
@@ -226,12 +224,15 @@ class ProductController extends Controller
         $id = $request->id;
         $quantity = $request->quantity;
         $volume = $request->volume;
+
         // kiểm tra sản phẩm theo id truyền lên.
-        $product = Product::where('status', '=', '1')->where('id', '=', $id)->get();
+        $product = Product::where('status', '=', '1')->find($id);
+
         if ($product == null)
         {
             return view('404');
         }
+
         // lấy thông tin giỏ hàng từ trong session.
         $shopping_cart = Session::get('shoppingCart');
 
@@ -240,6 +241,8 @@ class ProductController extends Controller
             // thì tạo mới giỏ hàng là một mảng các key và value
             $shopping_cart = array(); // key và value
         }
+
+        // Generate cart item
         $cartItem = null;
 
         if (array_key_exists($id, $shopping_cart))
@@ -247,35 +250,33 @@ class ProductController extends Controller
             $cartItem = $shopping_cart[$id];
         }
 
+        // nếu không, tạo mới một cart item.
         if ($cartItem == null)
         {
-            // nếu không, tạo mới một cart item.
-            $cartItem = [
-                'product' => $product,
-            ];
-            $cartItem['type'][$volume] = $quantity;
+            $cartItem[$volume]['quantity'] = $quantity;
         }
         else
         {
             // nếu có, cộng số lượng sản phẩm thêm.
-            if (array_key_exists($volume, $shopping_cart[$id]['type']))
+            if (array_key_exists($volume, $shopping_cart[$id]))
             {
-                $cartItem['type'][$volume] += $quantity;
+                $cartItem[$volume]['quantity'] += $quantity;
             }
             else
             {
-                $cartItem['type'][$volume] = $quantity;
+                $cartItem[$volume]['quantity'] = $quantity;
             }
         }
 
+        // Generate each cart item's cost
+        $cartItem[$volume]['subprice'] = order_price($product->price, $volume, $cartItem[$volume]['quantity']);
+
+        // Add cart item to session
         $shopping_cart[$id] = $cartItem;
-//        if($cartItem['volume']['quantity'] <= 0){
-//            unset($shopping_cart[$product->id]);
-//        }
         Session::put('shoppingCart', $shopping_cart);
         $request->session()->save();
 
-        return response()->json(['success' => "Products added to cart successfully."]);
+        return response()->json(['success' => "Sản phẩm đã được thêm vào giỏ hàng."]);
     }
 
     public function add(Request $request)
@@ -620,8 +621,6 @@ class ProductController extends Controller
             }
         }
 
-//        dd($origin_amount);
-
         return view('products.unisex_product_list', compact('brands', 'origins'))
             ->with('products', $products)
             ->with('brand_amount', $brand_amount)
@@ -633,15 +632,27 @@ class ProductController extends Controller
         return view('cart');
     }
 
-    public function cart_remove(Request $request)
+    public function cart_remove(Request $request): RedirectResponse
     {
         $cart = Session::get('shoppingCart'); // Second argument is a default value
-        if ((array_key_exists($request->id, $cart)) !== false)
+        if (array_key_exists($request->id, $cart))
         {
             unset($cart[$request->id]);
         }
-//        dd($cart);
         Session::put('shoppingCart', $cart);
-        return redirect(route('cart'));
+        return redirect()->back()->with(['success' => 'Đã xóa sản phẩm thành công.']);
+    }
+
+    public function cart_update(Request $request): JsonResponse
+    {
+        // Convert from json to associative array then replace current cart in session
+        $parsed_data = json_decode($request->shoppingCart, true);
+        session()->put('shoppingCart', $parsed_data);
+
+        // Update subprice of each item in the cart
+        $cart = update_cart_item_price();
+        $cart['total_price'] = get_cart_total_price();
+
+        return response()->json(['success' => $cart]);
     }
 }

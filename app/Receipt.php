@@ -3,18 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Receipt extends Model
 {
 
     protected $guarded = ['id'];
 
-    public function account()
+    public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
     }
 
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(OrderDetail::class);
     }
@@ -29,9 +31,9 @@ class Receipt extends Model
         return $general_detail;
     }
 
-    public function getFormatPriceAttribute()
+    public function getFormatPriceAttribute(): string
     {
-        $formatPrice = number_format($this->total_money, '0', '3', '.') . ' ₫';
-        return $formatPrice;
+        return format_money($this->total_money);
+
     }
 }

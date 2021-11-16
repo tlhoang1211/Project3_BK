@@ -26,8 +26,7 @@ class OrderDetail extends Model
 
     public function getFormatPriceAttribute()
     {
-        $formatPrice = number_format($this->price, '0', '3', '.') . ' ₫';
-        return $formatPrice;
+        return format_money($this->price);
     }
 //
 //    public function getProductAttribute()

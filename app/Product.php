@@ -23,23 +23,23 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function getFormatPriceAttribute()
+    public function getFormatPriceAttribute(): string
     {
-//        $formatPrice = Money::VND($this->price)->format();
-//        return $formatPrice;
-        $formatPrice = number_format($this->price, '0', '3', '.') . ' ₫';
-        return $formatPrice;
+        return format_money($this->price);
     }
 
-    public function getThumbnailArrayAttribute()
+    public function getThumbnailArrayAttribute(): array
     {
-        if ($this->thumbnail == null || strlen($this->thumbnail) == 0) {
+        if ($this->thumbnail == null || strlen($this->thumbnail) == 0)
+        {
             return array('https://res.cloudinary.com/vernom/image/upload/v1596461891/perfume_project/noimages_aaqvrt.png');
         }
         $list_photos = array();
         $single_thumb = explode(',', $this->thumbnail);
-        foreach ($single_thumb as $single) {
-            if (strlen($single) > 0) {
+        foreach ($single_thumb as $single)
+        {
+            if (strlen($single) > 0)
+            {
                 array_push($list_photos, self::$cloudinary_link . $single);
             }
         }
@@ -49,7 +49,8 @@ class Product extends Model
     public function getfirstThumbnailAttribute()
     {
         $thumbnail[] = explode(',', $this->thumbnail);
-        foreach ($thumbnail as $thumbnailValue) {
+        foreach ($thumbnail as $thumbnailValue)
+        {
             return self::$cloudinary_link . $thumbnailValue[0];
         }
     }
@@ -57,20 +58,24 @@ class Product extends Model
     public function getfirstThumbnail150Attribute()
     {
         $thumbnail[] = explode(',', $this->thumbnail);
-        foreach ($thumbnail as $thumbnailValue) {
+        foreach ($thumbnail as $thumbnailValue)
+        {
             return 'https://res.cloudinary.com/vernom/image/upload/c_scale,h_150,w_150/' . $thumbnailValue[0];
         }
     }
 
     public function getPhotoIdsAttribute()
     {
-        if ($this->thumbnail == null || strlen($this->thumbnail) == 0) {
+        if ($this->thumbnail == null || strlen($this->thumbnail) == 0)
+        {
             return array();
         }
         $list_ids = array();
         $photos = explode(',', $this->thumbnail);
-        foreach ($photos as $p) {
-            if (strlen($p) > 0) {
+        foreach ($photos as $p)
+        {
+            if (strlen($p) > 0)
+            {
                 array_push($list_ids, $p);
             }
         }

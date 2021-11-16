@@ -1,4 +1,46 @@
 <?php
+
+use App\Product;
+
+function update_cart_item_price()
+{
+    $cart = session('shoppingCart');
+    // Have to add "&" before $volumes to modify the original array
+    foreach ($cart as $product_id => &$volumes)
+    {
+        $base_price = Product::find($product_id)->price;
+        // Have to add "&" before $volume_detail to modify the original array
+        foreach ($volumes as $volume => &$volume_detail)
+        {
+            $money = order_price($base_price, $volume, $volume_detail['quantity']);
+            $volume_detail['subprice'] = format_money($money);
+        }
+    }
+    // Update session$
+    session()->put('shoppingCart', $cart);
+    return $cart;
+}
+
+function format_money($money): string
+{
+    return number_format($money, '0', '3', '.') . ' ₫';
+}
+
+function get_cart_total_price(): string
+{
+    $cart = session('shoppingCart');
+    $total_price = 0;
+    foreach ($cart as $product_id => $volumes)
+    {
+        $base_price = Product::find($product_id)->price;
+        foreach ($volumes as $volume => $volume_detail)
+        {
+            $total_price += order_price($base_price, $volume, $volume_detail['quantity']);
+        }
+    }
+    return format_money($total_price);
+}
+
 function order_price($base_price, $volume, $quantity)
 {
     $price = $base_price;

@@ -71,8 +71,10 @@ Route::get('/unisex_product', 'ProductController@unisex_product')->name('unisex_
 
 //Cart routes
 Route::get('/cart/page', 'ProductController@cart')->name('cart');
-Route::post('/new/receipt', 'ProductController@cart_store')->name('cart')->middleware('auth');
+Route::post('/new/receipt', 'ProductController@cart_store')->name('new_receipt')->middleware('auth');
 Route::get('/cart/page/{id}', 'ProductController@cart_remove')->name('cart_remove');
+Route::post('/cart/update', 'ProductController@cart_update')->name('cart_update');
+Route::get('/cart/update', 'ProductController@cart_update')->name('cart_update');
 //==================================================================================================================
 
 Route::get('/leave_review', function () {

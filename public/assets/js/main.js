@@ -239,7 +239,7 @@
                 newVal = 0;
             }
         }
-        $button.parent().find("input").val(newVal);
+        $button.parent().find("input").val(newVal).change();
     });
 
     /* Cart dropdown */

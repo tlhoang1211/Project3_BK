@@ -60,13 +60,12 @@
                 </div>
 
                 @php
-                    #$product_cart = session()->get('shoppingCart');
-                    $products_in_cart  = null;
-
                     $product_cart = Session::get('shoppingCart');
+                    $filter_cart = null;
 
-                    if($product_cart != null && $product_cart > 0){
-                        $products_in_cart = array_reverse(array_slice($product_cart, -3));
+                    if($product_cart != null){
+                        // Get 3 latest item added to the cart
+                        $filter_cart = array_reverse(array_slice($product_cart, -3, 3, true), true);
                     }
                 @endphp
 
@@ -75,20 +74,23 @@
                         <li>
                             <div class="dropdown dropdown-cart">
                                 <a href="{{route('cart')}}" class="cart_bt">
-                                    @if ($products_in_cart != null)
+                                    @if ($filter_cart != null)
                                         <strong id="cart_quantity">{{count($product_cart)}}</strong>
                                     @endif
                                 </a>
-                                @if ($products_in_cart != null)
+                                @if ($filter_cart != null)
                                     <div class="dropdown-menu">
                                         <ul>
-                                            @foreach($products_in_cart as $product_item)
+                                            @foreach($filter_cart as $product_id => $product_detail)
+                                                @php
+                                                    $product = \App\Product::find($product_id);
+                                                @endphp
                                                 <li>
-                                                    <a href="{{route('product_detail',$product_item['product']->first()->slug)}}">
+                                                    <a href="{{route('product_detail',$product->slug)}}">
                                                         <figure><img
-                                                                src={{$product_item['product']->first()->firstThumbnail}} data-src="{{$product_item['product']->first()->firstThumbnail}}"
+                                                                src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
                                                                 alt="" width="50" height="50" class="lazy"></figure>
-                                                        <strong><span>{{$product_item['product']->first()->name}}</span>{{$product_item['product']->first()->FormatPrice}}
+                                                        <strong><span>{{$product->name}}</span>{{$product->FormatPrice}}
                                                         </strong>
                                                     </a>
                                                     {{--                                                    <a href="0" class="action"><i class="ti-trash"></i></a>--}}
