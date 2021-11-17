@@ -123,7 +123,7 @@ Route::post('/contact/send', 'SendEmailController@send');
 Route::get('login', 'AccountController@index')->name('login');
 Route::post('registerProcess', 'AccountController@registerProgress')->name('registerP');
 Route::post('loginProcess', 'AccountController@loginProgress')->name('loginP');
-Route::post('/logoutaccount', 'AccountController@logOut')->name('logout');
+Route::get('/logoutAccount', 'AccountController@logOut')->name('logout');
 //==================================================================================================================
 
 // admin : route

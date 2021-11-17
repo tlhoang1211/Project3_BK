@@ -247,6 +247,13 @@
     {
         window.location.href = "/cart/page";
     })
+
+    // Account dropdown
+    $(".user-page").click(() =>
+    {
+        window.location.href = "/user/account/profile";
+    })
+
     $(".dropdown-cart, .dropdown-access").hover(function ()
     {
         $(this).find(".dropdown-menu").stop(true, true).delay(50).fadeIn(300);
