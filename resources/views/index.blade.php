@@ -151,7 +151,7 @@
                                     <h3>{{$product->name}}</h3>
                                 </a>
                                 <div class="price_box">
-                                    <span class="new_price">{{$product->price}}</span>
+                                    <span class="new_price">{{format_money($product->price)}}</span>
                                 </div>
                             </div>
                             <!-- /grid_item -->
