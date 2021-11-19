@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 // user : route
 Route::get('/', function () {
-    $products = \App\Product::all()->take(8);
-    $brands = \App\Brand::all();
+    $products = Product::all()->take(8);
+    $brands = Brand::all();
     return view('index', compact('products', 'brands'));
 })->name('home');
 
@@ -194,18 +194,18 @@ Route::get('/test/{haha}', function () {
     return 'haha';
 });
 Route::get('/multi_delete', function () {
-    $products = \App\Product::all()->where('status', '=', '1');
+    $products = Product::all()->where('status', '=', '1');
     return view('test_multi_delete', compact('products'));
 });
 Route::get('/multi_delete2', function () {
-    $products = \App\Product::all()->where('status', '=', '1');
+    $products = Product::all()->where('status', '=', '1');
     return view('test_multi_delete', compact('products'));
 });
 Route::post('/multi_delete_action', function (Illuminate\Http\Request $request) {
     $products_array = $request->products_id;
 //    dd($products_array);
     //check product con ton` tai hay khong
-    dd(\App\Product::whereIn('id', $request['products_id'])->update(['status' => 0]));
+    dd(Product::whereIn('id', $request['products_id'])->update(['status' => 0]));
 })->name('multi_delete_action');
 
 
