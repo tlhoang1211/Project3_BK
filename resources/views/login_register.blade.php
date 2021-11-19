@@ -35,7 +35,7 @@
     {{--			@endforeach--}}
     {{--		@endif--}}
     {{--	</ul>--}}
-{{--    @include('layouts.error_pop_up')--}}
+    {{--    @include('layouts.error_pop_up')--}}
     <main class="bg_gray">
         <div class="container margin_30">
             <div class="page_header">
@@ -55,28 +55,24 @@
                         <form action="{{route('loginP')}}" method="POST">
                             @csrf
                             <div class="form_container">
-                                {{--                                <div class="row no-gutters">--}}
-                                {{--                                    <div class="col-lg-6 pr-lg-1">--}}
-                                {{--                                        <a href="#0" class="social_bt facebook">Đăng nhập bằng Facebook</a>--}}
-                                {{--                                    </div>--}}
-                                {{--                                    <div class="col-lg-6 pl-lg-1">--}}
-                                {{--                                        <a href="#0" class="social_bt google">Đăng nhập bằng Google</a>--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
-                                {{--                                <div class="divider"><span>Hoặc</span></div>--}}
+
+                                @if ($errors->has('credentials'))
+                                    <label class="alert-warning">{{$errors->first('credentials')}}</label>
+                                @endif
+
                                 <div class="form-group">
-                                    <input type="email" class="form-control" name="emailLogin" id="email"
+                                    <input type="email" class="form-control" name="email" id="email"
                                            placeholder="Email *" style="margin-top: 32px">
                                 </div>
-                                @if ($errors->has('emailLogin'))
-                                    <label class="alert-warning">{{$errors->first('emailLogin')}}</label>
+                                @if ($errors->has('email'))
+                                    <label class="alert-warning">{{$errors->first('email')}}</label>
                                 @endif
                                 <div class="form-group">
-                                    <input type="password" class="form-control" name="passwordLogin" id="password_in"
-                                           value="" placeholder="Mật khẩu *">
+                                    <input type="password" class="form-control" name="password" id="password_in"
+                                           placeholder="Mật khẩu *">
                                 </div>
-                                @if ($errors->has('passwordLogin'))
-                                    <label class="alert-warning">{{$errors->first('passwordLogin')}}</label>
+                                @if ($errors->has('password'))
+                                    <label class="alert-warning">{{$errors->first('password')}}</label>
                                 @endif
                                 <div class="clearfix add_bottom_15">
                                     <div class="checkboxes float-left">
@@ -86,7 +82,7 @@
                                         </label>
                                     </div>
                                     <div class="float-right"><a id="forgot" href="javascript:void(0);">Quên mật
-                                            khẩu?</a></div>
+                                                                                                       khẩu?</a></div>
                                 </div>
                                 <div class="text-center"><input type="submit" value="Đăng nhập"
                                                                 class="btn_1 full-width">
@@ -124,7 +120,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-8">
                     <div class="box_account">
                         <h3 class="new_client">Khách hàng mới</h3> <small class="float-right pt-2">* Phần bắt
-                            buộc</small>
+                                                                                                   buộc</small>
                         <form action="{{route('registerP')}}" method="POST">
                             @csrf
                             <div class="form_container">
@@ -201,7 +197,7 @@
                                                 <input type="date" class="form-control" name="birthDate">
                                             </div>
                                             @if ($errors->has('birthDate'))
-                                                    <label class="alert-warning">{{$errors->first('birthDate')}}</label>
+                                                <label class="alert-warning">{{$errors->first('birthDate')}}</label>
                                             @endif
                                         </div>
                                     </div>

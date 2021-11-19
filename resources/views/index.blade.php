@@ -94,9 +94,9 @@
                 <li>
                     <a href="{{route('female_product')}}" class="img_container">
                         <img
-                                src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
-                                data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
-                                alt="" class="lazy">
+                            src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
+                            data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
+                            alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST Nữ</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -106,9 +106,9 @@
                 <li>
                     <a href="{{route('male_product')}}" class="img_container">
                         <img
-                                src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
-                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
-                                alt="" class="lazy">
+                            src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
+                            data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
+                            alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST Nam</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -118,9 +118,9 @@
                 <li>
                     <a href="{{route('unisex_product')}}" class="img_container">
                         <img
-                                src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
-                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
-                                alt="" class="lazy">
+                            src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
+                            data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
+                            alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST đa giới</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -151,7 +151,7 @@
                                     <h3>{{$product->name}}</h3>
                                 </a>
                                 <div class="price_box">
-                                    <span class="new_price">{{$product->price}}</span>
+                                    <span class="new_price">{{format_money($product->price)}}</span>
                                 </div>
                             </div>
                             <!-- /grid_item -->
@@ -191,9 +191,10 @@
                     <div id="brands" class="owl-carousel owl-theme">
                         @foreach ($brands as $brand)
                             <div class="item">
-                                <a href="#{{$brand->brand_name}}"><img
-                                            src={{$brand->ImageSize600x600}} data-src="{{$brand->ImageSize600x600}}"
-                                            alt="" class="owl-lazy"></a>
+                                <a href="{{route("product_search", ['brand'=>$brand->id])}}">
+                                    <img src={{$brand->ImageSize600x600}} data-src="{{$brand->ImageSize600x600}}"
+                                         alt="" class="owl-lazy">
+                                </a>
                             </div><!-- /item -->
                         @endforeach
                     </div><!-- /carousel -->
@@ -212,8 +213,8 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
-                                        alt="" width="400" height="266" class="lazy">
+                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
+                                    alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -229,8 +230,8 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
-                                        alt="" width="400" height="266" class="lazy">
+                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
+                                    alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -246,8 +247,8 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
-                                        alt="" width="400" height="266" class="lazy">
+                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
+                                    alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -256,7 +257,7 @@
                             </ul>
                             <h4>Bộ sưu tập Gucci Bloom, khi vẻ đẹp của hoa Huệ được tôn vinh</h4>
                             <p>Tháng 8 năm 2017, Giám đốc sáng tạo Alessandro Michele với nét mặt rạng rỡ, hạnh
-                                phúc....</p>
+                               phúc....</p>
                         </a>
                     </div>
                     <!-- /box_news -->
@@ -264,8 +265,8 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
-                                        alt="" width="400" height="266" class="lazy">
+                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
+                                    alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>06</strong>Aug</figcaption>
                             </figure>
                             <ul>

@@ -125,6 +125,81 @@
                     </div>
                     <div class="purchase-list-page__empty-page-wrapper">
                         <div class="purchase-empty-order__container">
+                            <table class="table table-hover table-bordered">
+                                <caption style="margin-left: 10px">Ấn vào hàng cụ thể để xem chi tiết hóa đơn</caption>
+                                <thead class="table-light">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tổng quan</th>
+                                    <th scope="col">Tổng giá trị</th>
+                                    <th scope="col">Thời gian</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($receipts as $receipt)
+                                    @php
+                                        $index = $loop->index + 1
+                                    @endphp
+                                    <tr class="receipt_detail" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal{{$index}}">
+                                        <td height="90px">{{$index}}</td>
+                                        <td>
+                                            <div style="overflow: auto;max-height: 90px">
+                                                {!! $receipt->general_detail !!}
+                                            </div>
+                                        </td>
+                                        <td>{!! $receipt->format_price !!}</td>
+                                        <td>{{$receipt->created_at}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                        @foreach ($receipts as $receipt)
+                            @php
+                                $index = $loop->index + 1
+                            @endphp
+
+                            <!-- Modal -->
+                                <x-modal.modal
+                                    id="exampleModal{{$index}}"
+                                    width="650px"
+                                    title="Receipt #{{$index}}"
+                                    closeText="Đóng"
+                                >
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Sản phẩm</th>
+                                            <th scope="col">Thể tích</th>
+                                            <th scope="col">Số lượng</th>
+                                            <th scope="col">Tổng giá trị</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($receipt->orders as $order)
+                                            <tr>
+                                                <th scope="row">{{$loop->index+1}}</th>
+                                                <td>
+                                                    <a href="{{route('product_detail', $order->product->slug)}}"> {{$order->product->name}} </a>
+                                                </td>
+                                                <td>{{$order->volume}}</td>
+                                                <td>{{$order->quantity}}</td>
+                                                <td>{{$order->format_price}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </x-modal.modal>
+
+                            @endforeach
+
+                            {{--Render paginaiton link--}}
+                            <div class="receipts_pagination">
+                                {{ $receipts->links() }}
+                            </div>
+
                         </div>
                     </div>
                 </div>

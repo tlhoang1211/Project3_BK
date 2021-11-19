@@ -18,15 +18,6 @@
                                 <div id="menu">
                                     <ul>
                                         <li><span><a href="/product_list">SẢN PHẨM</a></span></li>
-                                        {{--                                        <li><span><a href="/collection">CÁC BỘ SƯU TẬP</a></span>--}}
-                                        {{--                                            <ul>--}}
-                                        {{--                                                <li><a href="listing-grid-1-full.html">A</a></li>--}}
-                                        {{--                                                <li><a href="listing-grid-2-full.html">B</a></li>--}}
-                                        {{--                                                <li><a href="listing-grid-3.html">C</a></li>--}}
-                                        {{--                                                <li><a href="listing-grid-5-sidebar-right.html">XEM TOÀN BỘ BST</a>--}}
-                                        {{--                                                </li>--}}
-                                        {{--                                            </ul>--}}
-                                        </li>
                                         <li><span><a href="{{route('male_product')}}">NAM</a></span>
                                             {{--                                            <ul>--}}
                                             {{--                                                <li><a href="listing-grid-6-sidebar-left.html">A</a></li>--}}
@@ -52,7 +43,8 @@
                 </div>
                 <div class="col-xl-2 col-lg-2 d-lg-flex align-items-center">
                     <div id="logo">
-                        <a href="{{route('home')}}"><img src={{asset('assets/img/logo.png')}} alt="" width="200"
+                        <a href="{{route('home')}}"><img alt="logo" src={{asset('assets/img/logo.png')}} alt=""
+                                                         width="200"
                                                          height="60" style="margin-left: -30px"></a>
                     </div>
                 </div>
@@ -68,34 +60,37 @@
                 </div>
 
                 @php
-                    #$product_cart = session()->get('shoppingCart');
-                    $products_in_cart  = null;
-
                     $product_cart = Session::get('shoppingCart');
+                    $filter_cart = null;
 
-                    if($product_cart != null && $product_cart > 0){
-                        $products_in_cart = array_reverse(array_slice($product_cart, -3));
+                    if($product_cart != null){
+                        // Get 3 latest item added to the cart
+                        $filter_cart = array_reverse(array_slice($product_cart, -3, 3, true), true);
                     }
                 @endphp
 
                 <div class="col-xl-3 col-lg-2 col-md-3">
                     <ul class="top_tools">
                         <li>
-
                             <div class="dropdown dropdown-cart">
-                                <a href="{{route('cart')}}"
-                                   class="cart_bt">@if ($products_in_cart != null)
-                                        <strong> {{count($product_cart)}}</strong>@endif</a>
-                                @if ($products_in_cart != null)
+                                <a href="{{route('cart')}}" class="cart_bt">
+                                    @if ($filter_cart != null)
+                                        <strong id="cart_quantity">{{count($product_cart)}}</strong>
+                                    @endif
+                                </a>
+                                @if ($filter_cart != null)
                                     <div class="dropdown-menu">
                                         <ul>
-                                            @foreach($products_in_cart as $product_item)
+                                            @foreach($filter_cart as $product_id => $product_detail)
+                                                @php
+                                                    $product = \App\Product::find($product_id);
+                                                @endphp
                                                 <li>
-                                                    <a href="{{route('product_detail',$product_item['product']->first()->id)}}">
+                                                    <a href="{{route('product_detail',$product->slug)}}">
                                                         <figure><img
-                                                                src={{$product_item['product']->first()->firstThumbnail}} data-src="{{$product_item['product']->first()->firstThumbnail}}"
+                                                                src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
                                                                 alt="" width="50" height="50" class="lazy"></figure>
-                                                        <strong><span>{{$product_item['product']->first()->name}}</span>{{$product_item['product']->first()->FormatPrice}}
+                                                        <strong><span>{{$product->name}}</span>{{$product->FormatPrice}}
                                                         </strong>
                                                     </a>
                                                     {{--                                                    <a href="0" class="action"><i class="ti-trash"></i></a>--}}
@@ -112,42 +107,45 @@
                         {{--                            <a href="#0" class="wishlist"><span>Wishlist</span></a>--}}
                         {{--                        </li>--}}
                         <li>
-                            <div class="dropdown dropdown-access">
-                                <a href="account.html" class="access_link"><span>Tài khoản</span></a>
+                            <div class="dropdown dropdown-access {{auth()->check() ? 'user-page' : ''}}">
+                                <a href="#" class="access_link"
+                                >
+                                    <span>Tài khoản</span>
+                                </a>
                                 <div class="dropdown-menu">
-                                    @if(Session::has('current_account'))
+                                    @auth()
                                         <strong
-                                            style="font-size: 20px">{{Session::get('current_account')->fullName}}</strong>
+                                            style="font-size: 20px">{{auth()->user()->fullName}}</strong>
                                         <ul>
                                             <li>
-                                                <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn
-                                                    hàng</a>
+                                                <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
                                             </li>
+                                            {{--<li>--}}
+                                            {{--    <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn--}}
+                                            {{--                                                        hàng</a>--}}
+                                            {{--</li>--}}
                                             <li>
                                                 <a href="{{route('mypurchase')}}"><i class="ti-package"></i>Đơn hàng của
-                                                    tôi</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
+                                                                                                            tôi</a>
                                             </li>
                                             <li>
                                                 <a href="{{route('help')}}"><i class="ti-help-alt"></i>Trợ giúp</a>
                                             </li>
                                             <li>
-                                                <a class="log-out-btn" href="#"
-                                                   onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i
+                                                <a class="log-out-btn" href="{{ route('logout') }}"
+                                                >
+                                                    <i
                                                         class="fa fa-sign-out" aria-hidden="true"
-                                                        style="color: #3a87ad"></i>Đăng xuất </a>
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                      style="display: none;">
-                                                    {{ csrf_field() }}
-                                                </form>
+                                                        style="color: #3a87ad">
+
+                                                    </i>
+                                                    Đăng xuất
+                                                </a>
                                             </li>
                                         </ul>
                                     @else
                                         <a href="{{route('login')}}" class="btn_1">Đăng nhập/Đăng ký</a>
-                                    @endif
-
+                                    @endauth
                                 </div>
                             </div>
                             <!-- /dropdown-access-->

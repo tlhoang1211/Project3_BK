@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Account;
 use Closure;
 
 class AdminMiddleWare
@@ -10,8 +9,8 @@ class AdminMiddleWare
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -21,11 +20,11 @@ class AdminMiddleWare
 //        dd("132");
 //        dd($current_account);
 //        dd($current_account->roles);
-        if (isset($current_account)){
-            foreach ($current_account->roles as $role){
-                if ($role->name == 'admin'){
-                    return $next($request);
-                }
+        if (isset($current_account))
+        {
+            if ($current_account->role->name == 'admin')
+            {
+                return $next($request);
             }
         }
         return redirect('/');

@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Ho_Chi_Minh',
 
     /*
     |--------------------------------------------------------------------------
@@ -135,7 +135,7 @@ return [
     */
 
     'providers' => [
-
+        Yoeunes\Toastr\ToastrServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
          */

@@ -1,6 +1,7 @@
 <?php
 
 use App\Role;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -14,24 +15,25 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $data_check = Role::all()->first();
-        if ($data_check != null) {
+        if ($data_check != null)
+        {
             Schema::disableForeignKeyConstraints();
-            \App\Role::query()->truncate();
+            Role::query()->truncate();
             Schema::enableForeignKeyConstraints();
         }
 
         $roles = array(
             array(
-                'name' => 'user',
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now(),
-                ),
+                'name'       => 'user',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ),
             array(
-                'name' => 'admin',
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now(),
-                ),
+                'name'       => 'admin',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ),
         );
-        \App\Role::insert($roles);
+        Role::insert($roles);
     }
 }

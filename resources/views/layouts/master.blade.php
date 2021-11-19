@@ -32,10 +32,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
 
     <!-- BASE CSS -->
-    <link href={{ asset('assets/css/bootstrap.custom.min.css') }} rel="stylesheet">
     {{--	<link href={{ URL::asset('assets/css/bootstrap.custom.min.css') }} rel="stylesheet">--}}
+    <link href={{ asset('assets/css/bootstrap.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/style.css') }} rel="stylesheet">
-
+    <link href={{ asset('assets/css/style.css') }} rel="stylesheet">
+    <link href={{ asset('assets/css/toastr.min.css') }} rel="stylesheet">
     <!-- SPECIFIC CSS -->
     @yield('specific_css')
 
@@ -117,17 +118,21 @@
                         <h5>Theo dõi ủng hộ Wanderlust</h5>
                         <ul>
                             <li><a href="#0"><img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
-                                        data-src="assets/img/twitter_icon.svg" alt="" class="lazy"></a></li>
+                                        src="{{asset("assets/img/twitter_icon.svg")}}"
+                                        data-src="{{asset("assets/img/twitter_icon.svg")}}" alt="" class="lazy"></a>
+                            </li>
                             <li><a href="#0"><img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
-                                        data-src="assets/img/facebook_icon.svg" alt="" class="lazy"></a></li>
+                                        src="{{asset("assets/img/facebook_icon.svg")}}"
+                                        data-src="{{asset("assets/img/facebook_icon.svg")}}" alt="" class="lazy"></a>
+                            </li>
                             <li><a href="#0"><img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
-                                        data-src="assets/img/instagram_icon.svg" alt="" class="lazy"></a></li>
+                                        src="{{asset("assets/img/instagram_icon.svg")}}"
+                                        data-src="{{asset("assets/img/instagram_icon.svg")}}" alt="" class="lazy"></a>
+                            </li>
                             <li><a href="#0"><img
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
-                                        data-src="assets/img/youtube_icon.svg" alt="" class="lazy"></a></li>
+                                        src="{{asset("assets/img/youtube_icon.svg")}}"
+                                        data-src="{{asset("assets/img/youtube_icon.svg")}}" alt="" class="lazy"></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -157,8 +162,9 @@
                         </div>
                     </li>
                     <li><img
-                            src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
-                            data-src="assets/img/cards_all.svg" alt="" width="198" height="30" class="lazy">
+                            src="{{asset("assets/img/cards_all.svg")}}"
+                            data-src="{{asset("assets/img/cards_all.svg")}}" alt="" width="198" height="30"
+                            class="lazy">
                     </li>
                 </ul>
             </div>
@@ -173,14 +179,14 @@
     </div>
 </footer>
 <!--/footer-->
-</div>
 <!-- page -->
 
 <div id="toTop"></div><!-- Back to top button -->
 <!-- COMMON SCRIPTS -->
 <script src={{asset('assets/js/common_scripts.min.js')}}></script>
 <script src={{asset('assets/js/main.js')}}></script>
-
+<script src={{asset('assets/js/bootstrap.bundle.min.js')}}></script>
+<script src={{asset('assets/js/toastr.min.js')}}></script>
 <!-- SPECIFIC SCRIPTS -->
 @yield('specific_js')
 

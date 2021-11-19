@@ -5,57 +5,82 @@
 @section('specific_js')
     <script src="{{asset('assets/js/carousel_with_thumbs.js')}}"></script>
     <script src="{{asset('assets/js/read_more_read_less.js')}}"></script>
+
     <script>
-        $(document).ready(function () {
-            $(".add_to_cart").on('click', function (e) {
-                console.log('123');
-                var allVals = [];
-                $(".checkbox_list_receipt:checked").each(function () {
+        $(document).ready(function ()
+        {
+            $(".add_to_cart").on("click", function (e)
+            {
+                const allVals = [];
+                $(".checkbox_list_receipt:checked").each(function ()
+                {
                     allVals.push($(this).val());
                     console.log(allVals);
                 });
-                var check = confirm("Thêm sản phẩm vào giỏ hàng?");
-                if (check == true) {
-                    var id = this.getAttribute('data');
-                    var quantity = $('#quantity_1').val();
-                    var volume = $('select[name="volume"]').val();
-                    console.log(volume)
-                    // console.log(join_selected_values);
-                    // var xsrfToken = decodeURIComponent(readCookie('XSRF-TOKEN'));
-                    $.ajax({
-                        url: '{{route('add_to_cart')}}',
-                        type: 'POST',
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            'quantity': quantity,
-                            'volume': volume,
-                            'id': id,
-                        },
-                        success: function (data) {
-                            if (data['success']) {
-                                alert("Thành công.");
-                            } else if (data['error']) {
-                                console.log(data['error']);
-                            } else {
-                                alert('Lỗi!!');
-                            }
-                        },
-                        error: function (data) {
-                            alert(data.responseText);
+
+                const id = this.getAttribute("data");
+                const quantity = $("#quantity_1").val();
+                const volume = $("select[name=\"volume\"]").val();
+
+                $.ajax({
+                    url: '{{route('add_to_cart')}}',
+                    type: "POST",
+                    headers: {"X-CSRF-TOKEN": $("meta[name=\"csrf-token\"]").attr("content")},
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "quantity": quantity,
+                        "volume": volume,
+                        "id": id
+                    },
+                    success: function (data)
+                    {
+                        if (data["success"])
+                        {
+                            toastr.options = {
+                                "closeButton": false,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-center",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "timeOut": "1000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            };
+                            toastr.success(data["success"]);
                         }
-                    });
-                    $.each(allVals, function (index, value) {
-                        $('table tr').filter("[data-row-id='" + value + "']").remove();
-                    });
-                }
-            })
+                        else if (data["error"])
+                        {
+                            toastr.error(data["error"]);
+                        }
+                        else
+                        {
+                            toastr.error("Lỗi chưa xác định!");
+                        }
+                    },
+                    error: function (data)
+                    {
+                        toastr.error(data.responseText);
+                    }
+                });
+                $.each(allVals, function (index, value)
+                {
+                    $("table tr").filter("[data-row-id='" + value + "']").remove();
+                });
+            });
         });
     </script>
 @endsection
 @section('content')
     <div id="page">
-        <div class="layer" style="z-index: 4"></div>
+
+        {{--<div class="layer" style="z-index: 4"></div>--}}
         <main>
             <div class="container margin_30">
                 {{--                <div class="countdown_inner">-20% This offer ends in--}}
@@ -78,7 +103,7 @@
                                 <div class="owl-carousel owl-theme thumbs">
                                     @foreach($product->ThumbnailArray as $thumbnail)
                                         <div class="item active"><img
-                                                    src="{{$thumbnail}}" alt="Sauvage">
+                                                src="{{$thumbnail}}" alt="Sauvage">
                                         </div>
                                     @endforeach
                                 </div>
@@ -99,8 +124,8 @@
                         <div class="prod_info">
                             <h1>{{$product->name}}</h1>
                             <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                        class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                        class="icon-star"></i><em>4 reviews</em></span>
+                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
+                                    class="icon-star"></i><em>4 reviews</em></span>
                             <h6>{{$product->concentration}}
                                 <span
                                     class="@if($product->sex == 'Nữ')female @elseif($product->sex == 'Phi giới tính')unisex @else sex @endif">{{$product->sex}}</span>
@@ -114,16 +139,10 @@
                                         <a href="#"
                                            data-toggle="modal"
                                            data-target="#size-modal"><i
-                                                    class="ti-help-alt"></i></a></label>
+                                                class="ti-help-alt"></i></a></label>
                                     <div class="col-xl-4 col-lg-5 col-md-6 col-6">
-                                        <div class="custom-select-form">
-                                            <select class="wide" name="volume">
-                                                <option value="10ml" selected>10ml</option>
-                                                <option value="50ml">50ml</option>
-                                                <option value="90ml">90ml</option>
-                                                <option value="100ml">100ml</option>
-                                            </select>
-                                        </div>
+                                        <x-select :options="['100ml', '90ml', '50ml', '10ml']" selected="100ml"
+                                                  id="none"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -138,7 +157,7 @@
                             <div class="row">
                                 <div class="col-lg-5 col-md-6">
                                     <div class="price_main"><span
-                                                class="new_price">{{$product->FormatPrice}}</span>
+                                            class="new_price">{{$product->FormatPrice}}</span>
                                         {{--                                        <span class= "percentage">-20%</span> <span class="old_price">$160.00</span>--}} {{-- Giã cũ và % giảm giá --}}
                                     </div>
                                 </div>
@@ -169,8 +188,8 @@
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                            src="https://res.cloudinary.com/vernom/image/upload/v1596377508/perfume_project/icon/shield_check_xlvnlh.png"
-                                            width="30px" height="30px">
+                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377508/perfume_project/icon/shield_check_xlvnlh.png"
+                                        width="30px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Cam kết hàng chính hãng 100%</b></div>
@@ -180,8 +199,8 @@
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                            src="https://res.cloudinary.com/vernom/image/upload/v1596377507/perfume_project/icon/lock_mbzdux.jpg"
-                                            width="35px" height="30px">
+                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377507/perfume_project/icon/lock_mbzdux.jpg"
+                                        width="35px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Giao dịch An Toàn - Uy Tín</b></div>
@@ -191,8 +210,8 @@
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                            src="https://res.cloudinary.com/vernom/image/upload/v1596377509/perfume_project/icon/shop_ru9crz.png"
-                                            width="30px" height="30px">
+                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377509/perfume_project/icon/shop_ru9crz.png"
+                                        width="30px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Hơn 100.000 mặt hàng có sẵn</b></div>
@@ -202,35 +221,35 @@
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                            src="https://res.cloudinary.com/vernom/image/upload/v1596378892/perfume_project/icon/shipping_dx0t3e.png"
-                                            width="35px" height="30px">
+                                        src="https://res.cloudinary.com/vernom/image/upload/v1596378892/perfume_project/icon/shipping_dx0t3e.png"
+                                        width="35px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Giao hàng toàn quốc</b></div>
                                     <div>Giao trong 3h nội thành HN <a href="/pages/phuong-thuc-van-chuyen"><i
-                                                    style="color: #3a87ad;">(Xem
-                                                chi
-                                                tiết)</i></a></div>
+                                                style="color: #3a87ad;">(Xem
+                                                                        chi
+                                                                        tiết)</i></a></div>
                                 </div>
                             </div>
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                            src="https://res.cloudinary.com/vernom/image/upload/v1596377507/perfume_project/icon/refund_a5gobr.png"
-                                            width="30px" height="30px">
+                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377507/perfume_project/icon/refund_a5gobr.png"
+                                        width="30px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Đổi trả miễn phí</b></div>
                                     <div>Trong vòng <b>10 ngày</b> <a href="/pages/chinh-sach-doi-tra"><i
-                                                    style="color: #3a87ad;">(Xem chi
-                                                tiết)</i></a></div>
+                                                style="color: #3a87ad;">(Xem chi
+                                                                        tiết)</i></a></div>
                                 </div>
                             </div>
                             <div class="shopping-hotline">
                                 Gọi đặt mua <img
-                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377811/perfume_project/icon/telephone_yjju1b.jpg"
-                                        width="30px" height="30px"> <a href="tel:19000129"><b class="phone_number">+84
-                                        123-456-789</b></a>
+                                    src="https://res.cloudinary.com/vernom/image/upload/v1596377811/perfume_project/icon/telephone_yjju1b.jpg"
+                                    width="30px" height="30px"> <a href="tel:19000129"><b class="phone_number">+84
+                                                                                                               123-456-789</b></a>
                                 (9:00-21:00)
                             </div>
                         </div>
@@ -249,11 +268,11 @@
                         </li>
                         <li class="nav-item">
                             <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">Sử dụng và bảo
-                                quản</a>
+                                                                                                       quản</a>
                         </li>
                         <li class="nav-item">
                             <a id="tab-C" href="#pane-C" class="nav-link" data-toggle="tab" role="tab">Vận chuyển và đổi
-                                trả</a>
+                                                                                                       trả</a>
                         </li>
                         <li class="nav-item">
                             <a id="tab-D" href="#pane-D" class="nav-link" data-toggle="tab" role="tab">Đánh giá</a>
@@ -543,7 +562,7 @@
                                                 </div>
                                                 <h4>"Commpletely satisfied"</h4>
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -557,7 +576,7 @@
                                                 </div>
                                                 <h4>"Always the best"</h4>
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -574,7 +593,7 @@
                                                 </div>
                                                 <h4>"Outstanding"</h4>
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -588,14 +607,14 @@
                                                 </div>
                                                 <h4>"Excellent"</h4>
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- /row -->
                                     <p class="text-right"><a href="/leave_review" class="btn_1">Để
-                                            lại
-                                            đánh giá</a>
+                                                                                                lại
+                                                                                                đánh giá</a>
                                     </p>
                                 </div>
                                 <!-- /card-body -->
@@ -628,8 +647,8 @@
                                     </a>
                                 </figure>
                                 <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                            class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                            class="icon-star"></i>
+                                        class="icon-star voted"></i><i class="icon-star voted"></i><i
+                                        class="icon-star"></i>
                                 </div>
                                 <a href="{{route('product_detail',$elproduct->slug)}}">
                                     <h3>{{$elproduct->name}}</h3>
@@ -640,21 +659,21 @@
                                 <ul>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="Thêm vào danh sách yêu thích"><i
-                                                    class="ti-heart"></i><span>Thêm vào danh sách yêu thích</span></a>
+                                                class="ti-heart"></i><span>Thêm vào danh sách yêu thích</span></a>
                                     </li>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="So sánh"><i
-                                                    class="ti-control-shuffle"></i><span>So sánh</span></a></li>
+                                                class="ti-control-shuffle"></i><span>So sánh</span></a></li>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="Thêm vào giỏ"><i
-                                                    class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
+                                                class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
                                     </li>
                                 </ul>
                             </div>
                             <!-- /grid_item -->
                         </div>
-                    @endforeach
-                    <!-- /item -->
+                @endforeach
+                <!-- /item -->
                 </div>
                 <!-- /products_carousel -->
                 <br>
@@ -662,7 +681,7 @@
                 <div class="main_title">
                     <p>Các sản phẩm cùng thương hiệu</p>
                 </div>
-{{--                {{dd($eloquent_product_brand)}}--}}
+                {{--                {{dd($eloquent_product_brand)}}--}}
                 <div class="owl-carousel owl-theme products_carousel">
                     @foreach($eloquent_product_brand as $elproduct)
                         <div class="item">
@@ -675,8 +694,8 @@
                                     </a>
                                 </figure>
                                 <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                            class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                            class="icon-star"></i>
+                                        class="icon-star voted"></i><i class="icon-star voted"></i><i
+                                        class="icon-star"></i>
                                 </div>
                                 <a href="{{route('product_detail',$elproduct->slug)}}">
                                     <h3>{{$elproduct->name}}</h3>
@@ -687,14 +706,14 @@
                                 <ul>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="Thêm vào danh sách yêu thích"><i
-                                                    class="ti-heart"></i><span>Thêm vào danh sách yêu thích</span></a>
+                                                class="ti-heart"></i><span>Thêm vào danh sách yêu thích</span></a>
                                     </li>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="So sánh"><i
-                                                    class="ti-control-shuffle"></i><span>So sánh</span></a></li>
+                                                class="ti-control-shuffle"></i><span>So sánh</span></a></li>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="Thêm vào giỏ"><i
-                                                    class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
+                                                class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -750,59 +769,6 @@
     <!-- page -->
 
     <div id="toTop"></div><!-- Back to top button -->
-
-    <div class="top_panel">
-        <div class="container header_panel">
-            <a href="#0" class="btn_close_top_panel"><i class="ti-close"></i></a>
-            <label>1 product added to cart</label>
-        </div>
-        <!-- /header_panel -->
-        <div class="item">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="item_panel">
-                            <figure>
-                                <img src="{{$product->firstThumbnail}}"
-                                     data-src="{{$product->firstThumbnail}}" class="lazy" alt="">
-                            </figure>
-                            <h4>{{$product->name}}</h4>
-                            <div class="price_panel"><span class="new_price">{{$product->formatPrice}}</span>
-                                {{--                                <span class="percentage">-20%</span> <span class="old_price">$160.00</span>--}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 btn_panel">
-                        <a href="{{route('cart')}}" class="btn_1 outline">Xem giỏ hàng</a> <a href="#checkout" class="btn_1">Checkout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /item -->
-        <div class="container related">
-            <h4>Who bought this product also bought</h4>
-            <div class="row">
-                @foreach($eloquent_product as $product_e)
-                    <div class="col-md-4">
-                        <div class="item_panel">
-                            <a href="{{route('product_detail',$product_e->slug)}}">
-                                <figure>
-                                    <img src="{{$product_e->firstThumbnail}}"
-                                         data-src="{{$product_e->firstThumbnail}}" alt="" class="lazy">
-                                </figure>
-                            </a>
-                            <a href="#0">
-                                <h5>{{$product_e->name}}</h5>
-                            </a>
-                            <div class="price_panel"><span class="new_price">{{$product_e->formatPrice}}</span></div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        <!-- /related -->
-    </div>
-    <!-- /add_cart_panel -->
 
     <!-- Size modal -->
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="size-modal" id="size-modal" aria-hidden="true">

@@ -1101,29 +1101,30 @@ input {
 }
 
 .purchase-empty-order__container {
+    position: relative;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .05);
     border-radius: .125rem;
     overflow: hidden;
     background: #fff;
     width: 100%;
     height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
+    /*display: -webkit-box;*/
+    /*display: -webkit-flex;*/
     display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+    /*-webkit-box-orient: vertical;*/
+    /*-webkit-box-direction: normal;*/
+    /*-webkit-flex-direction: column;*/
     -moz-box-orient: vertical;
     -moz-box-direction: normal;
     -ms-flex-direction: column;
-    flex-direction: column;
+    /*flex-direction: column;*/
     -webkit-box-pack: center;
-    -webkit-justify-content: center;
+    /*-webkit-justify-content: center;*/
     -moz-box-pack: center;
     -ms-flex-pack: center;
-    justify-content: center;
+    /*justify-content: center;*/
     -webkit-box-align: center;
     -webkit-align-items: center;
     -moz-box-align: center;
@@ -1145,4 +1146,20 @@ input {
     color: rgba(0, 0, 0, .8);
     font-size: .875rem;
     line-height: 1.0625rem;
+}
+
+.receipts_pagination {
+    margin-right: 1rem;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.receipt_detail {
+    cursor: pointer;
+}
+
+.item-price {
+    height: 32.5px;
+    line-height: 32.5px;
 }
