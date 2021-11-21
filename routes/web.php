@@ -23,57 +23,49 @@ Route::get('/', function () {
     return view('index', compact('products', 'brands'));
 })->name('home');
 
-//Route::get('/product', function () {
-//    return view('products.product_detail');
-//});
-
+//==================================================================================================================
 
 Route::get('/service', function () {
     return view('service.service');
 });
-
 Route::get('/about_us', function () {
     return view('service.about_us');
 });
-
 Route::get('/contact', function () {
     return view('service.contact');
 });
+
+//==================================================================================================================
 
 //User routes
 Route::get('/user/account/profile', function () {
     $account = auth()->user();
     return view('account', compact('account'));
 })->name('profile')->middleware('auth');
-
 Route::put('/user/account/profile_update/{id}', function (\Illuminate\Http\Request $request, $id) {
     dd($request);
 })->name('account_update')->middleware('auth');
-
 Route::get('/user/purchase', 'UserController@orderList')->name('mypurchase')->middleware('auth');
+
 //==================================================================================================================
 
 //Product routes
 Route::get('/product_list', 'ProductController@productList')->name('product_list');
-
 Route::get('/product/{slug}', 'ProductController@index')->name('product_detail');
-
-Route::post('product/add_cart/item', 'ProductController@add_to_cart')->name('add_to_cart');
-
 Route::get('/product_find', 'ProductController@search')->name('product_search');
-
 Route::get('/male_product', 'ProductController@male_product')->name('male_product');
-
 Route::get('/female_product', 'ProductController@female_product')->name('female_product');
-
 Route::get('/unisex_product', 'ProductController@unisex_product')->name('unisex_product');
+
 //==================================================================================================================
 
 //Cart routes
+Route::post('product/add_cart/item', 'ProductController@add_to_cart')->name('add_to_cart');
 Route::get('/cart/page', 'ProductController@cart')->name('cart');
 Route::post('/new/receipt', 'ProductController@cart_store')->name('new_receipt')->middleware('auth');
 Route::get('/cart/page/{id}', 'ProductController@cart_remove')->name('cart_remove');
 Route::post('/cart/update', 'ProductController@cart_update')->name('cart_update');
+
 //==================================================================================================================
 
 Route::get('/leave_review', function () {
@@ -119,11 +111,14 @@ Route::post('/contact/send', 'SendEmailController@send');
 
 //Route::get('/product', 'ProductController@index');
 
+//==================================================================================================================
+
 // login - register : route
 Route::get('login', 'AccountController@index')->name('login');
 Route::post('registerProcess', 'AccountController@registerProgress')->name('registerP');
 Route::post('loginProcess', 'AccountController@loginProgress')->name('loginP');
 Route::get('/logoutAccount', 'AccountController@logOut')->name('logout');
+
 //==================================================================================================================
 
 // admin : route
@@ -186,6 +181,8 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
     });
 });
 
+//==================================================================================================================
+
 // test : route
 Route::get('checking_page', function () {
     return view('session_checking');
@@ -203,9 +200,9 @@ Route::get('/multi_delete2', function () {
 });
 Route::post('/multi_delete_action', function (Illuminate\Http\Request $request) {
     $products_array = $request->products_id;
-//    dd($products_array);
+    //    dd($products_array);
     //check product con ton` tai hay khong
     dd(Product::whereIn('id', $request['products_id'])->update(['status' => 0]));
 })->name('multi_delete_action');
 
-
+//==================================================================================================================
