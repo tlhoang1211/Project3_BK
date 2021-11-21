@@ -20,7 +20,7 @@ class ProductController extends Controller
         $product = Product::where('slug', '=', $slug)->first();
         $product_style = $product->style;
         $style_arr = explode(',', $product_style);
-//        dd($style_arr);
+        //        dd($style_arr);
         $item_query = Product::where('status', '1')->where('slug', '!=', $product->slug);
         foreach ($style_arr as $style)
         {
@@ -31,8 +31,8 @@ class ProductController extends Controller
         $item_brand_query = Product::where('status', '1')->where('id', '!=', $product->id);
         $item_brand_query->where('brand_id', '=', $product->brand->id);
         $eloquent_product_brand = $item_brand_query->get();
-//        dd($eloquent_product_brand);
-//        dd($product->brand->id);
+        //        dd($eloquent_product_brand);
+        //        dd($product->brand->id);
         return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))->with('product', $product)->with('eloquent_product', $eloquent_product);
     }
 
@@ -66,14 +66,14 @@ class ProductController extends Controller
             $datas->product_name = $request->product_name;
         }
         $products = $query->orderBy('id', 'desc')->paginate(5);
-//        dd($products);
-//        $asda = hello;
-//        if ($request->has('keyword')){
-//            $products = Product::where('status','=','1')->where('name','like','%'.$request->keyword.'%')->orderBy('id',$orderBy)->paginate($numberItem)->appends($request->only('keyword'));
-//            return view('admin.products.brand_list',compact('products'));
-//        }
-//        $products = Product::where('status','=','1')->orderBy('id',$orderBy)->paginate($numberItem);
-////        dd($products);
+        //        dd($products);
+        //        $asda = hello;
+        //        if ($request->has('keyword')){
+        //            $products = Product::where('status','=','1')->where('name','like','%'.$request->keyword.'%')->orderBy('id',$orderBy)->paginate($numberItem)->appends($request->only('keyword'));
+        //            return view('admin.products.brand_list',compact('products'));
+        //        }
+        //        $products = Product::where('status','=','1')->orderBy('id',$orderBy)->paginate($numberItem);
+        ////        dd($products);
 
 
         $brands = Brand::where('status', '=', '1')->orderBy('id', $orderBy)->get();
@@ -91,7 +91,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request);
+        //        dd($request);
         $request->validate([
             'name'             => 'required',
             'brand_id'         => 'required|integer',
@@ -153,10 +153,10 @@ class ProductController extends Controller
         {
             $product->thumbnail .= $thumb . ",";
         }
-//        $product->thumbnail = ;
+        //        $product->thumbnail = ;
         $product->status = 1;
 
-//        dd($product);
+        //        dd($product);
         $product->save();
         return redirect(route('admin_product_list'));
     }
@@ -269,7 +269,8 @@ class ProductController extends Controller
         }
 
         // Generate each cart item's cost
-        $cartItem[$volume]['subprice'] = order_price($product->price, $volume, $cartItem[$volume]['quantity']);
+        $order_price = order_price($product->price, $volume, $cartItem[$volume]['quantity']);
+        $cartItem[$volume]['subprice'] = format_money($order_price);
 
         // Add cart item to session
         $shopping_cart[$id] = $cartItem;
@@ -322,16 +323,16 @@ class ProductController extends Controller
         }
         // đưa sản phẩm vào giỏ hàng với key chính là id của sản phẩm.
         $shoppingCart[$product->id] = $cartItem;
-//        if($cartItem['quantity'] <= 0){
-//            unset($shoppingCart[$product->id]);
-//        }
+        //        if($cartItem['quantity'] <= 0){
+        //            unset($shoppingCart[$product->id]);
+        //        }
         Session::put('shoppingCart', $shoppingCart);
-//        return redirect('/shopping-cart/show');
+        //        return redirect('/shopping-cart/show');
     }
 
     public function search(Request $request)
     {
-//        dd($request);
+        //        dd($request);
         $keyword = $request->keyword;
 
         $product_search = Product::where('status', '=', '1')->where('slug', 'LIKE', '%' . $keyword . '%');
@@ -350,10 +351,10 @@ class ProductController extends Controller
         }
 
         $product_search = $product_search->paginate(9)->appends(request()->query());
-//        dd($product_search);
+        //        dd($product_search);
         $brands = Brand::where('status', '=', '1')->get();
         $origins = Origin::where('status', '=', '1')->get();
-//        dd($brands);
+        //        dd($brands);
         $male_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nam')->get());
         $female_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nữ')->get());
         $unisex_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Phi giới tính')->get());
@@ -369,10 +370,10 @@ class ProductController extends Controller
         $product = Product::where('status', '=', '1');
 
         $product = $product->paginate(9)->appends(request()->query());
-//        dd($product_search);
+        //        dd($product_search);
         $brands = Brand::where('status', '=', '1')->get();
         $origins = Origin::where('status', '=', '1')->get();
-//        dd($brands);
+        //        dd($brands);
         $male_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nam')->get());
         $female_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nữ')->get());
         $unisex_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Phi giới tính')->get());
@@ -385,7 +386,7 @@ class ProductController extends Controller
     {
         $product_query = Product::where('status', '=', '1');
 
-//        dd($products);
+        //        dd($products);
         if ($request->has('origin'))
         {
             $product_query->where('origin_id', '=', $request->origin);
@@ -414,8 +415,8 @@ class ProductController extends Controller
                 }
             }
         }
-//        dd($brand_amount);
-//        dd(count($brand_amount));
+        //        dd($brand_amount);
+        //        dd(count($brand_amount));
         foreach ($origins as $origin)
         {
             foreach ($origin->products as $origin_product)
@@ -431,7 +432,7 @@ class ProductController extends Controller
             }
         }
 
-//        dd($origin_amount);
+        //        dd($origin_amount);
 
         return view('products.male_product_list', compact('brands', 'origins'))
             ->with('products', $products)
@@ -441,7 +442,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-//        dd($request);
+        //        dd($request);
         $request->validate([
             'name'             => 'required',
             'brand_id'         => 'required|integer',
@@ -504,12 +505,12 @@ class ProductController extends Controller
         {
             $product->thumbnail .= $thumb . ",";
         }
-//        $product->thumbnail = ;
+        //        $product->thumbnail = ;
         $product->status = 1;
 
-//        dd($product);
+        //        dd($product);
         $product->update();
-//        dd($product);
+        //        dd($product);
         return redirect(route('admin_product_list'));
     }
 
@@ -517,7 +518,7 @@ class ProductController extends Controller
     {
         $product_query = Product::where('status', '=', '1');
 
-//        dd($products);
+        //        dd($products);
         if ($request->has('origin'))
         {
             $product_query->where('origin_id', '=', $request->origin);
@@ -546,8 +547,8 @@ class ProductController extends Controller
                 }
             }
         }
-//        dd($brand_amount);
-//        dd(count($brand_amount));
+        //        dd($brand_amount);
+        //        dd(count($brand_amount));
         foreach ($origins as $origin)
         {
             foreach ($origin->products as $origin_product)
@@ -563,7 +564,7 @@ class ProductController extends Controller
             }
         }
 
-//        dd($origin_amount);
+        //        dd($origin_amount);
 
         return view('products.female_product_list', compact('brands', 'origins'))
             ->with('products', $products)
@@ -575,7 +576,7 @@ class ProductController extends Controller
     {
         $product_query = Product::where('status', '=', '1');
 
-//        dd($products);
+        //        dd($products);
         if ($request->has('origin'))
         {
             $product_query->where('origin_id', '=', $request->origin);
@@ -604,8 +605,8 @@ class ProductController extends Controller
                 }
             }
         }
-//        dd($brand_amount);
-//        dd(count($brand_amount));
+        //        dd($brand_amount);
+        //        dd(count($brand_amount));
         foreach ($origins as $origin)
         {
             foreach ($origin->products as $origin_product)

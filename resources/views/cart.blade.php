@@ -248,7 +248,7 @@
                                 {{--Price of each cart item--}}
                                 @foreach($product_volume as $volume => $volume_detail)
                                     <div class='{{"item-price $product_detail->id-$volume"}}'>
-                                        {{format_money($volume_detail['subprice'])}}
+                                        {{ $volume_detail['subprice'] }}
                                     </div>
                                 @endforeach
                             </td>
