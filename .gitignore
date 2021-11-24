@@ -13,3 +13,4 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea
+!/resources/views/test_cart.blade.php
