@@ -1,4 +1,4 @@
-@props(['id' => '', 'title' => '', 'closeText' => 'Close', 'width' => '', 'generatedMultiply' => false])
+@props(['id' => '', 'title' => '', 'closeText' => 'Close', 'width' => ''])
 
 <!-- Modal -->
 <div class="modal fade" id="{{$id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

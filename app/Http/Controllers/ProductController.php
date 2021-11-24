@@ -648,6 +648,28 @@ class ProductController extends Controller
     {
         // Convert from json to associative array then replace current cart in session
         $parsed_data = json_decode($request->shoppingCart, true);
+
+        // Filter out invalid item
+        foreach ($parsed_data as $product_id => $item)
+        {
+            // Remove item with no volume (is deleted from front-end)
+            if (empty($item))
+            {
+                unset($parsed_data[$product_id]);
+                continue;
+            }
+
+            foreach ($item as $volume => $volume_detail)
+            {
+                // Remove item with invalid quantity
+                $quantity = $volume_detail['quantity'];
+                if (!is_numeric($quantity) || $quantity === 0)
+                {
+                    unset($parsed_data[$product_id][$volume]);
+                }
+            }
+        }
+
         session()->put('shoppingCart', $parsed_data);
 
         // Update subprice of each item in the cart

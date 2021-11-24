@@ -84,9 +84,46 @@
                         // Update cart item quantity on change
                         quantity_input.change(() =>
                         {
-                            item_detail[volume_select.val()]["quantity"] = quantity_input.val();
+                            let new_quantity = parseInt(quantity_input.val());
+                            const update = (new_quantity) =>
+                            {
+                                if (new_quantity > 0)
+                                {
+                                    item_detail[volume_select.val()]["quantity"] = new_quantity;
+                                }
+                                update_cart_in_server();
+                            };
 
-                            update_cart_in_server();
+                            // Remove the item volume if its quantity = 0
+                            if (new_quantity === 0)
+                            {
+                                // Display confirm modal
+                                const modal_element = $("#removeItemConfirm");
+                                const confirmModal = new bootstrap.Modal(modal_element);
+
+                                confirmModal.toggle();
+
+                                // Handle remove item which its quantity = 0
+                                $("div#removeItemConfirm button#remove").click(() =>
+                                {
+                                    delete item_detail[volume_select.val()];
+                                    update(new_quantity);
+                                    confirmModal.hide();
+                                    location.reload();
+                                });
+
+                                // Add .off() to remove previous event handlers attached (these are added on change event)
+                                modal_element.off().on("hide.bs.modal", async () =>
+                                {
+                                    quantity_input.val(1);
+                                    new_quantity = 1;
+                                    update();
+                                });
+                            }
+                            else
+                            {
+                                update();
+                            }
                         });
 
                         let old_volume = volume;
@@ -351,5 +388,14 @@
             </x-slot>
         </x-modal.modal>
     @endauth
+
+    {{--Remove item confirm modal--}}
+    <x-modal.modal id="removeItemConfirm" title="Remove item" closeText="No, keep it">
+        Do you want to delete this item?
+
+        <x-slot name="acceptButton">
+            <button type="button" class="btn btn-primary" id="remove">Remove</button>
+        </x-slot>
+    </x-modal.modal>
 
 @endsection
