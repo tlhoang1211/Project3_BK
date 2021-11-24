@@ -1,4 +1,4 @@
-@props(['options' => [], 'selected' => '', 'id' => ''])
+@props(['options' => [], 'selected' => ''])
 
 <div class="custom-select-form">
     <select name="volume" {{ $attributes->merge(['class' => 'wide']) }}>
