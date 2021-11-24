@@ -117,12 +117,12 @@
                                 {
                                     quantity_input.val(1);
                                     new_quantity = 1;
-                                    update();
+                                    update(new_quantity);
                                 });
                             }
                             else
                             {
-                                update();
+                                update(new_quantity);
                             }
                         });
 
