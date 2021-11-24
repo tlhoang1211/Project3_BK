@@ -1,6 +1,11 @@
 @extends('layouts.master')
 @section('specific_css')
     <link href="{{asset('assets/css/user_page.css')}}" rel="stylesheet">
+    <style>
+        .table > :not(caption) > * > * {
+            padding: 0.5rem 1.2rem;
+        }
+    </style>
 @endsection
 @section('specific_js')
     <script type="module" src="{{asset('assets/js/cart_page.js')}}"></script>
@@ -201,31 +206,16 @@
             @php
                 $cart = Session::get('shoppingCart')
             @endphp
-            @if ($cart != null)
+            @if ($cart !== null)
                 <table class="table table-striped cart-list">
                     <thead>
                     <tr>
-                        <th>
-                            Product
-                        </th>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Price (100ml)
-                        </th>
-                        <th>
-                            Type
-                        </th>
-                        <th>
-                            Quantity
-                        </th>
-                        <th>
-                            Subtotal
-                        </th>
-                        <th>
-
-                        </th>
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th>Price (100ml)</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -284,7 +274,7 @@
                                     </div>
                                 @endforeach
                             </td>
-                            <td>
+                            <td style="width: 130px">
                                 {{--Price of each cart item--}}
                                 @foreach($product_volume as $volume => $volume_detail)
                                     <div class='{{"item-price $product_detail->id-$volume"}}'>
@@ -334,8 +324,9 @@
     <!-- /box_cart -->
 
     </main>
+
+    <!-- Shipment detail modal -->
     @auth
-        <!-- Shipment detail modal -->
         <x-modal.modal id="exampleModalToggle"
                        title="Shipment Detail"
                        closeText="Hủy"
