@@ -1,10 +1,8 @@
 @extends('layouts.master')
 @section('specific_css')
-    <link href="{{asset('assets/css/account.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/user_page.css')}}" rel="stylesheet">
 @endsection
 @section('specific_js')
-    <script src="{{asset('assets/js/custome_select.js')}}"></script>
     <script type="module" src="{{asset('assets/js/cart_page.js')}}"></script>
 
     <script>
@@ -235,11 +233,16 @@
                                 @foreach($product_volume as $volume => $volume_detail)
                                     <div class="numbers-row" style="height: 32.5px">
 
-                                        {{-- Quantity --}}
+                                        {{--Quantity--}}
                                         <input style="height: 32.5px" type="text" value="{{$volume_detail['quantity']}}"
                                                class='{{"qty2 quantity-$product_detail->id $volume"}}'
                                                name="{{'quantity-' . $product_detail->id}}"
                                         >
+                                        {{--<x-quantity-input--}}
+                                        {{--        :initVal="$volume_detail['quantity']"--}}
+                                        {{--        class="quantity-{{ $product_detail->id }} {{ $volume }}"--}}
+                                        {{--        name="quantity-{{$product_detail->id}}"--}}
+                                        {{--/>--}}
 
                                     </div>
                                 @endforeach
