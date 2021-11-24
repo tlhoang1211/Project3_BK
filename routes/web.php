@@ -184,6 +184,10 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
 //==================================================================================================================
 
 // test : route
+Route::get('/test/cart', function () {
+    return view('test_cart');
+});
+
 Route::get('checking_page', function () {
     return view('session_checking');
 });
