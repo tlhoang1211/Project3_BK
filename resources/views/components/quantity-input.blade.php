@@ -1,12 +1,31 @@
 @props(['initVal'=>'', 'name' => ''])
 
-<div x-data="{value: {{ $initVal }} }"
-     x-init="$watch('value', value => console.log(value))"
->
-    <input style="height: 32.5px" type="text" :value="value"
-           class='qty2'
+<div x-data="init()">
+    <input style="height: 32.5px" type="text" x-model="value"
+           {{ $attributes->merge(['class' => 'qty2']) }}
            name="{{ $name }}"
+           @input="console.log(value)"
     >
-    <div class="inc button_inc" @click="$dispatch('input', value++)">+</div>
-    <div class="dec button_inc" @click="$dispatch('input', value === 0 ? 0 : value--)">-</div>
+    <div class="inc button_inc" @click="update('+')">+</div>
+    <div class="dec button_inc" @click="update('-')">-</div>
+
+    <script>
+        function init()
+        {
+            return {
+                value: {{ $initVal }},
+                update(sign)
+                {
+                    if (sign === "+")
+                    {
+                        this.value++;
+                    }
+                    else if (sign === "-")
+                    {
+                        this.value = this.value == 0 ? 0 : this.value--;
+                    }
+                }
+            };
+        }
+    </script>
 </div>
