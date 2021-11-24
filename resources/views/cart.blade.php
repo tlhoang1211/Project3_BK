@@ -258,7 +258,7 @@
                             <td>
                                 @foreach($product_volume as $volume => $volume_detail)
 
-                                    {{-- Volume --}}
+                                    {{-- Volume select --}}
                                     <x-select :options="['100ml', '90ml', '50ml', '10ml']"
                                               selected="{{$volume}}"
                                               :class='"volume-$product_detail->id $volume"'
@@ -270,7 +270,7 @@
                                 @foreach($product_volume as $volume => $volume_detail)
                                     <div class="numbers-row" style="height: 32.5px">
 
-                                        {{--Quantity--}}
+                                        {{-- Quantity input --}}
                                         <input style="height: 32.5px" type="text" value="{{$volume_detail['quantity']}}"
                                                class='{{"qty2 quantity-$product_detail->id $volume"}}'
                                                name="{{'quantity-' . $product_detail->id}}"
