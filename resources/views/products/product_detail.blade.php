@@ -103,7 +103,7 @@
                                 <div class="owl-carousel owl-theme thumbs">
                                     @foreach($product->ThumbnailArray as $thumbnail)
                                         <div class="item active"><img
-                                                src="{{$thumbnail}}" alt="Sauvage">
+                                                    src="{{$thumbnail}}" alt="Sauvage">
                                         </div>
                                     @endforeach
                                 </div>
@@ -124,11 +124,11 @@
                         <div class="prod_info">
                             <h1>{{$product->name}}</h1>
                             <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star"></i><em>4 reviews</em></span>
+                                        class="icon-star voted"></i><i class="icon-star voted"></i><i
+                                        class="icon-star"></i><a href="#pane-D"><em>4 reviews</em></a></span>
                             <h6>{{$product->concentration}}
                                 <span
-                                    class="@if($product->sex == 'Nữ')female @elseif($product->sex == 'Phi giới tính')unisex @else sex @endif">{{$product->sex}}</span>
+                                        class="@if($product->sex == 'Nữ')female @elseif($product->sex == 'Phi giới tính')unisex @else sex @endif">{{$product->sex}}</span>
                                 <p>Thương hiệu: <a href="#">{{$product->brand->brand_name}}</a></p>
                             </h6>
                             <div class="productID">Code:</div>
@@ -139,10 +139,11 @@
                                         <a href="#"
                                            data-toggle="modal"
                                            data-target="#size-modal"><i
-                                                class="ti-help-alt"></i></a></label>
+                                                    class="ti-help-alt"></i></a></label>
                                     <div class="col-xl-4 col-lg-5 col-md-6 col-6">
-                                        <x-select :options="['100ml', '90ml', '50ml', '10ml']" selected="100ml"
-                                                  id="none"/>
+                                        <x-product-detail.select :options="['100ml', '90ml', '50ml', '10ml']"
+                                                                 selected="100ml"
+                                                                 id="none"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -157,7 +158,7 @@
                             <div class="row">
                                 <div class="col-lg-5 col-md-6">
                                     <div class="price_main"><span
-                                            class="new_price">{{$product->FormatPrice}}</span>
+                                                class="new_price">{{$product->FormatPrice}}</span>
                                         {{--                                        <span class= "percentage">-20%</span> <span class="old_price">$160.00</span>--}} {{-- Giã cũ và % giảm giá --}}
                                     </div>
                                 </div>
@@ -188,8 +189,8 @@
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377508/perfume_project/icon/shield_check_xlvnlh.png"
-                                        width="30px" height="30px">
+                                            src="https://res.cloudinary.com/vernom/image/upload/v1596377508/perfume_project/icon/shield_check_xlvnlh.png"
+                                            width="30px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Cam kết hàng chính hãng 100%</b></div>
@@ -199,8 +200,8 @@
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377507/perfume_project/icon/lock_mbzdux.jpg"
-                                        width="35px" height="30px">
+                                            src="https://res.cloudinary.com/vernom/image/upload/v1596377507/perfume_project/icon/lock_mbzdux.jpg"
+                                            width="35px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Giao dịch An Toàn - Uy Tín</b></div>
@@ -210,8 +211,8 @@
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377509/perfume_project/icon/shop_ru9crz.png"
-                                        width="30px" height="30px">
+                                            src="https://res.cloudinary.com/vernom/image/upload/v1596377509/perfume_project/icon/shop_ru9crz.png"
+                                            width="30px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Hơn 100.000 mặt hàng có sẵn</b></div>
@@ -221,35 +222,35 @@
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                        src="https://res.cloudinary.com/vernom/image/upload/v1596378892/perfume_project/icon/shipping_dx0t3e.png"
-                                        width="35px" height="30px">
+                                            src="https://res.cloudinary.com/vernom/image/upload/v1596378892/perfume_project/icon/shipping_dx0t3e.png"
+                                            width="35px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Giao hàng toàn quốc</b></div>
                                     <div>Giao trong 3h nội thành HN <a href="/pages/phuong-thuc-van-chuyen"><i
-                                                style="color: #3a87ad;">(Xem
-                                                                        chi
-                                                                        tiết)</i></a></div>
+                                                    style="color: #3a87ad;">(Xem
+                                                                            chi
+                                                                            tiết)</i></a></div>
                                 </div>
                             </div>
                             <div class="product-policy__item">
                                 <div class="product-policy__item__img">
                                     <img
-                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377507/perfume_project/icon/refund_a5gobr.png"
-                                        width="30px" height="30px">
+                                            src="https://res.cloudinary.com/vernom/image/upload/v1596377507/perfume_project/icon/refund_a5gobr.png"
+                                            width="30px" height="30px">
                                 </div>
                                 <div class="product-policy__item__text">
                                     <div><b>Đổi trả miễn phí</b></div>
                                     <div>Trong vòng <b>10 ngày</b> <a href="/pages/chinh-sach-doi-tra"><i
-                                                style="color: #3a87ad;">(Xem chi
-                                                                        tiết)</i></a></div>
+                                                    style="color: #3a87ad;">(Xem chi
+                                                                            tiết)</i></a></div>
                                 </div>
                             </div>
                             <div class="shopping-hotline">
                                 Gọi đặt mua <img
-                                    src="https://res.cloudinary.com/vernom/image/upload/v1596377811/perfume_project/icon/telephone_yjju1b.jpg"
-                                    width="30px" height="30px"> <a href="tel:19000129"><b class="phone_number">+84
-                                                                                                               123-456-789</b></a>
+                                        src="https://res.cloudinary.com/vernom/image/upload/v1596377811/perfume_project/icon/telephone_yjju1b.jpg"
+                                        width="30px" height="30px"> <a href="tel:19000129"><b class="phone_number">+84
+                                                                                                                   123-456-789</b></a>
                                 (9:00-21:00)
                             </div>
                         </div>
@@ -280,7 +281,7 @@
                     </ul>
                 </div>
             </div>
-            <!-- /tabs_product -->
+            <!-- MÔ TẢ -->
             <div class="tab_content_wrapper">
                 <div class="container">
                     <div class="tab-content" role="tablist">
@@ -352,7 +353,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /TAB A -->
+                        <!-- SỬ DỤNG VÀ BẢO QUẢN -->
                         <div id="pane-B" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-B">
                             <div class="card-header" role="tab" id="heading-B">
                                 <h5 class="mb-0">
@@ -419,7 +420,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /TAB B -->
+                        <!-- VẬN CHUYỂN VÀ ĐỔI TRẢ -->
                         <div id="pane-C" class="card tab-pane fade " role="tabpanel" aria-labelledby="tab-C">
                             <div class="card-header" role="tab" id="heading-C">
                                 <h5 class="mb-0">
@@ -538,7 +539,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /TAB C -->
+                        <!-- ĐÁNH GIÁ -->
                         <div id="pane-D" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-D">
                             <div class="card-header" role="tab" id="heading-D">
                                 <h5 class="mb-0">
@@ -550,77 +551,49 @@
                             </div>
                             <div id="collapse-D" class="collapse" role="tabpanel" aria-labelledby="heading-D">
                                 <div class="card-body">
-                                    <div class="row justify-content-between">
-                                        <div class="col-lg-6">
-                                            <div class="review_content">
-                                                <div class="clearfix add_bottom_10">
-                                                    <span class="rating"><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i
-                                                            class="icon-star"></i><em>5.0/5.0</em></span>
-                                                    <em>54 phút trước</em>
-                                                </div>
-                                                <h4>"Commpletely satisfied"</h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="review_content">
-                                                <div class="clearfix add_bottom_10">
-                                                    <span class="rating"><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star"></i><i
-                                                            class="icon-star empty"></i><i
-                                                            class="icon-star empty"></i><em>4.0/5.0</em></span>
-                                                    <em>1 ngày trước</em>
-                                                </div>
-                                                <h4>"Always the best"</h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <!-- /row -->
                                     <div class="row justify-content-between">
-                                        <div class="col-lg-6">
-                                            <div class="review_content">
-                                                <div class="clearfix add_bottom_10">
-                                                    <span class="rating"><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i
-                                                            class="icon-star empty"></i><em>4.5/5.0</em></span>
-                                                    <em>3 ngày trước</em>
-                                                </div>
-                                                <h4>"Outstanding"</h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="review_content">
-                                                <div class="clearfix add_bottom_10">
-                                                    <span class="rating"><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i
-                                                            class="icon-star"></i><em>5.0/5.0</em></span>
-                                                    <em>4 ngày trước</em>
-                                                </div>
-                                                <h4>"Excellent"</h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                            </div>
-                                        </div>
+                                        <x-product-detail.comment
+                                                :rate="4"
+                                                title="Outstanding"
+                                                date="3 ngày trước"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        </x-product-detail.comment>
+                                        <x-product-detail.comment
+                                                :rate="4"
+                                                title="Outstanding"
+                                                date="3 ngày trước"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        </x-product-detail.comment>
+                                        <x-product-detail.comment
+                                                :rate="4"
+                                                title="Outstanding"
+                                                date="3 ngày trước"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        </x-product-detail.comment>
+                                        <x-product-detail.comment
+                                                :rate="3"
+                                                title="Outstanding"
+                                                date="3 ngày trước"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        </x-product-detail.comment>
                                     </div>
                                     <!-- /row -->
-                                    <p class="text-right"><a href="/leave_review" class="btn_1">Để
-                                                                                                lại
-                                                                                                đánh giá</a>
-                                    </p>
+                                    <p class="text-right"><a href="/leave_review" class="btn_1">
+                                            Để lại đánh giá
+                                    </a></p>
                                 </div>
                                 <!-- /card-body -->
                             </div>
                         </div>
-                        <!-- /tab D -->
                     </div>
                     <!-- /tab-content -->
                 </div>
@@ -647,8 +620,8 @@
                                     </a>
                                 </figure>
                                 <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                        class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                        class="icon-star"></i>
+                                            class="icon-star voted"></i><i class="icon-star voted"></i><i
+                                            class="icon-star"></i>
                                 </div>
                                 <a href="{{route('product_detail',$elproduct->slug)}}">
                                     <h3>{{$elproduct->name}}</h3>
@@ -659,14 +632,14 @@
                                 <ul>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="Thêm vào danh sách yêu thích"><i
-                                                class="ti-heart"></i><span>Thêm vào danh sách yêu thích</span></a>
+                                                    class="ti-heart"></i><span>Thêm vào danh sách yêu thích</span></a>
                                     </li>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="So sánh"><i
-                                                class="ti-control-shuffle"></i><span>So sánh</span></a></li>
+                                                    class="ti-control-shuffle"></i><span>So sánh</span></a></li>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="Thêm vào giỏ"><i
-                                                class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
+                                                    class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -694,8 +667,8 @@
                                     </a>
                                 </figure>
                                 <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                        class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                        class="icon-star"></i>
+                                            class="icon-star voted"></i><i class="icon-star voted"></i><i
+                                            class="icon-star"></i>
                                 </div>
                                 <a href="{{route('product_detail',$elproduct->slug)}}">
                                     <h3>{{$elproduct->name}}</h3>
@@ -706,14 +679,14 @@
                                 <ul>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="Thêm vào danh sách yêu thích"><i
-                                                class="ti-heart"></i><span>Thêm vào danh sách yêu thích</span></a>
+                                                    class="ti-heart"></i><span>Thêm vào danh sách yêu thích</span></a>
                                     </li>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="So sánh"><i
-                                                class="ti-control-shuffle"></i><span>So sánh</span></a></li>
+                                                    class="ti-control-shuffle"></i><span>So sánh</span></a></li>
                                     <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="left"
                                            title="Thêm vào giỏ"><i
-                                                class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
+                                                    class="ti-shopping-cart"></i><span>Thêm vào giỏ hàng</span></a>
                                     </li>
                                 </ul>
                             </div>

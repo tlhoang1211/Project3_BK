@@ -17,7 +17,7 @@ class ProductController extends Controller
 {
     public function index($slug)
     {
-        $product = Product::where('slug', '=', $slug)->first();
+        $product = Product::where('slug', $slug)->first();
         $product_style = $product->style;
         $style_arr = explode(',', $product_style);
         //        dd($style_arr);

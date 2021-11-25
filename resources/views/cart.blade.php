@@ -278,7 +278,7 @@
                                 @foreach($product_volume as $volume => $volume_detail)
 
                                     {{-- Volume select --}}
-                                    <x-select :options="['100ml', '90ml', '50ml', '10ml']"
+                                    <x-product-detail.select :options="['100ml', '90ml', '50ml', '10ml']"
                                               selected="{{$volume}}"
                                               :class='"volume-$product_detail->id $volume"'
                                     />
