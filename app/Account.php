@@ -11,7 +11,6 @@ class Account extends Authenticatable
 {
     use Notifiable;
 
-    public $timestamps = true;
     protected $table = 'accounts';
     protected $fillable = ['name', 'email', 'password'];
     protected $hidden = ['password', 'remember_token'];
@@ -31,5 +30,10 @@ class Account extends Authenticatable
     public function receipts(): HasMany
     {
         return $this->hasMany(Receipt::class)->latest();
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->latest();
     }
 }
