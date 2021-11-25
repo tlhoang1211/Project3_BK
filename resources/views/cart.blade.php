@@ -80,7 +80,7 @@
                 });
             };
 
-            const main = () =>
+            if (cart)
             {
                 for (const product_id in cart)
                 {
@@ -137,11 +137,19 @@
                                     {
                                         delete cart[product_id];
                                         update_cart_in_server();
-                                        $(this).closest("tr").remove();
+                                        // Remove the item row if it has no volume
+                                        quantity_input.closest("tr").remove();
+
+                                        // Reload page to stop user click payment button
+                                        if (jQuery.isEmptyObject(cart))
+                                        {
+                                            location.reload();
+                                        }
 
                                     }
                                     else
                                     {
+                                        // Revert quantity to 1
                                         new_quantity++;
                                         quantity_input.val(new_quantity);
                                         update(new_quantity);
@@ -207,11 +215,6 @@
                         });
                     }
                 }
-            };
-
-            if (cart)
-            {
-                main();
             }
         });
     </script>
@@ -232,9 +235,9 @@
             </div>
             <!-- /page_header -->
             @php
-                $cart = Session::get('shoppingCart')
+                $cart = Session::get('shoppingCart');
             @endphp
-            @if ($cart !== null)
+            @if (!empty($cart))
                 <table class="table cart-list table-hover">
                     <thead>
                     <tr>
@@ -260,8 +263,9 @@
                                         <img src="{{$product_detail->firstThumbnail150}}"
                                              data-src="{{$product_detail->firstThumbnail150}}" class="lazy" alt="Image">
                                     </a>
-                                    <span class="item_cart ms-1">
-                                        <a href="{{route('product_detail',$product_detail->slug)}}" class="fs-5 link-info">
+                                    <span class="item_cart ms-3">
+                                        <a href="{{route('product_detail',$product_detail->slug)}}"
+                                           class="fs-5 link-info">
                                             {{$product_detail->name}}
                                         </a>
                                     </span>
