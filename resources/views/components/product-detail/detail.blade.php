@@ -292,40 +292,20 @@
                 </div>
                 <div id="collapse-D" class="collapse" role="tabpanel" aria-labelledby="heading-D">
                     <div class="card-body">
-                        <!-- /row -->
+
+                        {{--Comments--}}
                         <div class="row justify-content-between">
+
+                        @foreach($product->comments as $comment)
                             <x-product-detail.comment
-                                    :rate="4"
-                                    title="Outstanding"
-                                    date="3 ngày trước"
+                                    :rate="$comment->rate"
+                                    :title="$comment->title"
+                                    :date="$comment->created_at->diffForHumans()"
                             >
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                {{ $comment->body }}
                             </x-product-detail.comment>
-                            <x-product-detail.comment
-                                    :rate="4"
-                                    title="Outstanding"
-                                    date="3 ngày trước"
-                            >
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </x-product-detail.comment>
-                            <x-product-detail.comment
-                                    :rate="4"
-                                    title="Outstanding"
-                                    date="3 ngày trước"
-                            >
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </x-product-detail.comment>
-                            <x-product-detail.comment
-                                    :rate="3"
-                                    title="Outstanding"
-                                    date="3 ngày trước"
-                            >
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </x-product-detail.comment>
+                        @endforeach
+
                         </div>
                         <!-- /row -->
                         <p class="text-right"><a href="/leave_review" class="btn_1">
