@@ -319,7 +319,7 @@
                             {{-- Write new comment --}}
                             <div class="col-lg-5">
                                 @auth()
-                                    <div class="border border-primary p-lg-4 rounded-3 bg-light bg-gradient comment">
+                                    <div class="border p-lg-4 rounded-3 bg-light bg-gradient comment">
                                         <form action="/product/{{ $product->slug }}/comment" method="POST">
                                             @csrf
 

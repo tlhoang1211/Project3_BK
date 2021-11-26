@@ -989,3 +989,7 @@ p.exchange {
 .rating-submit:hover {
     color: #fff
 }
+
+.comment {
+    border-color: #3A87AD;
+}
