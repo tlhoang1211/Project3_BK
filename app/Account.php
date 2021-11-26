@@ -18,12 +18,12 @@ class Account extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
-//        return $this->belongsToMany('App\Role','account_role', 'role_id', 'account_id');
+        //        return $this->belongsToMany('App\Role','account_role', 'role_id', 'account_id');
     }
 
     public function city(): BelongsTo
     {
-//        return $this->hasOne()
+        //        return $this->hasOne()
         return $this->belongsTo(City::class);
     }
 
@@ -35,5 +35,10 @@ class Account extends Authenticatable
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class)->latest();
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(OrderDetail::class)->latest();
     }
 }

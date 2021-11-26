@@ -4,10 +4,16 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderDetail extends Model
 {
     protected $guarded = ['id'];
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(Account::class);
+    }
 
     public function receipt()
     {
@@ -28,9 +34,9 @@ class OrderDetail extends Model
     {
         return format_money($this->price);
     }
-//
-//    public function getProductAttribute()
-//    {
-//        $product = App\Product::find($this->product_id);
-//    }
+    //
+    //    public function getProductAttribute()
+    //    {
+    //        $product = App\Product::find($this->product_id);
+    //    }
 }

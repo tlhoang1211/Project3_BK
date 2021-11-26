@@ -9,14 +9,14 @@
     <script>
         $(document).ready(function ()
         {
-            // Save current open nav-item to LocalStorage
+            // Save current open nav-item to sessionStorage
             $("a.nav-link").click(function ()
             {
-                localStorage.setItem("current_nav_item_id", $(this).attr("id"));
+                sessionStorage.setItem("current_nav_item_id", $(this).attr("id"));
             });
 
             // Display previous nav-item
-            const id = localStorage.getItem("current_nav_item_id");
+            const id = sessionStorage.getItem("current_nav_item_id");
             if (id)
             {
                 $(`a#${id}.nav-link`).trigger("click");
