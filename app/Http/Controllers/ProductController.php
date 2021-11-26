@@ -196,7 +196,7 @@ class ProductController extends Controller
         $cart = session()->get('shoppingCart');
         $account = auth()->user();
 
-        if ($cart != null)
+        if ($cart !== null)
         {
             // Validate shipment info
             $attributes = $request->validate([
@@ -224,6 +224,7 @@ class ProductController extends Controller
                     $order_detail = [];
 
                     $order_detail['receipt_id'] = $receipt->id;
+                    $order_detail['account_id'] = $account->id;
                     $order_detail['product_id'] = $product_id;
                     $order_detail['volume'] = $volume;
                     $order_detail['quantity'] = $volume_detail['quantity'];

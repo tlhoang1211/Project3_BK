@@ -319,43 +319,62 @@
                             {{-- Write new comment --}}
                             <div class="col-lg-5">
                                 @auth()
-                                    <div class="border p-lg-4 rounded-3 bg-light bg-gradient comment">
-                                        <form action="/product/{{ $product->slug }}/comment" method="POST">
-                                            @csrf
+                                    {{--Check if user is already bought this product--}}
+                                    @if (auth()->user()->orders->pluck('product_id')->contains($product->id))
 
-                                            {{-- Rating --}}
-                                            <div class="rating mb-3 d-flex justify-content-center flex-row-reverse">
-                                                <input type="radio" name="rating" value="5" id="5"><label
-                                                        for="5">☆</label>
-                                                <input type="radio" name="rating" value="4" id="4"><label
-                                                        for="4">☆</label>
-                                                <input type="radio" name="rating" value="3" id="3"><label
-                                                        for="3">☆</label>
-                                                <input type="radio" name="rating" value="2" id="2"><label
-                                                        for="2">☆</label>
-                                                <input type="radio" name="rating" value="1" id="1"><label
-                                                        for="1">☆</label>
-                                            </div>
+                                        {{--Comment--}}
+                                        <div class="border p-lg-4 rounded-3 bg-light bg-gradient comment">
+                                            <form action="/product/{{ $product->slug }}/comment" method="POST">
+                                                @csrf
 
-                                            {{-- Title --}}
-                                            <div class="mb-3">
-                                                <input name="title" type="text" class="form-control form-control-lg"
-                                                       id="title"
-                                                       placeholder="Title">
-                                            </div>
+                                                {{-- Rating --}}
+                                                <div class="rating mb-3 d-flex justify-content-center flex-row-reverse">
+                                                    <input type="radio" name="rating" value="5" id="5"><label
+                                                            for="5">☆</label>
+                                                    <input type="radio" name="rating" value="4" id="4"><label
+                                                            for="4">☆</label>
+                                                    <input type="radio" name="rating" value="3" id="3"><label
+                                                            for="3">☆</label>
+                                                    <input type="radio" name="rating" value="2" id="2"><label
+                                                            for="2">☆</label>
+                                                    <input type="radio" name="rating" value="1" id="1"><label
+                                                            for="1">☆</label>
+                                                </div>
 
-                                            {{-- Body --}}
-                                            <div class="mb-3">
-                                        <textarea name="body" class="form-control fix-textarea" id="body"
-                                                  rows="3" placeholder="Enter your comment here..."></textarea>
-                                            </div>
+                                                {{-- Title --}}
+                                                <div class="mb-3">
+                                                    <input name="title" type="text" class="form-control form-control-lg"
+                                                           id="title"
+                                                           placeholder="Title">
+                                                    @if ($errors->has('title'))
+                                                        <label class="alert-warning">{{$errors->first('title')}}</label>
+                                                    @endif
+                                                </div>
 
-                                            <button type="submit" class="btn_1">
-                                                Để lại đánh giá
-                                            </button>
+                                                {{-- Body --}}
+                                                <div class="mb-3">
+                                                    <textarea name="body" class="form-control fix-textarea" id="body"
+                                                              rows="3"
+                                                              placeholder="Enter your comment here..."></textarea>
+                                                    @if ($errors->has('body'))
+                                                        <label class="alert-warning">{{$errors->first('body')}}</label>
+                                                    @endif
+                                                </div>
 
-                                        </form>
-                                    </div>
+                                                <button type="submit" class="btn_1">
+                                                    Để lại đánh giá
+                                                </button>
+
+                                            </form>
+                                        </div>
+                                    @else
+                                        <div>
+                                            <h3>Quý khách không thể đánh giá phẩm này.</h3>
+                                            <p>
+                                                Quý khách vui lòng mua ít nhất 1 sản phẩm để có thể để lại đánh giá.
+                                            </p>
+                                        </div>
+                                    @endif
                                 @else
                                     <div>
                                         <h1>Để lại đánh giá</h1>
