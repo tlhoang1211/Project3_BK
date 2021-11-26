@@ -379,6 +379,3 @@
     <!-- /container -->
 </div>
 
-@section('specific_js')
-
-@endsection

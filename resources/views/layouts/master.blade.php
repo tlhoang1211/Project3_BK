@@ -192,6 +192,7 @@
 <script src={{asset('assets/js/main.js')}}></script>
 <script src={{asset('assets/js/bootstrap.bundle.min.js')}}></script>
 <script src={{asset('assets/js/toastr.min.js')}}></script>
+<script src={{asset('assets/js/SaveScrollPosition.js')}}></script>
 <!-- SPECIFIC SCRIPTS -->
 @yield('specific_js')
 

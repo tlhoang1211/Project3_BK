@@ -9,6 +9,19 @@
     <script>
         $(document).ready(function ()
         {
+            // Save current open nav-item to LocalStorage
+            $("a.nav-link").click(function ()
+            {
+                localStorage.setItem("current_nav_item_id", $(this).attr("id"));
+            });
+
+            // Display previous nav-item
+            const id = localStorage.getItem("current_nav_item_id");
+            if (id)
+            {
+                $(`a#${id}.nav-link`).trigger("click");
+            }
+
             $(".add_to_cart").on("click", function (e)
             {
                 const allVals = [];
