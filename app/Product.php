@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Product extends Model
 {
     private static $cloudinary_link = 'https://res.cloudinary.com/vernom/image/upload/c_scale,h_400,w_400/';
+    protected $guarded = ['id'];
 
     public function groups()
     {
@@ -91,5 +92,10 @@ class Product extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class)->latest();
+    }
+
+    public function getRateAttribute()
+    {
+        return $this->comments->pluck('rate')->avg();
     }
 }

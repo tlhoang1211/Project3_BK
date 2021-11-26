@@ -41,9 +41,13 @@
             <!-- /page_header -->
             <div class="prod_info">
                 <h1>{{$product->name}}</h1>
-                <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                            class="icon-star voted"></i><i class="icon-star voted"></i><i
-                            class="icon-star"></i><a href="#pane-D"><em>4 reviews</em></a></span>
+
+                {{-- Rating --}}
+                <x-product-detail.rating :isOverview="true" :rate="$product->rate" />
+                <a href="#tab-D" class="link-warning">
+                    <em>{{ $product->comments->count() }} nhận xét</em>
+                </a>
+
                 <h6>{{$product->concentration}}
                     <span
                             class="@if($product->sex == 'Nữ')female @elseif($product->sex == 'Phi giới tính')unisex @else sex @endif">{{$product->sex}}</span>

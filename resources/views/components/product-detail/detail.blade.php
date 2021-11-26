@@ -1,4 +1,4 @@
-@props(['product'])
+@props(['product', 'comments'])
 
 {{--Tab titles--}}
 <div class="tabs_product">
@@ -293,24 +293,82 @@
                 <div id="collapse-D" class="collapse" role="tabpanel" aria-labelledby="heading-D">
                     <div class="card-body">
 
-                        {{--Comments--}}
+                    {{--Comments--}}
+                    <!-- /row -->
+
+
                         <div class="row justify-content-between">
 
-                        @foreach($product->comments as $comment)
-                            <x-product-detail.comment
-                                    :rate="$comment->rate"
-                                    :title="$comment->title"
-                                    :date="$comment->created_at->diffForHumans()"
-                            >
-                                {{ $comment->body }}
-                            </x-product-detail.comment>
-                        @endforeach
+                            {{-- Display comments--}}
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-center mb-3">
+                                    {{ $comments->links() }}
+                                </div>
 
+                                @foreach($comments as $comment)
+                                    <x-product-detail.comment
+                                            :rate="$comment->rate"
+                                            :title="$comment->title"
+                                            :date="$comment->created_at->diffForHumans()"
+                                    >
+                                        {{ $comment->body }}
+                                    </x-product-detail.comment>
+                                @endforeach
+                            </div>
+
+                            {{-- Write new comment --}}
+                            <div class="col-lg-5">
+                                @auth()
+                                    <div class="border border-primary p-lg-4 rounded-3 bg-light bg-gradient comment">
+                                        <form action="/product/{{ $product->slug }}/comment" method="POST">
+                                            @csrf
+
+                                            {{-- Rating --}}
+                                            <div class="rating mb-3 d-flex justify-content-center flex-row-reverse">
+                                                <input type="radio" name="rating" value="5" id="5"><label
+                                                        for="5">☆</label>
+                                                <input type="radio" name="rating" value="4" id="4"><label
+                                                        for="4">☆</label>
+                                                <input type="radio" name="rating" value="3" id="3"><label
+                                                        for="3">☆</label>
+                                                <input type="radio" name="rating" value="2" id="2"><label
+                                                        for="2">☆</label>
+                                                <input type="radio" name="rating" value="1" id="1"><label
+                                                        for="1">☆</label>
+                                            </div>
+
+                                            {{-- Title --}}
+                                            <div class="mb-3">
+                                                <input name="title" type="text" class="form-control form-control-lg"
+                                                       id="title"
+                                                       placeholder="Title">
+                                            </div>
+
+                                            {{-- Body --}}
+                                            <div class="mb-3">
+                                        <textarea name="body" class="form-control fix-textarea" id="body"
+                                                  rows="3" placeholder="Enter your comment here..."></textarea>
+                                            </div>
+
+                                            <button type="submit" class="btn_1">
+                                                Để lại đánh giá
+                                            </button>
+
+                                        </form>
+                                    </div>
+                                @else
+                                    <div>
+                                        <h1>Để lại đánh giá</h1>
+                                        <p>
+                                            Bạn cần
+                                            <a href="{{ route('login') }}" class="link-info fs6-6">đăng nhập</a>
+                                            để đánh giá sản phẩm này.
+                                        </p>
+                                    </div>
+                                @endauth
+                            </div>
                         </div>
-                        <!-- /row -->
-                        <p class="text-right"><a href="/leave_review" class="btn_1">
-                                Để lại đánh giá
-                            </a></p>
+
                     </div>
                     <!-- /card-body -->
                 </div>
@@ -320,3 +378,7 @@
     </div>
     <!-- /container -->
 </div>
+
+@section('specific_js')
+
+@endsection

@@ -21,7 +21,7 @@ class CommentSeeder extends Seeder
         $faker = Factory::create();
 
         Product::all()->each(static function ($item, $key) use ($faker) {
-            for ($i = 0; $i < random_int(2, 5); $i++)
+            for ($i = 0; $i < random_int(10, 15); $i++)
             {
                 Comment::create([
                     'title'      => $faker->sentence,
@@ -31,6 +31,7 @@ class CommentSeeder extends Seeder
                     'product_id' => $item->id,
                 ]);
             }
+            $item->rate = 1;
         });
     }
 }

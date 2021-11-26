@@ -84,7 +84,7 @@
             <x-product-detail.product-primary :product="$product"/>
 
             {{--Product detail--}}
-            <x-product-detail.detail :product="$product"/>
+            <x-product-detail.detail :product="$product" :comments="$comments"/>
 
             {{-- Related products--}}
             <x-product-detail.related-products

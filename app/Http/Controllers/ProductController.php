@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Brand;
+use App\Comment;
 use App\OrderDetail;
 use App\Origin;
 use App\Product;
@@ -15,9 +16,27 @@ use PhpParser\Node\Expr\Array_;
 
 class ProductController extends Controller
 {
-    public function index($slug)
+    public function productComment(Request $request, Product $product): RedirectResponse
     {
-        $product = Product::where('slug', $slug)->first();
+        $request->validate([
+            'title' => 'required|max:70',
+            'body'  => 'required|max:500'
+        ]);
+
+        Comment::create([
+            'title'      => $request->title,
+            'body'       => $request->body,
+            'rate'       => $request->rating ?? 0,
+            'account_id' => auth()->id(),
+            'product_id' => $product->id,
+        ]);
+
+        return back();
+    }
+
+    public function index(Product $product)
+    {
+        //        $product = Product::where('slug', $slug)->first();
         $product_style = $product->style;
         $style_arr = explode(',', $product_style);
         //        dd($style_arr);
@@ -33,7 +52,10 @@ class ProductController extends Controller
         $eloquent_product_brand = $item_brand_query->get();
         //        dd($eloquent_product_brand);
         //        dd($product->brand->id);
-        return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))->with('product', $product)->with('eloquent_product', $eloquent_product);
+        return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
+            ->with('product', $product)
+            ->with('eloquent_product', $eloquent_product)
+            ->with('comments', Comment::latest()->where('product_id', $product->id)->paginate(5));
     }
 
     public function admin_index(Request $request)
