@@ -19,14 +19,15 @@ class ProductController extends Controller
     public function productComment(Request $request, Product $product): RedirectResponse
     {
         $request->validate([
-            'title' => 'required|max:70',
-            'body'  => 'required|max:500'
+            'title'  => 'required|max:70',
+            'body'   => 'required|max:500',
+            'rating' => 'required'
         ]);
 
         Comment::create([
             'title'      => $request->title,
             'body'       => $request->body,
-            'rate'       => $request->rating ?? 0,
+            'rate'       => $request->rating,
             'account_id' => auth()->id(),
             'product_id' => $product->id,
         ]);

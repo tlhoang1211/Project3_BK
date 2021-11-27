@@ -2,10 +2,11 @@
 
 @php
     $floor_rate = floor($rate);
+    $float_rate = (float) $rate;
 @endphp
 
 <span class="rating">
-    @for ($i = 0; $i < $floor_rate; $i++)
+        @for ($i = 0; $i < $floor_rate; $i++)
         @if ($isOverview)
             <i class="icon-star voted"></i>
         @else
@@ -21,5 +22,5 @@
             @endif
         @endfor
     @endif
-    <em>{{ number_format((float)$rate, 1, '.', '') }}/5.0</em>
+        <em>{{ number_format($float_rate, 1, '.', '') }}/5.0</em>
 </span>

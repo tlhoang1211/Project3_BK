@@ -340,6 +340,11 @@
                                                     <input type="radio" name="rating" value="1" id="1"><label
                                                             for="1">☆</label>
                                                 </div>
+                                                <div class="d-flex justify-content-center mb-3">
+                                                    @if ($errors->has('rating'))
+                                                        <label class="alert-warning">{{$errors->first('rating')}}</label>
+                                                    @endif
+                                                </div>
 
                                                 {{-- Title --}}
                                                 <div class="mb-3">
@@ -368,23 +373,10 @@
                                             </form>
                                         </div>
                                     @else
-                                        {{--<div>--}}
-                                        {{--    <h3>Quý khách chưa thể đánh giá sản phẩm này.</h3>--}}
-                                        {{--    <p>--}}
-                                        {{--        Quý khách vui lòng mua ít nhất 1 sản phẩm để có thể để lại đánh giá.--}}
-                                        {{--    </p>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="no-comment" style="width: 18rem;">--}}
-                                        {{--    <div class="card-body">--}}
-                                        {{--        <h5 class="card-title">Chưa thể đánh giá.</h5>--}}
-                                        {{--        <p class="card-text">Quý khách vui lòng mua ít nhất 1 sản phẩm để có thể--}}
-                                        {{--                             để lại đánh giá.</p>--}}
-                                        {{--    </div>--}}
-                                        {{--</div>--}}
                                         <div class="alert alert-warning" role="alert">
                                             <h5>Chưa thể đánh giá.</h5>
                                             <p>Quý khách vui lòng mua ít nhất 1 sản phẩm để có thể
-                                                                 để lại đánh giá.</p>
+                                               để lại đánh giá.</p>
                                         </div>
                                     @endif
                                 @else
