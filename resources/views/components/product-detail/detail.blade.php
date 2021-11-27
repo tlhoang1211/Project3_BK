@@ -368,16 +368,28 @@
                                             </form>
                                         </div>
                                     @else
-                                        <div>
-                                            <h3>Quý khách không thể đánh giá phẩm này.</h3>
-                                            <p>
-                                                Quý khách vui lòng mua ít nhất 1 sản phẩm để có thể để lại đánh giá.
-                                            </p>
+                                        {{--<div>--}}
+                                        {{--    <h3>Quý khách chưa thể đánh giá sản phẩm này.</h3>--}}
+                                        {{--    <p>--}}
+                                        {{--        Quý khách vui lòng mua ít nhất 1 sản phẩm để có thể để lại đánh giá.--}}
+                                        {{--    </p>--}}
+                                        {{--</div>--}}
+                                        {{--<div class="no-comment" style="width: 18rem;">--}}
+                                        {{--    <div class="card-body">--}}
+                                        {{--        <h5 class="card-title">Chưa thể đánh giá.</h5>--}}
+                                        {{--        <p class="card-text">Quý khách vui lòng mua ít nhất 1 sản phẩm để có thể--}}
+                                        {{--                             để lại đánh giá.</p>--}}
+                                        {{--    </div>--}}
+                                        {{--</div>--}}
+                                        <div class="alert alert-warning" role="alert">
+                                            <h5>Chưa thể đánh giá.</h5>
+                                            <p>Quý khách vui lòng mua ít nhất 1 sản phẩm để có thể
+                                                                 để lại đánh giá.</p>
                                         </div>
                                     @endif
                                 @else
-                                    <div>
-                                        <h1>Để lại đánh giá</h1>
+                                    <div class="alert alert-warning" role="alert">
+                                        <h5>Để lại đánh giá</h5>
                                         <p>
                                             Bạn cần
                                             <a href="{{ route('login') }}" class="link-info fs6-6">đăng nhập</a>
