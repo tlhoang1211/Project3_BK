@@ -17,6 +17,7 @@ mix.js("resources/js/app.js", "public/js")
         proxy: {
             target: "localhost:8000"
         },
-        notify: false
+        notify: false,
+        reloadDelay: 0
     })
 ;

@@ -5597,7 +5597,7 @@ input.qty2:focus {
     padding-left: 5px !important;
 }
 
-.form-control {
+.form-control :not(.comment){
     padding: 10px;
     font-size: 14px;
     font-size: 0.875rem;
@@ -5609,7 +5609,7 @@ input.qty2:focus {
     height: calc(1.75em + .75rem + 2px);
 }
 
-.form-control:focus {
+.form-control:focus :not(.comment){
     border-color: #ccc;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.05);

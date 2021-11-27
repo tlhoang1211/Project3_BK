@@ -38,7 +38,7 @@ class ReceiptSeeder extends Seeder
                 'created_at'   => $faker->dateTimeThisDecade('now'),
                 'updated_at'   => Carbon::now(),
             ];
-            array_push($receipts, $item);
+            $receipts[] = $item;
         }
 
         Receipt::insert($receipts);

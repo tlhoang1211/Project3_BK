@@ -11,7 +11,6 @@ class Account extends Authenticatable
 {
     use Notifiable;
 
-    public $timestamps = true;
     protected $table = 'accounts';
     protected $fillable = ['name', 'email', 'password'];
     protected $hidden = ['password', 'remember_token'];
@@ -19,17 +18,27 @@ class Account extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
-//        return $this->belongsToMany('App\Role','account_role', 'role_id', 'account_id');
+        //        return $this->belongsToMany('App\Role','account_role', 'role_id', 'account_id');
     }
 
     public function city(): BelongsTo
     {
-//        return $this->hasOne()
+        //        return $this->hasOne()
         return $this->belongsTo(City::class);
     }
 
     public function receipts(): HasMany
     {
         return $this->hasMany(Receipt::class)->latest();
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->latest();
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(OrderDetail::class)->latest();
     }
 }

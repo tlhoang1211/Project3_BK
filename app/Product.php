@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
     private static $cloudinary_link = 'https://res.cloudinary.com/vernom/image/upload/c_scale,h_400,w_400/';
+    protected $guarded = ['id'];
 
     public function groups()
     {
@@ -85,5 +87,15 @@ class Product extends Model
     public function getImageSize600x600Attribute()
     {
         return 'https://res.cloudinary.com/dwarrion/image/upload/c_scale,h_600,w_600/' . $this->brand_thumbnail;
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->latest();
+    }
+
+    public function getRateAttribute()
+    {
+        return $this->comments->pluck('rate')->avg();
     }
 }

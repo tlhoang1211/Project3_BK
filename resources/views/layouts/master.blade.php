@@ -43,6 +43,9 @@
 <!-- YOUR CUSTOM CSS -->
     {{--    <link href={{ asset('assets/css/custom.css') }} rel="stylesheet">--}}
     <link href={{ asset('assets/css/custom-hung.css') }} rel="stylesheet">
+
+    {{--Alpine JS--}}
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
@@ -118,20 +121,22 @@
                         <h5>Theo dõi ủng hộ Wanderlust</h5>
                         <ul>
                             <li><a href="#0"><img
-                                        src="{{asset("assets/img/twitter_icon.svg")}}"
-                                        data-src="{{asset("assets/img/twitter_icon.svg")}}" alt="" class="lazy"></a>
+                                            src="{{asset("assets/img/twitter_icon.svg")}}"
+                                            data-src="{{asset("assets/img/twitter_icon.svg")}}" alt="" class="lazy"></a>
                             </li>
                             <li><a href="#0"><img
-                                        src="{{asset("assets/img/facebook_icon.svg")}}"
-                                        data-src="{{asset("assets/img/facebook_icon.svg")}}" alt="" class="lazy"></a>
+                                            src="{{asset("assets/img/facebook_icon.svg")}}"
+                                            data-src="{{asset("assets/img/facebook_icon.svg")}}" alt=""
+                                            class="lazy"></a>
                             </li>
                             <li><a href="#0"><img
-                                        src="{{asset("assets/img/instagram_icon.svg")}}"
-                                        data-src="{{asset("assets/img/instagram_icon.svg")}}" alt="" class="lazy"></a>
+                                            src="{{asset("assets/img/instagram_icon.svg")}}"
+                                            data-src="{{asset("assets/img/instagram_icon.svg")}}" alt=""
+                                            class="lazy"></a>
                             </li>
                             <li><a href="#0"><img
-                                        src="{{asset("assets/img/youtube_icon.svg")}}"
-                                        data-src="{{asset("assets/img/youtube_icon.svg")}}" alt="" class="lazy"></a>
+                                            src="{{asset("assets/img/youtube_icon.svg")}}"
+                                            data-src="{{asset("assets/img/youtube_icon.svg")}}" alt="" class="lazy"></a>
                             </li>
                         </ul>
                     </div>
@@ -162,9 +167,9 @@
                         </div>
                     </li>
                     <li><img
-                            src="{{asset("assets/img/cards_all.svg")}}"
-                            data-src="{{asset("assets/img/cards_all.svg")}}" alt="" width="198" height="30"
-                            class="lazy">
+                                src="{{asset("assets/img/cards_all.svg")}}"
+                                data-src="{{asset("assets/img/cards_all.svg")}}" alt="" width="198" height="30"
+                                class="lazy">
                     </li>
                 </ul>
             </div>
@@ -187,6 +192,7 @@
 <script src={{asset('assets/js/main.js')}}></script>
 <script src={{asset('assets/js/bootstrap.bundle.min.js')}}></script>
 <script src={{asset('assets/js/toastr.min.js')}}></script>
+<script src={{asset('assets/js/SaveScrollPosition.js')}}></script>
 <!-- SPECIFIC SCRIPTS -->
 @yield('specific_js')
 

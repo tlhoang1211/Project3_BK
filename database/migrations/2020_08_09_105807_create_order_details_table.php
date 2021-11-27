@@ -17,6 +17,7 @@ class CreateOrderDetailsTable extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->foreignId('receipt_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->string('volume');
             $table->integer('quantity');
             $table->double('price');

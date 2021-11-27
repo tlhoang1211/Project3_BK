@@ -1,10 +1,17 @@
 @extends('layouts.master')
 @section('specific_css')
-    <link href="{{asset('assets/css/account.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/user_page.css')}}" rel="stylesheet">
+    <style>
+        main {
+            margin-bottom: 10px;
+        }
+
+        .table > :not(caption) > * > * {
+            padding: 0.5rem 1.2rem;
+        }
+    </style>
 @endsection
 @section('specific_js')
-    <script src="{{asset('assets/js/custome_select.js')}}"></script>
     <script type="module" src="{{asset('assets/js/cart_page.js')}}"></script>
 
     <script>
@@ -75,20 +82,84 @@
 
             if (cart)
             {
-                for (const cart_item in cart)
+                for (const product_id in cart)
                 {
-                    const item_detail = cart[cart_item];
+                    const item_detail = cart[product_id];
                     for (const volume in item_detail)
                     {
-                        const volume_select = $(`select.volume-${cart_item}.${volume}`);
-                        const quantity_input = $(`input.quantity-${cart_item}.${volume}`);
+                        const volume_select = $(`select.volume-${product_id}.${volume}`);
+                        const quantity_input = $(`input.quantity-${product_id}.${volume}`);
 
                         // Update cart item quantity on change
                         quantity_input.change(() =>
                         {
-                            item_detail[volume_select.val()]["quantity"] = quantity_input.val();
+                            let new_quantity = parseInt(quantity_input.val());
+                            const update = (new_quantity) =>
+                            {
+                                if (new_quantity > 0)
+                                {
+                                    item_detail[volume_select.val()]["quantity"] = new_quantity;
+                                }
+                                update_cart_in_server();
+                            };
 
-                            update_cart_in_server();
+                            // Remove the item volume if its quantity = 0
+                            if (new_quantity === 0)
+                            {
+                                // Display confirm modal
+                                const modal_element = $("#removeItemConfirm");
+                                const confirm_modal = new bootstrap.Modal(modal_element);
+
+                                confirm_modal.toggle();
+                                let has_no_volume = false;
+
+                                // Handle remove item which its quantity = 0
+                                $("div#removeItemConfirm button#remove").off().click(() =>
+                                {
+                                    delete item_detail[volume_select.val()];
+                                    // Change has_no_volume -> true to delete the item when the modal hides
+                                    if (jQuery.isEmptyObject(cart[product_id]))
+                                    {
+                                        has_no_volume = true;
+                                    }
+                                    else
+                                    {
+                                        update_cart_in_server();
+                                        location.reload();
+                                    }
+                                    confirm_modal.hide();
+                                });
+
+                                // Add .off() to remove previous event handlers attached (these are added on change event)
+                                modal_element.off().on("hide.bs.modal", () =>
+                                {
+                                    if (has_no_volume)
+                                    {
+                                        delete cart[product_id];
+                                        update_cart_in_server();
+                                        // Remove the item row if it has no volume
+                                        quantity_input.closest("tr").remove();
+
+                                        // Reload page to stop user click payment button
+                                        if (jQuery.isEmptyObject(cart))
+                                        {
+                                            location.reload();
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        // Revert quantity to 1
+                                        new_quantity++;
+                                        quantity_input.val(new_quantity);
+                                        update(new_quantity);
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                update(new_quantity);
+                            }
                         });
 
                         let old_volume = volume;
@@ -101,7 +172,7 @@
                             {
                                 // Check if user select existed type of a product
                                 let error = false;
-                                $(`select.volume-${cart_item}:not(.${volume})`).each((key, select) =>
+                                $(`select.volume-${product_id}:not(.${volume})`).each((key, select) =>
                                 {
                                     const other_select_value = select.value;
                                     if (new_volume === other_select_value)
@@ -116,7 +187,7 @@
                                 {
                                     // Reset to old volume
                                     volume_select.val(old_volume);
-                                    $(`.volume-${cart_item}.${old_volume} span.current`).text(old_volume);
+                                    $(`.volume-${product_id}.${old_volume} span.current`).text(old_volume);
                                     // Reset select item to the previous one
                                     const ul = $("ul.list");
                                     ul.find(`[data-value='${new_volume}']`).removeClass("selected focus");
@@ -130,9 +201,9 @@
 
                                     // Update subtotal display element class to match current volume value
                                     // (required to update subtotal value after changing the volume)
-                                    $(`div.item-price.${cart_item}-${old_volume}`)
-                                        .removeClass(`${cart_item}-${old_volume}`)
-                                        .addClass(`${cart_item}-${new_volume}`);
+                                    $(`div.item-price.${product_id}-${old_volume}`)
+                                        .removeClass(`${product_id}-${old_volume}`)
+                                        .addClass(`${product_id}-${new_volume}`);
 
                                     // Update old volume to be deleted in next volume selection
                                     old_volume = new_volume;
@@ -150,7 +221,7 @@
 
 @endsection
 @section('content')
-    <main class="bg_gray">
+    <main>
         <div class="container margin_30">
             <div class="page_header">
                 <div class="breadcrumbs">
@@ -164,33 +235,17 @@
             </div>
             <!-- /page_header -->
             @php
-                $cart = Session::get('shoppingCart')
+                $cart = Session::get('shoppingCart');
             @endphp
-            @if ($cart != null)
-                <table class="table table-striped cart-list">
+            @if (!empty($cart))
+                <table class="table cart-list table-hover">
                     <thead>
                     <tr>
-                        <th>
-                            Product
-                        </th>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Price (100ml)
-                        </th>
-                        <th>
-                            Type
-                        </th>
-                        <th>
-                            Quantity
-                        </th>
-                        <th>
-                            Subtotal
-                        </th>
-                        <th>
-
-                        </th>
+                        <th class="text-center">Sản phẩm</th>
+                        <th>Đơn giá (100ml)</th>
+                        <th>Dung tích</th>
+                        <th>Số lượng</th>
+                        <th>Số tiền</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -201,21 +256,20 @@
                         @php
                             $product_detail = \App\Product::find($product_id);
                         @endphp
-                        <tr>
+                        <tr class="align-middle">
                             <td>
                                 <div class="thumb_cart">
                                     <a href="{{route('product_detail',$product_detail->slug)}}">
                                         <img src="{{$product_detail->firstThumbnail150}}"
                                              data-src="{{$product_detail->firstThumbnail150}}" class="lazy" alt="Image">
                                     </a>
+                                    <span class="item_cart ms-3">
+                                        <a href="{{route('product_detail',$product_detail->slug)}}"
+                                           class="fs-5 link-info">
+                                            {{$product_detail->name}}
+                                        </a>
+                                    </span>
                                 </div>
-                            </td>
-                            <td>
-                                <span class="item_cart">
-                                    <a href="{{route('product_detail',$product_detail->slug)}}">
-                                    {{$product_detail->name}}
-                                    </a>
-                                </span>
                             </td>
                             <td>
                                 <strong>{{$product_detail->formatPrice}}</strong>
@@ -223,8 +277,8 @@
                             <td>
                                 @foreach($product_volume as $volume => $volume_detail)
 
-                                    {{-- Volume --}}
-                                    <x-select :options="['100ml', '90ml', '50ml', '10ml']"
+                                    {{-- Volume select --}}
+                                    <x-product-detail.select :options="['100ml', '90ml', '50ml', '10ml']"
                                               selected="{{$volume}}"
                                               :class='"volume-$product_detail->id $volume"'
                                     />
@@ -235,16 +289,21 @@
                                 @foreach($product_volume as $volume => $volume_detail)
                                     <div class="numbers-row" style="height: 32.5px">
 
-                                        {{-- Quantity --}}
+                                        {{-- Quantity input --}}
                                         <input style="height: 32.5px" type="text" value="{{$volume_detail['quantity']}}"
                                                class='{{"qty2 quantity-$product_detail->id $volume"}}'
                                                name="{{'quantity-' . $product_detail->id}}"
                                         >
+                                        {{--<x-quantity-input--}}
+                                        {{--        :initVal="$volume_detail['quantity']"--}}
+                                        {{--        class="quantity-{{ $product_detail->id }} {{ $volume }}"--}}
+                                        {{--        name="quantity-{{$product_detail->id}}"--}}
+                                        {{--/>--}}
 
                                     </div>
                                 @endforeach
                             </td>
-                            <td>
+                            <td style="width: 130px">
                                 {{--Price of each cart item--}}
                                 @foreach($product_volume as $volume => $volume_detail)
                                     <div class='{{"item-price $product_detail->id-$volume"}}'>
@@ -294,8 +353,9 @@
     <!-- /box_cart -->
 
     </main>
+
+    <!-- Shipment detail modal -->
     @auth
-        <!-- Shipment detail modal -->
         <x-modal.modal id="exampleModalToggle"
                        title="Shipment Detail"
                        closeText="Hủy"
@@ -348,5 +408,14 @@
             </x-slot>
         </x-modal.modal>
     @endauth
+
+    {{--Remove item confirm modal--}}
+    <x-modal.modal id="removeItemConfirm" title="Remove item" closeText="No, keep it">
+        Do you want to delete this item?
+
+        <x-slot name="acceptButton">
+            <button type="button" class="btn btn-primary" id="remove">Remove</button>
+        </x-slot>
+    </x-modal.modal>
 
 @endsection

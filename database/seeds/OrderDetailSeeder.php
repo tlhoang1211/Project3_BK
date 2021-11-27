@@ -41,6 +41,7 @@ class OrderDetailSeeder extends Seeder
                 $item = [
                     'product_id' => $product->id,
                     'receipt_id' => $receipt->id,
+                    'account_id' => $receipt->account_id,
                     'volume'     => $volume,
                     'quantity'   => $quantity,
                     'price'      => $quantity * ($volume_number / 100.0) * $product->price,

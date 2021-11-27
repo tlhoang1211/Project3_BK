@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Brand;
+use App\Comment;
 use App\OrderDetail;
 use App\Origin;
 use App\Product;
@@ -15,9 +16,28 @@ use PhpParser\Node\Expr\Array_;
 
 class ProductController extends Controller
 {
-    public function index($slug)
+    public function productComment(Request $request, Product $product): RedirectResponse
     {
-        $product = Product::where('slug', '=', $slug)->first();
+        $request->validate([
+            'title'  => 'required|max:70',
+            'body'   => 'required|max:500',
+            'rating' => 'required'
+        ]);
+
+        Comment::create([
+            'title'      => $request->title,
+            'body'       => $request->body,
+            'rate'       => $request->rating,
+            'account_id' => auth()->id(),
+            'product_id' => $product->id,
+        ]);
+
+        return back();
+    }
+
+    public function index(Product $product)
+    {
+        //        $product = Product::where('slug', $slug)->first();
         $product_style = $product->style;
         $style_arr = explode(',', $product_style);
         //        dd($style_arr);
@@ -33,7 +53,10 @@ class ProductController extends Controller
         $eloquent_product_brand = $item_brand_query->get();
         //        dd($eloquent_product_brand);
         //        dd($product->brand->id);
-        return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))->with('product', $product)->with('eloquent_product', $eloquent_product);
+        return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
+            ->with('product', $product)
+            ->with('eloquent_product', $eloquent_product)
+            ->with('comments', Comment::latest()->where('product_id', $product->id)->paginate(5));
     }
 
     public function admin_index(Request $request)
@@ -174,7 +197,7 @@ class ProductController extends Controller
         $cart = session()->get('shoppingCart');
         $account = auth()->user();
 
-        if ($cart != null)
+        if ($cart !== null)
         {
             // Validate shipment info
             $attributes = $request->validate([
@@ -202,6 +225,7 @@ class ProductController extends Controller
                     $order_detail = [];
 
                     $order_detail['receipt_id'] = $receipt->id;
+                    $order_detail['account_id'] = $account->id;
                     $order_detail['product_id'] = $product_id;
                     $order_detail['volume'] = $volume;
                     $order_detail['quantity'] = $volume_detail['quantity'];
@@ -648,6 +672,28 @@ class ProductController extends Controller
     {
         // Convert from json to associative array then replace current cart in session
         $parsed_data = json_decode($request->shoppingCart, true);
+
+        // Filter out invalid item
+        foreach ($parsed_data as $product_id => $item)
+        {
+            // Remove item with no volume (is deleted from front-end)
+            if (empty($item))
+            {
+                unset($parsed_data[$product_id]);
+                continue;
+            }
+
+            foreach ($item as $volume => $volume_detail)
+            {
+                // Remove item with invalid quantity
+                $quantity = $volume_detail['quantity'];
+                if (!is_numeric($quantity) || $quantity === 0)
+                {
+                    unset($parsed_data[$product_id][$volume]);
+                }
+            }
+        }
+
         session()->put('shoppingCart', $parsed_data);
 
         // Update subprice of each item in the cart

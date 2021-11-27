@@ -23,7 +23,7 @@ class AccountSeeder extends Seeder
             Schema::enableForeignKeyConstraints();
         }
 
-        $user = Account::create(array(
+        Account::create(array(
             'role_id'        => 2,
             'password'       => md5("admin" . "12345"),
             'salt'           => '12345',
@@ -39,7 +39,7 @@ class AccountSeeder extends Seeder
             'updated_at'     => Carbon::now(),
             'address'        => $faker->address
         ));
-        $user = Account::create(array(
+        Account::create(array(
             'role_id'        => 1,
             'password'       => md5("guest" . "56789"),
             'salt'           => '56789',
@@ -49,6 +49,22 @@ class AccountSeeder extends Seeder
             'sex'            => 'Male',
             'birthDate'      => '1996-05-22',
             'phoneNumber'    => '084558392801',
+            'email_verified' => 'verified',
+            'status'         => 1,
+            'created_at'     => Carbon::now(),
+            'updated_at'     => Carbon::now(),
+            'address'        => $faker->address
+        ));
+        Account::create(array(
+            'role_id'        => 1,
+            'password'       => md5("guest" . "56789"),
+            'salt'           => '56789',
+            'fullName'       => $faker->name,
+            'email'          => $faker->email,
+            'city_id'        => 1,
+            'sex'            => 'Male',
+            'birthDate'      => '1996-05-22',
+            'phoneNumber'    => $faker->phoneNumber,
             'email_verified' => 'verified',
             'status'         => 1,
             'created_at'     => Carbon::now(),

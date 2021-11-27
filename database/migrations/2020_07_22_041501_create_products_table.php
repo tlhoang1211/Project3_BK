@@ -34,6 +34,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->text('thumbnail');
             $table->integer('status');
+            $table->double('rate')->default(0.0);
             $table->timestamps();
         });
     }
