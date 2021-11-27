@@ -23,5 +23,3 @@ window.onbeforeunload = () =>
 
     sessionStorage.setItem(`scroll_position_of_${current_page}`, JSON.stringify(page_scroll_position));
 };
-
-console.log(current_page);
