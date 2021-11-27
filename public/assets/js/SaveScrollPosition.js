@@ -1,4 +1,6 @@
-const current_page = window.location.href;
+let current_page = window.location.href;
+// Remove ?page=1,2,3... generated in the URL by Laravel pagination
+current_page = current_page.replace(/\?page=[\d]/gm, "");
 
 document.addEventListener("DOMContentLoaded", function (event)
 {
@@ -14,9 +16,12 @@ document.addEventListener("DOMContentLoaded", function (event)
 window.onbeforeunload = function (e)
 {
     const page_scroll_position = {
+        // Remove last character in case the page is using pagination (end up with page=1,2,...)
         page: current_page,
         position: window.scrollY
     };
 
     sessionStorage.setItem(`scroll_position_of_${current_page}`, JSON.stringify(page_scroll_position));
 };
+
+console.log(current_page);
