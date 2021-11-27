@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\City;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -28,18 +29,18 @@ class AccountController extends Controller
 
     public function registerProgress(RegisterRequest $request)
     {
-//        dd($request);
-//        $request->validate([
-//            'email' => 'required',
-//            'password' => 'required',
-//            'firstName' => 'required',
-//            'lastName' => 'required',
-//            'address' => 'required',
-//            'city' => 'required',
-//            'phone' => 'required',
-//            'term' => 'required',
-//        ]);
-//        $request->validate();
+        //        dd($request);
+        //        $request->validate([
+        //            'email' => 'required',
+        //            'password' => 'required',
+        //            'firstName' => 'required',
+        //            'lastName' => 'required',
+        //            'address' => 'required',
+        //            'city' => 'required',
+        //            'phone' => 'required',
+        //            'term' => 'required',
+        //        ]);
+        //        $request->validate();
         $account = new Account();
         $account->email = $request->email;
         $account->address = $request->address;
@@ -76,9 +77,9 @@ class AccountController extends Controller
 
             if ($password == md5($attribute['password'] . $salt))
             {
-//                session_start();
-//                $account_session = $request->session();
-//                $account_session->put('current_account', $account);
+                //                session_start();
+                //                $account_session = $request->session();
+                //                $account_session->put('current_account', $account);
                 Auth::login($account);
 
                 if (auth()->user()->role->name == 'admin')
@@ -94,11 +95,11 @@ class AccountController extends Controller
         return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
     }
 
-    public function logOut(Request $request)
+    public function logOut(Request $request): RedirectResponse
     {
 
         Auth::logout();
-        return redirect('/');
+        return back();
     }
 
     public function edit($id)
@@ -145,7 +146,7 @@ class AccountController extends Controller
         ]);
 
         $account = new Account();
-//        dd($request);
+        //        dd($request);
         $account->name = $request->name;
         $account->save();
         return redirect(route('admin_account_list'));
@@ -163,13 +164,13 @@ class AccountController extends Controller
     {
         $ids = $request->ids;
         $ids_array = explode(',', $ids);
-//        return response()->json(['success'=>$ids_array]);
+        //        return response()->json(['success'=>$ids_array]);
         Account::whereIn('id', $ids_array)->update(['status' => 0]);
 
         return response()->json(['success' => "Account Deleted successfully."]);
-//        $products_array = $request->accounts;
+        //        $products_array = $request->accounts;
         //dd($products_array);
         //check product con ton` tai hay khong
-//
+        //
     }
 }
