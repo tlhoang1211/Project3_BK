@@ -294,11 +294,6 @@
                                                class='{{"qty2 quantity-$product_detail->id $volume"}}'
                                                name="{{'quantity-' . $product_detail->id}}"
                                         >
-                                        {{--<x-quantity-input--}}
-                                        {{--        :initVal="$volume_detail['quantity']"--}}
-                                        {{--        class="quantity-{{ $product_detail->id }} {{ $volume }}"--}}
-                                        {{--        name="quantity-{{$product_detail->id}}"--}}
-                                        {{--/>--}}
 
                                     </div>
                                 @endforeach
