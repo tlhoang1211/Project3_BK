@@ -350,6 +350,7 @@
                                                 <div class="mb-3">
                                                     <input name="title" type="text" class="form-control form-control-lg"
                                                            id="title"
+                                                           value="{{ old('title') }}"
                                                            placeholder="Title">
                                                     @if ($errors->has('title'))
                                                         <label class="alert-warning">{{$errors->first('title')}}</label>
@@ -360,7 +361,7 @@
                                                 <div class="mb-3">
                                                     <textarea name="body" class="form-control fix-textarea" id="body"
                                                               rows="3"
-                                                              placeholder="Enter your comment here..."></textarea>
+                                                              placeholder="Enter your comment here...">{{ old('body') }}</textarea>
                                                     @if ($errors->has('body'))
                                                         <label class="alert-warning">{{$errors->first('body')}}</label>
                                                     @endif
