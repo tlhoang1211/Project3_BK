@@ -5364,6 +5364,7 @@ input.qty2:focus {
 }
 
 .button_inc {
+    user-select: none;
     cursor: pointer;
     position: absolute;
     width: 33px;
