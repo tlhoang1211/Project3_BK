@@ -1,22 +1,12 @@
 <header class="version_1">
-    <div class="main_nav inner Sticky">
-        <div class="container" style="max-width: 99%">
-            <div class="row small-gutters">
-
-                {{--Logo--}}
-                <div class="col-xl-2 col-lg-2 d-lg-flex align-items-center">
-                    <div id="logo">
-                        <a href="{{route('home')}}"><img alt="logo" src={{asset('assets/img/logo.png')}} alt=""
-                                                         width="200"
-                                                         height="60" style="margin-left: -30px"></a>
-                    </div>
-                </div>
+    <div class="Sticky inner main_nav shadow">
+        <div class="container" style="max-width: 90%;">
+            <div class="align-items-center d-flex justify-content-between" style="min-height: 80px;">
 
                 {{--Hamburger menu--}}
-                <div class="col-xl-2 col-lg-2 col-md-2">
-                    <nav class="categories">
-                        <ul class="clearfix">
-                            <li><span>
+                <nav class="categories d-block menu">
+                    <ul class="clearfix">
+                        <li><span>
 										<a href="#">
 											<span class="hamburger hamburger--spin">
 												<span class="hamburger-box">
@@ -25,44 +15,41 @@
 											</span>
 										</a>
 									</span>
-                                <div id="menu">
-                                    <ul>
-                                        <li><span><a href="/product_list">SẢN PHẨM</a></span></li>
-                                        <li><span><a href="{{route('male_product')}}">NAM</a></span>
-                                            {{--                                            <ul>--}}
-                                            {{--                                                <li><a href="listing-grid-6-sidebar-left.html">A</a></li>--}}
-                                            {{--                                                <li><a href="listing-grid-7-sidebar-right.html">B</a></li>--}}
-                                            {{--                                                <li><a href="listing-row-1-sidebar-left.html">C</a></li>--}}
-                                            {{--                                                <li><a href="listing-row-3-sidebar-left.html">D</a></li>--}}
-                                            {{--                                            </ul>--}}
-                                        </li>
-                                        <li><span><a href="{{route('female_product')}}">NỮ</a></span>
-                                        <li><span><a href="{{route('unisex_product')}}">PHI GIỚI TÍNH</a></span>
-                                            {{--                                            <ul>--}}
-                                            {{--                                                <li><a href="listing-grid-1-full.html">A</a></li>--}}
-                                            {{--                                                <li><a href="listing-grid-2-full.html">B</a></li>--}}
-                                            {{--                                                <li><a href="listing-grid-3.html">C</a></li>--}}
-                                            {{--                                                <li><a href="listing-grid-4-sidebar-left.html">D</a></li>--}}
-                                            {{--                                            </ul>--}}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
+                            <div id="menu">
+                                <ul>
+                                    <li><span><a href="/product_list">SẢN PHẨM</a></span></li>
+                                    <li><span><a href="{{route('male_product')}}">NAM</a></span>
+                                    </li>
+                                    <li><span><a href="{{route('female_product')}}">NỮ</a></span>
+                                    <li><span><a href="{{route('unisex_product')}}">PHI GIỚI TÍNH</a></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                {{--Logo--}}
+                <div class="align-items-center d-flex flex-column" style="min-width: 300px;">
+                    <div id="logo"  class="m-auto w-50">
+                        <a href="{{route('home')}}"><img alt="logo" src={{asset('assets/img/logo.png')}} alt=""
+                                                         width="300"
+                                                         height="80" style="margin-left: -30px"></a>
+                    </div>
+
+                    {{--Search bar--}}
+                    <div class="search-bar" id="search_bar">
+                        <form action="{{route('product_search')}}" method="GET">
+                            @csrf
+                            <div class="custom-search-input">
+                                <input type="text" name="keyword" placeholder="Tìm kiếm hơn 10.000 sản phẩm"
+                                       value="@if (isset($keyword)){{$keyword}}@endif">
+                                <button type="submit"><i class="header-icon_search_custom"></i></button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
-                {{--Search bar--}}
-                <div class="col-xl-5 col-lg-6 col-md-5 d-none d-md-block">
-                    <form action="{{route('product_search')}}" method="GET">
-                        @csrf
-                        <div class="custom-search-input">
-                            <input type="text" name="keyword" placeholder="Tìm kiếm hơn 10.000 sản phẩm"
-                                   value="@if (isset($keyword)){{$keyword}}@endif">
-                            <button type="submit"><i class="header-icon_search_custom"></i></button>
-                        </div>
-                    </form>
-                </div>
 
                 @php
                     $product_cart = Session::get('shoppingCart');
@@ -74,16 +61,27 @@
                     }
                 @endphp
 
-                <div class="col-xl-3 col-lg-2 col-md-3">
+                <div>
                     <ul class="top_tools">
+
+                        {{--Search icon --}}
+                        <li>
+                            <div id="search_icon">
+                                <a href="#" class="header-icon_search_custom fa-2x">
+                                    <span>Search</span>
+                                </a>
+                            </div>
+                        </li>
+
+                        {{-- Dropdown cart --}}
                         <li>
                             <div class="dropdown dropdown-cart">
                                 <a href="{{route('cart')}}" class="cart_bt">
-                                    @if ($filter_cart != null)
+                                    @if ($filter_cart !== null)
                                         <strong id="cart_quantity">{{count($product_cart)}}</strong>
                                     @endif
                                 </a>
-                                @if ($filter_cart != null)
+                                @if ($filter_cart !== null)
                                     <div class="dropdown-menu">
                                         <ul>
                                             @foreach($filter_cart as $product_id => $product_detail)
@@ -93,8 +91,8 @@
                                                 <li>
                                                     <a href="{{route('product_detail',$product->slug)}}">
                                                         <figure><img
-                                                                src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
-                                                                alt="" width="50" height="50" class="lazy"></figure>
+                                                                    src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
+                                                                    alt="" width="50" height="50" class="lazy"></figure>
                                                         <strong><span>{{$product->name}}</span>{{$product->FormatPrice}}
                                                         </strong>
                                                     </a>
@@ -120,7 +118,7 @@
                                 <div class="dropdown-menu">
                                     @auth()
                                         <strong
-                                            style="font-size: 20px">{{auth()->user()->fullName}}</strong>
+                                                style="font-size: 20px">{{auth()->user()->fullName}}</strong>
                                         <ul>
                                             <li>
                                                 <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
@@ -140,8 +138,8 @@
                                                 <a class="log-out-btn" href="{{ route('logout') }}"
                                                 >
                                                     <i
-                                                        class="fa fa-sign-out" aria-hidden="true"
-                                                        style="color: #3a87ad">
+                                                            class="fa fa-sign-out" aria-hidden="true"
+                                                            style="color: #3a87ad">
 
                                                     </i>
                                                     Đăng xuất

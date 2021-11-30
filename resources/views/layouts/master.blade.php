@@ -50,12 +50,14 @@
 
 <body>
 
-@include('layouts.menu_bar')
+{{--@include('layouts.menu_bar')--}}
+@include('test')
 
 <!--content Start-->
 @yield('content')
 
 <!--content End-->
+
 <footer>
     <div class="container">
         <div class="row">

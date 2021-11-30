@@ -9,12 +9,23 @@
     {
         if ($(this).scrollTop() > 80)
         {
-            $headerStick.addClass("sticky_element");
-        } else
-        {
-            $headerStick.removeClass("sticky_element");
+            $headerStick.addClass("sticky_element opacity-50");
         }
+        else
+        {
+            $headerStick.removeClass("sticky_element opacity-50");
+        }
+    });
 
+    $headerStick.hover(() =>
+    {
+        $headerStick.removeClass("opacity-50");
+    }, () =>
+    {
+        if ($(window).scrollTop() > 80)
+        {
+            $headerStick.addClass("opacity-50");
+        }
     });
 
     // Menu Categories
@@ -50,7 +61,8 @@
                 $(".menu ul:first", this).parent().find("> span a").removeClass("active");
                 $(".menu ul:first", this).hide();
             });
-        } else
+        }
+        else
         {
             $(".categories").removeClass("menu");
         }
@@ -228,13 +240,15 @@
         if ($button.text() === "+")
         {
             newVal = parseFloat(oldValue) + 1;
-        } else
+        }
+        else
         {
             // Don't allow decrementing below zero
             if (oldValue > 1)
             {
                 newVal = parseFloat(oldValue) - 1;
-            } else
+            }
+            else
             {
                 newVal = 0;
             }
@@ -242,17 +256,48 @@
         $button.parent().find("input").val(newVal).change();
     });
 
+    // Hide logo, display search bar
+    let logo_is_displayed = true;
+    $("#search_icon").click((e) =>
+    {
+        e.stopPropagation();
+
+        $(`#${logo_is_displayed ? "logo" : "search_bar"}`).stop(true, true).delay(50).fadeToggle(200, () =>
+        {
+            $(`#${logo_is_displayed ? "search_bar" : "logo"}`).stop(true, true).delay(50).fadeToggle(100, () =>
+            {
+                logo_is_displayed = !logo_is_displayed;
+            });
+        });
+    });
+
+    // Switch back to logo if click outside of the searchbar
+    $(document).click((e) =>
+    {
+        if (!logo_is_displayed && !$(e.target).closest("#search_bar").length)
+        {
+            $("#search_icon").trigger("click");
+        }
+    });
+    // $(window).on("scroll", () =>
+    // {
+    //     if (!logo_is_displayed)
+    //     {
+    //         $("#search_icon").trigger("click");
+    //     }
+    // });
+
     /* Cart dropdown */
     $(".dropdown-cart").click(() =>
     {
         window.location.href = "/cart/page";
-    })
+    });
 
     // Account dropdown
     $(".user-page").click(() =>
     {
         window.location.href = "/user/account/profile";
-    })
+    });
 
     $(".dropdown-cart, .dropdown-access").hover(function ()
     {
@@ -269,7 +314,8 @@
         if (width <= 768)
         {
             $("a.cart_bt, a.access_link").removeAttr("data-toggle", "dropdown");
-        } else
+        }
+        else
         {
             $("a.cart_bt,a.access_link").attr("data-toggle", "dropdown");
         }
@@ -297,7 +343,8 @@
         if ($(window).width() <= 768)
         {
             $headingFooter.attr("data-toggle", "collapse");
-        } else
+        }
+        else
         {
             $headingFooter.removeAttr("data-toggle", "collapse");
         }
@@ -326,7 +373,8 @@
         if ($(window).scrollTop() >= pxShow)
         {
             $("#toTop").addClass("visible");
-        } else
+        }
+        else
         {
             $("#toTop").removeClass("visible");
         }
@@ -343,7 +391,8 @@
         if ($(window).width() <= 768)
         {
             $(".tooltip-1").tooltip("disable");
-        } else
+        }
+        else
         {
             $(".tooltip-1").tooltip({html: true});
         }

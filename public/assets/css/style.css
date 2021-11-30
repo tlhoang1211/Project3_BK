@@ -2398,7 +2398,7 @@ header .main_nav .custom-search-input {
     padding: 0;
     width: 100%;
     margin: 0;
-    top: 10px;
+    /*top: 10px;*/
     position: relative;
     height: 40px;
     -webkit-border-radius: 3px;
@@ -2559,11 +2559,12 @@ header.version_1 .main_header ul.top_tools > li .dropdown-access:hover > a {
 
 header.version_1 .main_nav {
     background-color: #fff;
+    transition: 0.5s;
 }
 
-header.version_1 .main_nav.inner {
-    border-bottom: 1px solid #ededed;
-}
+/*header.version_1 .main_nav.inner {*/
+/*    border-bottom: 1px solid #ededed;*/
+/*}*/
 
 header.version_1 .main_nav .custom-search-input {
     background-color: #f2f2f2;
@@ -7739,4 +7740,13 @@ img.mfp-img {
 
 .bg-text h2 {
     color: #ffffff;
+}
+
+.thinner {
+    -webkit-text-stroke: 2px #3a87ad;
+}
+
+.search-bar {
+    display: none;
+    width: 700px;
 }
