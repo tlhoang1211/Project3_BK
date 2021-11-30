@@ -1,7 +1,7 @@
 <header class="version_1">
-    <div class="Sticky inner main_nav shadow">
+    <div class="Sticky inner main_nav shadow sticky_element">
         <div class="container" style="max-width: 90%;">
-            <div class="align-items-center d-flex justify-content-between" style="min-height: 80px;">
+            <div class="align-items-center d-flex justify-content-between" style="min-height: 83px;">
 
                 {{--Hamburger menu--}}
                 <nav class="categories d-block menu">
@@ -29,12 +29,14 @@
                     </ul>
                 </nav>
 
+
                 {{--Logo--}}
                 <div class="align-items-center d-flex flex-column" style="min-width: 300px;">
-                    <div id="logo"  class="m-auto w-50">
-                        <a href="{{route('home')}}"><img alt="logo" src={{asset('assets/img/logo.png')}} alt=""
-                                                         width="300"
-                                                         height="80" style="margin-left: -30px"></a>
+                    <div id="logo" class="m-auto w-50">
+                        <a href="{{route('home')}}">
+                            <img class="swing" alt="logo" src={{asset('assets/img/logo-3.png')}}
+                                    width="435" height="83" style="margin-left: -30px">
+                        </a>
                     </div>
 
                     {{--Search bar--}}
@@ -67,7 +69,7 @@
                         {{--Search icon --}}
                         <li>
                             <div id="search_icon">
-                                <a href="#" class="header-icon_search_custom fa-2x">
+                                <a href="#" class="header-icon_search_custom fa-2x" style="padding-top: 3px;">
                                     <span>Search</span>
                                 </a>
                             </div>

@@ -9,22 +9,11 @@
     {
         if ($(this).scrollTop() > 80)
         {
-            $headerStick.addClass("sticky_element opacity-50");
+            $headerStick.addClass("fade-away");
         }
         else
         {
-            $headerStick.removeClass("sticky_element opacity-50");
-        }
-    });
-
-    $headerStick.hover(() =>
-    {
-        $headerStick.removeClass("opacity-50");
-    }, () =>
-    {
-        if ($(window).scrollTop() > 80)
-        {
-            $headerStick.addClass("opacity-50");
+            $headerStick.removeClass("fade-away");
         }
     });
 
@@ -38,16 +27,16 @@
                 e.preventDefault();
             });
             $(".categories").addClass("menu");
-            $(".menu ul > li").on("mouseover", function (e)
+            $(".menu ul > li").stop().on("mouseover", function (e)
             {
                 $(this).find("ul:first").show();
                 $(this).find("> span a").addClass("active");
-            }).on("mouseout", function (e)
+            }).stop().on("mouseout", function (e)
             {
                 $(this).find("ul:first").hide();
                 $(this).find("> span a").removeClass("active");
             });
-            $(".menu ul li li").on("mouseover", function (e)
+            $(".menu ul li li").stop().on("mouseover", function (e)
             {
                 if ($(this).has("ul").length)
                 {
@@ -55,7 +44,7 @@
                 }
                 $(".menu ul:first", this).parent().find("> span a").addClass("active");
                 $(".menu ul:first", this).show();
-            }).on("mouseout", function (e)
+            }).stop().on("mouseout", function (e)
             {
                 $(this).parent().removeClass("expanded");
                 $(".menu ul:first", this).parent().find("> span a").removeClass("active");
@@ -258,8 +247,9 @@
 
     // Hide logo, display search bar
     let logo_is_displayed = true;
-    $("#search_icon").click((e) =>
+    $("#search_icon").stop().click(function (e)
     {
+        $(this).css("disabled", true);
         e.stopPropagation();
 
         $(`#${logo_is_displayed ? "logo" : "search_bar"}`).stop(true, true).delay(50).fadeToggle(200, () =>
@@ -267,6 +257,7 @@
             $(`#${logo_is_displayed ? "search_bar" : "logo"}`).stop(true, true).delay(50).fadeToggle(100, () =>
             {
                 logo_is_displayed = !logo_is_displayed;
+                $(this).css("disabled", false);
             });
         });
     });
@@ -301,10 +292,10 @@
 
     $(".dropdown-cart, .dropdown-access").hover(function ()
     {
-        $(this).find(".dropdown-menu").stop(true, true).delay(50).fadeIn(300);
+        $(this).find(".dropdown-menu").stop().delay(50).fadeIn(300);
     }, function ()
     {
-        $(this).find(".dropdown-menu").stop(true, true).delay(50).fadeOut(300);
+        $(this).find(".dropdown-menu").stop().delay(50).fadeOut(300);
     });
 
     /* Cart Dropdown Hidden From tablet */
