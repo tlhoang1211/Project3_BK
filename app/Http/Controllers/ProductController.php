@@ -32,6 +32,10 @@ class ProductController extends Controller
             'product_id' => $product->id,
         ]);
 
+        // Update product rating
+        $product->rate = $product->calculated_rate;
+        $product->save();
+
         return back();
     }
 

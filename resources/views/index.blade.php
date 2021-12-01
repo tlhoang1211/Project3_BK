@@ -133,7 +133,7 @@
             {{--Product grid--}}
             <div class="container margin_60_35">
                 <div class="main_title">
-                    <h2>Bán chạy nhất</h2>
+                    <h2>Được đánh giá tốt nhất</h2>
                     <span>Các sản phẩm</span>
                     <p>Các thương hiệu nước hoa được feedback nhiều nhất tại Việt Nam</p>
                 </div>
