@@ -27,15 +27,19 @@
                 e.preventDefault();
             });
             $(".categories").addClass("menu");
-            $(".menu ul > li").stop().on("mouseover", function (e)
+
+            $(".menu ul > li").hover(function (e)
             {
-                $(this).find("ul:first").show();
+                e.stopPropagation();
+
+                $(this).find("ul:first").delay(50).fadeIn();
                 $(this).find("> span a").addClass("active");
-            }).stop().on("mouseout", function (e)
+            }, function ()
             {
-                $(this).find("ul:first").hide();
+                $(this).find("ul:first").delay(50).fadeOut();
                 $(this).find("> span a").removeClass("active");
             });
+
             $(".menu ul li li").stop().on("mouseover", function (e)
             {
                 if ($(this).has("ul").length)
