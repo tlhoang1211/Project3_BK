@@ -222,7 +222,7 @@
 @endsection
 @section('content')
     <main>
-        <div class="container margin_30" style="padding-top: 100px">
+        <div class="container margin_30">
             <div class="page_header">
                 <div class="breadcrumbs">
                     <ul>
