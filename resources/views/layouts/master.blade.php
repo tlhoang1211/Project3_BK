@@ -50,8 +50,7 @@
 
 <body>
 
-{{--@include('layouts.menu_bar')--}}
-@include('test')
+@include('layouts.menu_bar')
 
 <!--content Start-->
 @yield('content')
