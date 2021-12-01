@@ -222,7 +222,7 @@
 @endsection
 @section('content')
     <main>
-        <div class="container margin_30">
+        <div class="container margin_30" style="padding-top: 100px">
             <div class="page_header">
                 <div class="breadcrumbs">
                     <ul>
@@ -279,8 +279,8 @@
 
                                     {{-- Volume select --}}
                                     <x-product-detail.select :options="['100ml', '90ml', '50ml', '10ml']"
-                                              selected="{{$volume}}"
-                                              :class='"volume-$product_detail->id $volume"'
+                                                             selected="{{$volume}}"
+                                                             :class='"volume-$product_detail->id $volume"'
                                     />
 
                                 @endforeach
@@ -343,7 +343,10 @@
             </div>
         </div>
         @else
-        Hiện tại bạn không có sản phẩm nào trong giỏ hàng
+            <div class="alert alert-secondary fs-5 text-center" role="alert" style="background: #F6F4F2">
+                Hiện tại bạn không có sản phẩm nào trong giỏ hàng
+                <img src="{{ asset('assets/img/animated_cart.gif') }}" class="img-fluid rounded mx-auto d-bloc" alt="animated cart">
+            </div>
     @endif
     <!-- /box_cart -->
 
