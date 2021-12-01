@@ -14,7 +14,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -24,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (!$this->app->isLocal())
+        {
+            $this->app['request']->server->set('HTTPS', true);
+        }
+
         Paginator::useBootstrap();
     }
 }

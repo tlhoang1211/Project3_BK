@@ -56,6 +56,7 @@
 @yield('content')
 
 <!--content End-->
+
 <footer>
     <div class="container">
         <div class="row">
