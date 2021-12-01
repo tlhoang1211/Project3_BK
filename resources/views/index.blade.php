@@ -130,6 +130,7 @@
             </ul>
             <!--/banners_grid -->
 
+            {{--Product grid--}}
             <div class="container margin_60_35">
                 <div class="main_title">
                     <h2>Bán chạy nhất</h2>
@@ -184,7 +185,6 @@
                 </div>
             </div>
             <!-- /featured -->
-
 
             <div class="bg_gray">
                 <div class="container margin_30">
