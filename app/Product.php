@@ -94,7 +94,7 @@ class Product extends Model
         return $this->hasMany(Comment::class)->latest();
     }
 
-    public function getRateAttribute()
+    public function getCalculatedRateAttribute()
     {
         return $this->comments->pluck('rate')->avg();
     }

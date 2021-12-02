@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 // user : route
 Route::get('/', function () {
-    $products = Product::all()->take(8);
+    $products = Product::all()->sortByDesc('rate')->take(12);
     $brands = Brand::all();
     return view('index', compact('products', 'brands'));
 })->name('home');

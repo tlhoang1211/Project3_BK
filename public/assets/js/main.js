@@ -253,15 +253,14 @@
     let logo_is_displayed = true;
     $("#search_icon").stop().click(function (e)
     {
-        $(this).css("disabled", true);
         e.stopPropagation();
 
-        $(`#${logo_is_displayed ? "logo" : "search_bar"}`).stop(true, true).delay(50).fadeToggle(200, () =>
+        $(`#${logo_is_displayed ? "logo" : "search_bar"}`).delay(50).fadeToggle(200, (e) =>
         {
-            $(`#${logo_is_displayed ? "search_bar" : "logo"}`).stop(true, true).delay(50).fadeToggle(100, () =>
+            $(`#${logo_is_displayed ? "search_bar" : "logo"}`).delay(50).fadeToggle(100, (e) =>
             {
                 logo_is_displayed = !logo_is_displayed;
-                $(this).css("disabled", false);
+                $(this).css("pointer-events", 'auto');
             });
         });
     });
@@ -269,7 +268,7 @@
     // Switch back to logo if click outside of the searchbar
     $(document).click((e) =>
     {
-        if (!logo_is_displayed && !$(e.target).closest("#search_bar").length)
+        if (!logo_is_displayed && !$(e.target).closest("#search_bar").length && !$(e.target).closest("#search_icon").length)
         {
             $("#search_icon").trigger("click");
         }
@@ -358,7 +357,6 @@
             zIndex: 1
         });
     }
-
 
     // Scroll to top
     const pxShow = 800; // height on which the button will show
