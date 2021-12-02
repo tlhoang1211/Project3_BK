@@ -2,7 +2,6 @@
 
 @php
     $floor_rate = floor($rate);
-    $float_rate = (float) $rate;
 @endphp
 
 <span class="rating">
@@ -22,5 +21,5 @@
             @endif
         @endfor
     @endif
-        <em>{{ number_format($float_rate, 1, '.', '') }}/5.0</em>
+        <em>{{ $rate }}/5.0</em>
 </span>

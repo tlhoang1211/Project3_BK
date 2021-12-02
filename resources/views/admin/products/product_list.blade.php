@@ -17,53 +17,70 @@
 
     <script src="{{asset('assets/admin/libs/parsleyjs/parsley.min.js')}}"></script>
     <script>
-        $(document).ready(function () {
-            $(".parsley-examples").parsley()
+        $(document).ready(function ()
+        {
+            $(".parsley-examples").parsley();
         });
     </script>
     <script>
-        $(document).ready(function () {
-            $("#delete_all").on('click', function (e) {
-                console.log('123');
+        $(document).ready(function ()
+        {
+            $("#delete_all").on("click", function (e)
+            {
+                console.log("123");
                 var allVals = [];
-                $(".checkbox_list_product:checked").each(function () {
+                $(".checkbox_list_product:checked").each(function ()
+                {
                     allVals.push($(this).val());
                     console.log(allVals);
                 });
-                if (allVals.length <= 0) {
+                if (allVals.length <= 0)
+                {
                     alert("Please select row.");
-                } else {
+                }
+                else
+                {
                     var check = confirm("Are you sure you want to delete this row?");
-                    if (check == true) {
+                    if (check == true)
+                    {
                         var join_selected_values = allVals.join(",");
                         $.ajax({
                             url: '{{route('admin_product_delete_multi')}}',
-                            type: 'PUT',
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            data: 'ids=' + join_selected_values,
-                            success: function (data) {
-                                if (data['success']) {
-                                    $(".sub_chk:checked").each(function () {
+                            type: "PUT",
+                            headers: {"X-CSRF-TOKEN": $("meta[name=\"csrf-token\"]").attr("content")},
+                            data: "ids=" + join_selected_values,
+                            success: function (data)
+                            {
+                                if (data["success"])
+                                {
+                                    $(".sub_chk:checked").each(function ()
+                                    {
                                         $(this).parents("tr").remove();
                                     });
                                     alert("Brands Deleted Success");
                                     window.location = '{{route('admin_product_list')}}';
-                                } else if (data['error']) {
-                                    console.log(data['error']);
-                                } else {
-                                    alert('Whoops Something went wrong!!');
+                                }
+                                else if (data["error"])
+                                {
+                                    console.log(data["error"]);
+                                }
+                                else
+                                {
+                                    alert("Whoops Something went wrong!!");
                                 }
                             },
-                            error: function (data) {
+                            error: function (data)
+                            {
                                 alert(data.responseText);
                             }
                         });
-                        $.each(allVals, function (index, value) {
-                            $('table tr').filter("[data-row-id='" + value + "']").remove();
+                        $.each(allVals, function (index, value)
+                        {
+                            $("table tr").filter("[data-row-id='" + value + "']").remove();
                         });
                     }
                 }
-            })
+            });
         });
     </script>
 @endsection
@@ -103,15 +120,23 @@
                                 <div class="col-12">
                                     <form action="{{route('admin_product_list')}}">
                                         <div class="row">
+
+                                            {{--Brand--}}
                                             <div class="col-2">
                                                 <label>Hãng</label>
+                                                @if (old('brand'))
+                                                    @dd(old('brand'))
+                                                @endif
                                                 <select class="form-control" name="brand">
-                                                    <option value="0">All</option>
+                                                    <option {!! old('brand' == 0 ? 'selected' : '' ) !!} value="0">All
+                                                    </option>
                                                     @foreach($brands as $brand)
-                                                        <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+                                                        <option {!! old('brand' == $brand->id ? 'selected' : '' ) !!} }}
+                                                                value="{{$brand->id}}">{{$brand->brand_name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
+
                                             <div class="col-2">
                                                 <label>Xuất xứ</label>
                                                 <select class="form-control" name="origin">
@@ -124,27 +149,27 @@
                                             <div class="col-2">
                                                 <label>Nhà phát minh</label>
                                                 <input type="text" class="form-control" name="inventor"
-                                                       value="{{$datas->inventor ?? ''}}">
+                                                       value="{{$data->inventor ?? ''}}">
                                             </div>
                                             <div class="col-4">
                                                 <label>Tên sản phẩm</label>
                                                 <input type="text" class="form-control" name="product_name"
-                                                       value="{{$datas->product_name ?? ''}}">
+                                                       value="{{$data->product_name ?? ''}}">
                                             </div>
                                             <div class="col-2"
                                                  style="justify-content: space-between;flex-direction: column;display: flex;">
                                                 <label> </label>
                                                 <div>
-                                                    <button class="btn btn-primary waves-effect waves-light btn-block" > Lọc
+                                                    <button class="btn btn-primary waves-effect waves-light btn-block">
+                                                        Lọc
                                                     </button>
-                                                    <button type="reset"
-                                                            class="btn btn-secondary waves-effect waves-light btn-block">
+                                                    <a href="{{ route('admin_product_list') }}"
+                                                       class="btn btn-secondary waves-effect waves-light btn-block">
                                                         Reset
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
-
 
                                     </form>
                                 </div>
@@ -167,6 +192,8 @@
                             <th>Tên nhà phát minh</th>
                             <th>Tên xuất xứ</th>
                             <th>Tên hãng</th>
+                            <th>Số lượt đánh giá</th>
+                            <th>Đánh giá</th>
                             <th colspan="2" style="text-align: center">Action</th>
                         </tr>
                         </thead>
@@ -193,6 +220,8 @@
 
                                 <td>{{$product->origin->name}}</td>
                                 <td>{{$product->brand->brand_name}}</td>
+                                <td>{{$product->comments->count()}}</td>
+                                <td>{{$product->rate}}</td>
                                 {{--                                    <td><div> {{$product->description}}</div></td>--}}
                                 {{--                                    <td>{{count($product->products)}}</td>--}}
                                 <td><a href="{{route('admin_product_edit',$product->id)}}" class="btn btn-primary"
