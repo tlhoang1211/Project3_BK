@@ -1,6 +1,7 @@
 <?php
 
 use App\Brand;
+use App\Http\Controllers\AccountController;
 use App\Origin;
 use App\Product;
 use Illuminate\Support\Facades\Route;
@@ -42,9 +43,8 @@ Route::get('/user/account/profile', function () {
     $account = auth()->user();
     return view('account', compact('account'));
 })->name('profile')->middleware('auth');
-Route::put('/user/account/profile_update/{id}', function (\Illuminate\Http\Request $request, $id) {
-    dd($request);
-})->name('account_update')->middleware('auth');
+Route::post('/user/account/profile_update', [AccountController::class, 'user_update'])
+    ->name('user_account_update')->middleware('auth');
 Route::get('/user/purchase', 'UserController@orderList')->name('mypurchase')->middleware('auth');
 
 //==================================================================================================================
@@ -54,8 +54,8 @@ Route::post('/product/{product:slug}/comment', 'ProductController@productComment
 Route::get('/product_list', 'ProductController@productList')->name('product_list');
 Route::get('/product/{product:slug}', 'ProductController@index')->name('product_detail');
 Route::get('/product_find', 'ProductController@search')->name('product_search');
-Route::get('/male_product', 'ProductController@male_product')->name('male_product');
-Route::get('/female_product', 'ProductController@female_product')->name('female_product');
+    Route::get('/male_product', 'ProductController@male_product')->name('male_product');
+    Route::get('/female_product', 'ProductController@female_product')->name('female_product');
 Route::get('/unisex_product', 'ProductController@unisex_product')->name('unisex_product');
 
 //==================================================================================================================

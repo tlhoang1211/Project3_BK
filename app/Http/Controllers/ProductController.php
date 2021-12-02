@@ -424,7 +424,7 @@ class ProductController extends Controller
         {
             foreach ($brand->products as $brand_product)
             {
-                if ($brand_product->sex == "Nam")
+                if ($brand_product->sex === "Nam")
                 {
                     if ($brand_amount[$brand->id][$brand_product->id] = null)
                     {

@@ -12,7 +12,7 @@ class Account extends Authenticatable
     use Notifiable;
 
     protected $table = 'accounts';
-    protected $fillable = ['name', 'email', 'password'];
+    protected $guarded = ['id'];
     protected $hidden = ['password', 'remember_token'];
 
     public function role(): BelongsTo

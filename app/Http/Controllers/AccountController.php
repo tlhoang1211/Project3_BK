@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\City;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -160,7 +161,7 @@ class AccountController extends Controller
         return redirect(route('admin_account_list'));
     }
 
-    public function delete_multi(Request $request)
+    public function delete_multi(Request $request): JsonResponse
     {
         $ids = $request->ids;
         $ids_array = explode(',', $ids);
@@ -172,5 +173,19 @@ class AccountController extends Controller
         //dd($products_array);
         //check product con ton` tai hay khong
         //
+    }
+
+    public function user_update(Request $request): RedirectResponse
+    {
+        $account = auth()->user();
+        $attributes = $request->validate([
+            'fullName'  => 'required',
+            'birthDate' => 'required',
+            'sex'       => 'required'
+        ]);
+        $attributes['birthDate'] = date("Y-m-d", strtotime($attributes['birthDate']));
+        $account->update($attributes);
+
+        return back();
     }
 }

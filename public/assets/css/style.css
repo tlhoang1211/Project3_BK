@@ -4613,6 +4613,7 @@ body.modal-open .mm-slideout {
 /*-------- 2.1 Home --------*/
 #carousel-home, #carousel-home-2 {
     position: relative;
+    margin-top: 83px;
 }
 
 #carousel-home .static, #carousel-home-2 .static {
