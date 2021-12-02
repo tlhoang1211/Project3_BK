@@ -78,12 +78,15 @@
                         {{-- Dropdown cart --}}
                         <li>
                             <div class="dropdown dropdown-cart">
-                                <a href="{{route('cart')}}" class="cart_bt">
-                                    @if ($filter_cart !== null)
-                                        <strong id="cart_quantity">{{count($product_cart)}}</strong>
+                                <a href="{{route('cart')}}" class="cart_bt position-relative">
+                                    @if ($filter_cart)
+                                        <div class="position-absolute bottom-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ count($product_cart) }}
+                                            <span class="visually-hidden">unread messages</span>
+                                        </div>
                                     @endif
                                 </a>
-                                @if ($filter_cart !== null)
+                                @if ($filter_cart)
                                     <div class="dropdown-menu">
                                         <ul>
                                             @foreach($filter_cart as $product_id => $product_detail)

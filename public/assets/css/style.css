@@ -2241,16 +2241,18 @@ header ul.top_tools > li a > span {
     display: none;
 }
 
+header ul.top_tools > li a > .badge {
+    padding: 0.45em 0.65em 0.5em 0.65em;
+}
+
 header ul.top_tools > li a:before {
     font-family: 'header_icons';
-    font-size: 26px;
     font-size: 1.625rem;
     font-weight: 500 !important;
 }
 
 header ul.top_tools > li a.btn_search_mob:before, header ul.top_tools > li a.search_panel:before {
     content: '\0045';
-    font-size: 26px;
     font-size: 1.625rem;
 }
 
@@ -2296,7 +2298,6 @@ header ul.top_tools > li a.cart_bt:before {
 }
 
 header ul.top_tools > li a.cart_bt strong {
-    font-size: 10px;
     font-size: 0.625rem;
     font-weight: 700;
     width: 16px;
@@ -2307,7 +2308,7 @@ header ul.top_tools > li a.cart_bt strong {
     position: absolute;
     bottom: 10px;
     right: -3px;
-    line-height: 17px !important;
+    line-height: 15px !important;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;

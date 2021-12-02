@@ -159,7 +159,7 @@
                         </div>
                     @endforeach
                     <a href="{{ auth()->user()->sex === 'Male' ? route('male_product') : route('female_product') }}"
-                       class="btn_1 fs-5" style="margin-bottom: 20px">
+                       class="btn_1 fs-5">
                         Xem toàn bộ sản phẩm của chúng tôi
                     </a>
                     <!-- /col -->
