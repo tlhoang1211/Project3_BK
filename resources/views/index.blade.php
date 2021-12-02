@@ -158,11 +158,19 @@
                             <!-- /grid_item -->
                         </div>
                     @endforeach
-                    <a href="{{ auth()->user()->sex === 'Male' ? route('male_product') : route('female_product') }}"
-                       class="btn_1 fs-5">
-                        Xem toàn bộ sản phẩm của chúng tôi
-                    </a>
-                    <!-- /col -->
+                    @auth
+                        <a href="{{ auth()->user()->sex === 'Male' ? route('male_product') : route('female_product') }}"
+                           class="btn_1 fs-5">
+                            Xem toàn bộ sản phẩm của chúng tôi
+                        </a>
+                    @else
+                        <a href="{{ route('product_list') }}"
+                           class="btn_1 fs-5">
+                            Xem toàn bộ sản phẩm của chúng tôi
+                        </a>
+                @endauth
+
+                <!-- /col -->
                 </div>
                 <!-- /row -->
             </div>

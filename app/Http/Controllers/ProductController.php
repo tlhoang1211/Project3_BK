@@ -692,8 +692,10 @@ class ProductController extends Controller
         session()->put('shoppingCart', $parsed_data);
 
         // Update subprice of each item in the cart
+        $ship_fee = 200000.0;
         $cart = update_cart_item_price();
-        $cart['total_price'] = format_money(get_cart_total_price());
+        $cart['total_price'] = format_money(get_cart_total_price() + $ship_fee);
+        $cart['price_no_ship'] = format_money(get_cart_total_price());
 
         return response()->json(['success' => $cart]);
     }
