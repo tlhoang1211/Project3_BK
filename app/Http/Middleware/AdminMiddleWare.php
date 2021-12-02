@@ -3,29 +3,24 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class AdminMiddleWare
 {
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        $current_account = session('current_account');
-//        $account = Account::first();
-//        dd("132");
-//        dd($current_account);
-//        dd($current_account->roles);
-        if (isset($current_account))
+        $current_account = auth()->user();
+
+        if (isset($current_account) && $current_account->role->name === 'admin')
         {
-            if ($current_account->role->name == 'admin')
-            {
-                return $next($request);
-            }
+            return $next($request);
         }
         return redirect('/');
     }

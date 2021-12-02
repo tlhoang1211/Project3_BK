@@ -69,43 +69,34 @@ class ProductController extends Controller
         $numberItem = 5;
         $orderBy = "ASC";
         $query = Product::where('status', '=', '1');
-        $datas = new Array_();
+        $data = new Array_();
 
 
         if ($request->has('origin') && $request->origin != "0")
         {
             $query->where('origin_id', $request->origin);
-            $datas->origin = $request->origin;
+            $data->origin = $request->origin;
         }
         if ($request->has('brand') && $request->brand != "0")
         {
             $query->where('brand_id', $request->brand);
-            $datas->brand = $request->brand;
+            $data->brand = $request->brand;
         }
         if ($request->has('inventor') && $request->inventor != null && strlen($request->inventor) > 0)
         {
             $query->where('inventor_name', 'like', '%' . $request->inventor . '%');
-            $datas->inventor = $request->inventor;
+            $data->inventor = $request->inventor;
         }
         if ($request->has('product_name') && $request->product_name != null && strlen($request->product_name) > 0)
         {
             $query->where('name', 'like', '%' . $request->product_name . '%');
-            $datas->product_name = $request->product_name;
+            $data->product_name = $request->product_name;
         }
-        $products = $query->orderBy('id', 'desc')->paginate(5);
-        //        dd($products);
-        //        $asda = hello;
-        //        if ($request->has('keyword')){
-        //            $products = Product::where('status','=','1')->where('name','like','%'.$request->keyword.'%')->orderBy('id',$orderBy)->paginate($numberItem)->appends($request->only('keyword'));
-        //            return view('admin.products.brand_list',compact('products'));
-        //        }
-        //        $products = Product::where('status','=','1')->orderBy('id',$orderBy)->paginate($numberItem);
-        ////        dd($products);
-
+        $products = $query->orderBy('created_at', 'desc')->paginate(10);
 
         $brands = Brand::where('status', '=', '1')->orderBy('id', $orderBy)->get();
         $origins = Origin::where('status', '=', '1')->orderBy('id', $orderBy)->get();
-        return view('admin.products.product_list')->with(compact('products', 'brands', 'origins', 'datas'));
+        return view('admin.products.product_list')->with(compact('products', 'brands', 'origins', 'data'));
 
     }
 

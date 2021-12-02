@@ -22,8 +22,8 @@ class AccountController extends Controller
     public function admin_index()
     {
         $cities = City::all();
-        $account_cur = Session::get('current_account');
-        $accounts = Account::where('id', '!=', $account_cur->id)->paginate(5);
+        $account_cur = \auth()->user();
+        $accounts = Account::where('id', '!=', auth()->id())->paginate(5);
         return view('admin.accounts.account_list', compact('cities', 'accounts'));
     }
 

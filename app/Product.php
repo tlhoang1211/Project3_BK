@@ -96,6 +96,7 @@ class Product extends Model
 
     public function getCalculatedRateAttribute()
     {
-        return $this->comments->pluck('rate')->avg();
+        $float_rate =  $this->comments->pluck('rate')->avg();
+        return number_format($float_rate, 1, '.', '');
     }
 }

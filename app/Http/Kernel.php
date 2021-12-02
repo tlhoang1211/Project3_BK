@@ -77,6 +77,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth'             => Authenticate::class,
+        'admin_check'      => AdminMiddleWare::class,
         'auth.basic'       => AuthenticateWithBasicAuth::class,
         'bindings'         => SubstituteBindings::class,
         'cache.headers'    => SetCacheHeaders::class,
@@ -86,6 +87,5 @@ class Kernel extends HttpKernel
         'signed'           => ValidateSignature::class,
         'throttle'         => ThrottleRequests::class,
         'verified'         => EnsureEmailIsVerified::class,
-        'admin_check'      => AdminMiddleWare::class,
     ];
 }
