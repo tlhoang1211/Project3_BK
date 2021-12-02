@@ -1,0 +1,37 @@
+main {
+    margin-bottom: 10px;
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.5rem 1.2rem;
+}
+
+.no-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-size: contain;
+    /*background-size: cover;*/
+}
+
+.no-product-female {
+    background-image: url("../img/cart/continue_shopping_female.gif");
+}
+
+.no-product-male {
+    background-image: url("../img/cart/continue_shopping_male.gif");
+}
+
+.no-product > p {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.no-product-female > p {
+    background: #FFF7E9;
+}
+
+.no-product-male > p {
+    background: #E4E3C3;
+}

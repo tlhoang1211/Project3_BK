@@ -1,15 +1,7 @@
 @extends('layouts.master')
 @section('specific_css')
     <link href="{{asset('assets/css/user_page.css')}}" rel="stylesheet">
-    <style>
-        main {
-            margin-bottom: 10px;
-        }
-
-        .table > :not(caption) > * > * {
-            padding: 0.5rem 1.2rem;
-        }
-    </style>
+    <link href="{{asset('assets/css/cart-page.css')}}" rel="stylesheet">
 @endsection
 @section('specific_js')
     <script type="module" src="{{asset('assets/js/cart_page.js')}}"></script>
@@ -235,7 +227,7 @@
             </div>
             <!-- /page_header -->
             @php
-                $cart = Session::get('shoppingCart');
+                $cart = Session::get('shoppingCart')
             @endphp
             @if (!empty($cart))
                 <table class="table cart-list table-hover">
@@ -250,11 +242,11 @@
                     </thead>
                     <tbody>
                     @php
-                        $total_price = get_cart_total_price();
+                        $total_price = get_cart_total_price()
                     @endphp
                     @foreach ($cart as $product_id => $product_volume)
                         @php
-                            $product_detail = \App\Product::find($product_id);
+                            $product_detail = \App\Product::find($product_id)
                         @endphp
                         <tr class="align-middle">
                             <td>
@@ -343,9 +335,15 @@
             </div>
         </div>
         @else
-            <div class="alert alert-secondary fs-5 text-center" role="alert" style="background: #F6F4F2">
-                Hiện tại bạn không có sản phẩm nào trong giỏ hàng
-                <img src="{{ asset('assets/img/animated_cart.gif') }}" class="img-fluid rounded mx-auto d-bloc" alt="animated cart">
+            <div class="alert alert-secondary no-product {{auth()->user()->sex === 'Male' ? 'no-product-male' : 'no-product-female'}}"
+                 role="alert"
+                 style="min-height: 320px">
+                <p class="fs-6 p-4">
+                    Hiện tại bạn không có sản phẩm nào trong giỏ hàng
+                </p>
+                <a href="{{ route('product_list') }}" class="btn_1" style="margin-bottom: 20px">
+                    Tiếp tục mua sắm chứ nhỉ?
+                </a>
             </div>
     @endif
     <!-- /box_cart -->
