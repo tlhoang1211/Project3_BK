@@ -34,8 +34,10 @@
     <link href={{ asset('assets/css/style.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/toastr.min.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/layout.css') }} rel="stylesheet">
+
     <!-- SPECIFIC CSS -->
     @yield('specific_css')
+    @stack('component_css')
 
 <!-- YOUR CUSTOM CSS -->
     {{--    <link href={{ asset('assets/css/custom.css') }} rel="stylesheet">--}}

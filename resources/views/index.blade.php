@@ -4,6 +4,7 @@
 @endsection
 @section('specific_css')
     <link href={{ asset('assets/css/home_1.css') }} rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/gird-item.css') }}">
 @endsection
 @section('specific_js')
     <script src={{asset('assets/js/carousel-home.min.js')}}></script>
@@ -140,33 +141,19 @@
                 <div class="row small-gutters">
                     @foreach($products as $product)
                         <div class="col-6 col-md-4 col-xl-3">
-                            <div class="grid_item">
-                                <figure>
-                                    <a href="{{route('product_detail',$product->slug)}}">
-                                        <img class="img-fluid lazy"
-                                             src="{{$product->firstThumbnail}}" data-src="{{$product->firstThumbnail}}"
-                                             alt="">
-                                    </a>
-                                </figure>
-                                <a href="product-detail-1.html">
-                                    <h3>{{$product->name}}</h3>
-                                </a>
-                                <div class="price_box">
-                                    <span class="new_price">{{format_money($product->price)}}</span>
-                                </div>
-                            </div>
-                            <!-- /grid_item -->
+                            <x-product.grid-item :product="$product"/>
                         </div>
                     @endforeach
                     @auth
-                        <a href="{{ auth()->user()->sex === 'Male' ? route('male_product') : route('female_product') }}"
+                        <?php $sex = auth()->user()->sex ?>
+                        <a href="{{ $sex === 'Male' ? route('male_product') : route('female_product') }}"
                            class="btn_1 fs-5">
-                            Xem toàn bộ sản phẩm của chúng tôi
+                            Xem toàn bộ sản phẩm cho {{ $sex === 'Male' ? 'nam' : 'nữ' }}
                         </a>
                     @else
                         <a href="{{ route('product_list') }}"
                            class="btn_1 fs-5">
-                            Xem toàn bộ sản phẩm của chúng tôi
+                            Xem toàn bộ sản phẩm
                         </a>
                 @endauth
 

@@ -54,8 +54,8 @@ Route::post('/product/{product:slug}/comment', 'ProductController@productComment
 Route::get('/product_list', 'ProductController@productList')->name('product_list');
 Route::get('/product/{product:slug}', 'ProductController@index')->name('product_detail');
 Route::get('/product_find', 'ProductController@search')->name('product_search');
-    Route::get('/male_product', 'ProductController@male_product')->name('male_product');
-    Route::get('/female_product', 'ProductController@female_product')->name('female_product');
+Route::get('/male_product', 'ProductController@male_product')->name('male_product');
+Route::get('/female_product', 'ProductController@female_product')->name('female_product');
 Route::get('/unisex_product', 'ProductController@unisex_product')->name('unisex_product');
 
 //==================================================================================================================
