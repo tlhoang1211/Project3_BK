@@ -308,7 +308,7 @@ if ($cart)
                             @endforeach
 
                             <div class="back-to-shop mt-auto"><a href="{{ route('product_list') }}">&leftarrow;<span
-                                            class="text-muted">Back to shop</span></a></div>
+                                            class="text-muted">Tiếp tục mua sắm</span></a></div>
                         </div>
                         <div class="col-md-4 summary">
                             <div>
