@@ -76,21 +76,17 @@ class AccountController extends Controller
             $password = $account->password;
             $salt = $account->salt;
 
-            if ($password == md5($attribute['password'] . $salt))
+            if ($password === md5($attribute['password'] . $salt))
             {
-                //                session_start();
-                //                $account_session = $request->session();
-                //                $account_session->put('current_account', $account);
-                Auth::login($account);
+                //                dd($request->remembered == 'checked');
+                Auth::login($account, $request->remembered == 'checked');
 
-                if (auth()->user()->role->name == 'admin')
+                if (auth()->user()->role->name === 'admin')
                 {
                     return redirect('/admin');
                 }
-                else
-                {
-                    return redirect(session('previous_link'));
-                }
+
+                return redirect(session('previous_link'));
             }
         }
         return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
@@ -100,7 +96,9 @@ class AccountController extends Controller
     {
 
         Auth::logout();
-        return back();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 
     public function edit($id)
