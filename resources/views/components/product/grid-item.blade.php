@@ -9,7 +9,7 @@
         </a>
     </figure>
     <a href="product-detail-1.html">
-        <h3>{{$product->name}}</h3>
+        <h3 class="mb-2">{{$product->name}}</h3>
     </a>
     <div class="price_box">
         <span class="new_price">{{format_money($product->price)}}</span>
