@@ -1,6 +1,7 @@
 <?php
 
 use App\Brand;
+use App\Http\Controllers\AccountController;
 use App\Origin;
 use App\Product;
 use Illuminate\Support\Facades\Route;
@@ -42,9 +43,8 @@ Route::get('/user/account/profile', function () {
     $account = auth()->user();
     return view('account', compact('account'));
 })->name('profile')->middleware('auth');
-Route::put('/user/account/profile_update/{id}', function (\Illuminate\Http\Request $request, $id) {
-    dd($request);
-})->name('account_update')->middleware('auth');
+Route::post('/user/account/profile_update', [AccountController::class, 'user_update'])
+    ->name('user_account_update')->middleware('auth');
 Route::get('/user/purchase', 'UserController@orderList')->name('mypurchase')->middleware('auth');
 
 //==================================================================================================================

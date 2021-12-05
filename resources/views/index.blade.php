@@ -4,6 +4,7 @@
 @endsection
 @section('specific_css')
     <link href={{ asset('assets/css/home_1.css') }} rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/gird-item.css') }}">
 @endsection
 @section('specific_js')
     <script src={{asset('assets/js/carousel-home.min.js')}}></script>
@@ -94,9 +95,9 @@
                 <li>
                     <a href="{{route('female_product')}}" class="img_container">
                         <img
-                            src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
-                            data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
-                            alt="" class="lazy">
+                                src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
+                                alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST Nữ</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -106,9 +107,9 @@
                 <li>
                     <a href="{{route('male_product')}}" class="img_container">
                         <img
-                            src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
-                            data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
-                            alt="" class="lazy">
+                                src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
+                                alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST Nam</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -118,9 +119,9 @@
                 <li>
                     <a href="{{route('unisex_product')}}" class="img_container">
                         <img
-                            src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
-                            data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
-                            alt="" class="lazy">
+                                src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
+                                alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST đa giới</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -140,24 +141,22 @@
                 <div class="row small-gutters">
                     @foreach($products as $product)
                         <div class="col-6 col-md-4 col-xl-3">
-                            <div class="grid_item">
-                                <figure>
-                                    <a href="{{route('product_detail',$product->slug)}}">
-                                        <img class="img-fluid lazy"
-                                             src="{{$product->firstThumbnail}}" data-src="{{$product->firstThumbnail}}"
-                                             alt="">
-                                    </a>
-                                </figure>
-                                <a href="product-detail-1.html">
-                                    <h3>{{$product->name}}</h3>
-                                </a>
-                                <div class="price_box">
-                                    <span class="new_price">{{format_money($product->price)}}</span>
-                                </div>
-                            </div>
-                            <!-- /grid_item -->
+                            <x-product.grid-item :product="$product"/>
                         </div>
-                @endforeach
+                    @endforeach
+                    @auth
+                        <?php $sex = auth()->user()->sex ?>
+                        <a href="{{ $sex === 'Male' ? route('male_product') : route('female_product') }}"
+                           class="btn_1 fs-5">
+                            Xem toàn bộ sản phẩm cho {{ $sex === 'Male' ? 'nam' : 'nữ' }}
+                        </a>
+                    @else
+                        <a href="{{ route('product_list') }}"
+                           class="btn_1 fs-5">
+                            Xem toàn bộ sản phẩm
+                        </a>
+                @endauth
+
                 <!-- /col -->
                 </div>
                 <!-- /row -->
@@ -213,8 +212,8 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
-                                    alt="" width="400" height="266" class="lazy">
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
+                                        alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -230,8 +229,8 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
-                                    alt="" width="400" height="266" class="lazy">
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
+                                        alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -247,8 +246,8 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
-                                    alt="" width="400" height="266" class="lazy">
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
+                                        alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -265,8 +264,8 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
-                                    alt="" width="400" height="266" class="lazy">
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
+                                        alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>06</strong>Aug</figcaption>
                             </figure>
                             <ul>

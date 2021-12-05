@@ -74,10 +74,10 @@
                                 @if ($errors->has('password'))
                                     <label class="alert-warning">{{$errors->first('password')}}</label>
                                 @endif
-                                <div class="clearfix add_bottom_15">
+                                <div class="clearfix add_bottom_15 mt-2">
                                     <div class="checkboxes float-left">
                                         <label class="container_check">Nhớ tài khoản
-                                            <input type="checkbox" name="term" value="checked">
+                                            <input type="checkbox" name="remembered" value="checked">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>

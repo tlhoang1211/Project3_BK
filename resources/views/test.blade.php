@@ -1,186 +1,288 @@
-<header class="version_1">
-    <div class="Sticky inner main_nav shadow sticky_element">
-        <div class="container" style="max-width: 90%;">
-            <div class="align-items-center d-flex justify-content-between" style="min-height: 83px;">
+@extends('layouts.master')
+@section('title')
+    Wanderlust
+@endsection
+@section('specific_css')
+    <link href={{ asset('assets/css/home_1.css') }} rel="stylesheet">
+@endsection
+@section('specific_js')
+    <script src={{asset('assets/js/carousel-home.min.js')}}></script>
+@endsection
+@section('content')
 
-                {{--Hamburger menu--}}
-                <nav class="categories d-block menu">
-                    <ul class="clearfix">
-                        <li><span>
-										<a href="#">
-											<span class="hamburger hamburger--spin">
-												<span class="hamburger-box">
-													<span class="hamburger-inner"></span>
-												</span>
-											</span>
-										</a>
-									</span>
-                            <div id="menu">
-                                <ul>
-                                    <li><span><a href="/product_list">SẢN PHẨM</a></span></li>
-                                    <li><span><a href="{{route('male_product')}}">NAM</a></span>
-                                    </li>
-                                    <li><span><a href="{{route('female_product')}}">NỮ</a></span>
-                                    <li><span><a href="{{route('unisex_product')}}">PHI GIỚI TÍNH</a></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-
-
-                {{--Logo--}}
-                <div class="align-items-center d-flex flex-column" style="min-width: 300px;">
-                    <div id="logo" class="m-auto w-50">
-                        <a href="{{route('home')}}">
-                            <img class="swing" alt="logo" src={{asset('assets/img/logo-3.png')}}
-                                    width="435" height="83" style="margin-left: -30px">
-                        </a>
-                    </div>
-
-                    {{--Search bar--}}
-                    <div class="search-bar" id="search_bar">
-                        <form action="{{route('product_search')}}" method="GET">
-                            @csrf
-                            <div class="custom-search-input">
-                                <input type="text" name="keyword" placeholder="Tìm kiếm hơn 10.000 sản phẩm"
-                                       value="@if (isset($keyword)){{$keyword}}@endif">
-                                <button type="submit"><i class="header-icon_search_custom"></i></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-
-                @php
-                    $product_cart = Session::get('shoppingCart');
-                    $filter_cart = null;
-
-                    if($product_cart !== null){
-                        // Get 3 latest item added to the cart
-                        $filter_cart = array_reverse(array_slice($product_cart, -3, 3, true), true);
-                    }
-                @endphp
-
-                <div>
-                    <ul class="top_tools">
-
-                        {{--Search icon --}}
-                        <li>
-                            <div id="search_icon">
-                                <a href="#" class="header-icon_search_custom fa-2x" style="padding-top: 3px;">
-                                    <span>Search</span>
-                                </a>
-                            </div>
-                        </li>
-
-                        {{-- Dropdown cart --}}
-                        <li>
-                            <div class="dropdown dropdown-cart">
-                                <a href="{{route('cart')}}" class="cart_bt">
-                                    @if ($filter_cart !== null)
-                                        <strong id="cart_quantity">{{count($product_cart)}}</strong>
-                                    @endif
-                                </a>
-                                @if ($filter_cart !== null)
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            @foreach($filter_cart as $product_id => $product_detail)
-                                                @php
-                                                    $product = \App\Product::find($product_id);
-                                                @endphp
-                                                <li>
-                                                    <a href="{{route('product_detail',$product->slug)}}">
-                                                        <figure><img
-                                                                    src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
-                                                                    alt="" width="50" height="50" class="lazy"></figure>
-                                                        <strong><span>{{$product->name}}</span>{{$product->FormatPrice}}
-                                                        </strong>
-                                                    </a>
-                                                    {{--                                                    <a href="0" class="action"><i class="ti-trash"></i></a>--}}
-                                                </li>
-                                            @endforeach
-                                        </ul>
+    <div id="page">
+        <!-- /header -->
+        <main>
+            <div id="carousel-home">
+                <div class="owl-carousel owl-theme">
+                    <div class="owl-slide cover"
+                         style="background-image: url(https://res.cloudinary.com/vernom/image/upload/c_scale,h_750,w_1450/v1596632621/perfume_project/sauvage_index_kvsxtv.jpg); height: 850px">
+                        <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0)">
+                            <div class="container">
+                                <div class="row justify-content-center justify-content-md-end">
+                                    <div class="col-lg-6 static">
+                                        <div class="slide-text text-right white">
+                                            <h2 class="owl-slide-animated owl-slide-title">Sauvage<br>the new parfume
+                                            </h2>
+                                            <p class="owl-slide-animated owl-slide-subtitle">
+                                                A powerfully fresh trail, wild and noble all at once.
+                                            </p>
+                                            <div class="owl-slide-animated owl-slide-cta"><a class="btn_1"
+                                                                                             href="/product/sauvage_p"
+                                                                                             role="button">Mua ngay</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                @endif
-                            </div>
-
-                            <!-- /dropdown-cart-->
-                        </li>
-                        {{--                        <li>--}}
-                        {{--                            <a href="#0" class="wishlist"><span>Wishlist</span></a>--}}
-                        {{--                        </li>--}}
-                        <li>
-                            <div class="dropdown dropdown-access {{auth()->check() ? 'user-page' : ''}}">
-                                <a href="#" class="access_link"
-                                >
-                                    <span>Tài khoản</span>
-                                </a>
-                                <div class="dropdown-menu">
-                                    @auth()
-                                        <strong
-                                                style="font-size: 20px">{{auth()->user()->fullName}}</strong>
-                                        <ul>
-                                            <li>
-                                                <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
-                                            </li>
-                                            {{--<li>--}}
-                                            {{--    <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn--}}
-                                            {{--                                                        hàng</a>--}}
-                                            {{--</li>--}}
-                                            <li>
-                                                <a href="{{route('mypurchase')}}"><i class="ti-package"></i>Đơn hàng của
-                                                                                                            tôi</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('help')}}"><i class="ti-help-alt"></i>Trợ giúp</a>
-                                            </li>
-                                            <li>
-                                                <a class="log-out-btn" href="{{ route('logout') }}"
-                                                >
-                                                    <i
-                                                            class="fa fa-sign-out" aria-hidden="true"
-                                                            style="color: #3a87ad">
-
-                                                    </i>
-                                                    Đăng xuất
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    @else
-                                        <a href="{{route('login')}}" class="btn_1">Đăng nhập/Đăng ký</a>
-                                    @endauth
                                 </div>
                             </div>
-                            <!-- /dropdown-access-->
-                        </li>
-                        {{--                        <li>--}}
-                        {{--                            <a href="javascript:void(0);" class="btn_search_mob"><span>Search</span></a>--}}
-                        {{--                        </li>--}}
-                        {{--                        <li>--}}
-                        {{--                            <a href="#menu" class="btn_cat_mob">--}}
-                        {{--                                <div class="hamburger hamburger--spin" id="hamburger">--}}
-                        {{--                                    <div class="hamburger-box">--}}
-                        {{--                                        <div class="hamburger-inner"></div>--}}
-                        {{--                                    </div>--}}
-                        {{--                                </div>--}}
-                        {{--                                Nước hoa--}}
-                        {{--                            </a>--}}
-                        {{--                        </li>--}}
-                    </ul>
+                        </div>
+                    </div>
+                    <!--/owl-slide-->
+                    <div class="owl-slide cover"
+                         style="background-image: url(https://res.cloudinary.com/vernom/image/upload/c_scale,h_750,w_1450/v1596633226/perfume_project/dior_index_3_gc1umg.jpg); height: 850px">
+                        <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0)">
+                            <div class="container">
+                                <div class="row justify-content-center justify-content-md-start">
+                                    <div class="col-lg-6 static">
+                                        <div class="slide-text white">
+                                            <h2 class="owl-slide-animated owl-slide-title">Sauvage<br>eau de toilette
+                                            </h2>
+                                            <p class="owl-slide-animated owl-slide-subtitle">
+                                                Powerful & juicy freshness with a woody amber trail
+                                            </p>
+                                            <div class="owl-slide-animated owl-slide-cta"><a class="btn_1"
+                                                                                             href="/product/sauvage_edt"
+                                                                                             role="button">Mua ngay</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/owl-slide-->
+                    <div class="owl-slide cover"
+                         style="background-image: url(https://res.cloudinary.com/vernom/image/upload/c_scale,h_850,w_1400/v1596633006/perfume_project/dior_index_2_vh9tig.jpg); height: 850px;">
+                        <div class="opacity-mask d-flex align-items-center"
+                             data-opacity-mask="rgba(255, 255, 255, 0.3)">
+                            <div class="container">
+                                <div class="row justify-content-center justify-content-md-start">
+                                    <div class="col-lg-12 static">
+                                        <div class="slide-text text-center black">
+                                            <h2 class="owl-slide-animated owl-slide-title">Sauvage<br>eau de parfum
+                                            </h2>
+                                            <p class="owl-slide-animated owl-slide-subtitle">
+                                                spicy freshness with a woody trail envelopped in vanilla absolute
+                                            </p>
+                                            <div class="owl-slide-animated owl-slide-cta"><a class="btn_1"
+                                                                                             href="/product/sauvage_edp"
+                                                                                             role="button">Mua ngay</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/owl-slide-->
+                    </div>
+                </div>
+                <div id="icon_drag_mobile"></div>
+            </div>
+            <!--/carousel-->
+
+            <ul id="banners_grid" class="clearfix">
+                <li>
+                    <a href="{{route('female_product')}}" class="img_container">
+                        <img
+                                src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
+                                alt="" class="lazy">
+                        <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+                            <h3>BST Nữ</h3>
+                            <div><span class="btn_1">Xem ngay</span></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('male_product')}}" class="img_container">
+                        <img
+                                src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
+                                alt="" class="lazy">
+                        <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+                            <h3>BST Nam</h3>
+                            <div><span class="btn_1">Xem ngay</span></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('unisex_product')}}" class="img_container">
+                        <img
+                                src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
+                                alt="" class="lazy">
+                        <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+                            <h3>BST đa giới</h3>
+                            <div><span class="btn_1">Xem ngay</span></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!--/banners_grid -->
+
+            {{--Product grid--}}
+            <div class="container margin_60_35">
+                <div class="main_title">
+                    <h2>Được đánh giá tốt nhất</h2>
+                    <span>Các sản phẩm</span>
+                    <p>Các thương hiệu nước hoa được feedback nhiều nhất tại Việt Nam</p>
+                </div>
+                <div class="row small-gutters">
+                    @foreach($products as $product)
+                        <div class="col-6 col-md-4 col-xl-3">
+                            <x-product.grid-item :product="$product"/>
+                        </div>
+                    @endforeach
+                    @auth
+                        <?php $sex = auth()->user()->sex ?>
+                        <a href="{{ $sex === 'Male' ? route('male_product') : route('female_product') }}"
+                           class="btn_1 fs-5">
+                            Xem toàn bộ sản phẩm cho {{ $sex === 'Male' ? 'nam' : 'nữ' }}
+                        </a>
+                    @else
+                        <a href="{{ route('product_list') }}"
+                           class="btn_1 fs-5">
+                            Xem toàn bộ sản phẩm
+                        </a>
+                @endauth
+
+                <!-- /col -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+
+            <div class="featured lazy"
+                 data-bg="url(https://res.cloudinary.com/vernom/image/upload/v1596722751/perfume_project/another_13_uxtbu1.jpg)">
+                <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+                    <div class="container margin_60">
+                        <div class="row justify-content-center justify-content-md-start">
+                            <div class="col-lg-6 wow" data-wow-offset="150">
+                                <h3>Le Labo<br>Another 13</h3>
+                                <p>Đàn ông là không sợ nắng</p>
+                                <div class="feat_text_block">
+                                    <div class="price_box">
+                                        <span class="new_price">6.000.000₫</span>
+                                        <span class="old_price">6.500.000₫</span>
+                                    </div>
+                                    <a class="btn_1" href="/product/another_13_edp" role="button">Mua ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- /row -->
-        </div>
-        <div class="search_mob_wp">
-            <form action="{{route('product_search')}}" method="GET">
-                <input type="text" class="form-control" placeholder="Tìm kiếm hơn 10.000 sản phẩm" name="keyword">
-                <input type="submit" class="btn_1 full-width" value="Search">
-            </form>
-        </div>
-        <!-- /search_mobile -->
-    </div>
-    <!-- /main_nav -->
-</header>
-<!-- /header -->
+            <!-- /featured -->
+
+            <div class="bg_gray">
+                <div class="container margin_30">
+                    <div id="brands" class="owl-carousel owl-theme">
+                        @foreach ($brands as $brand)
+                            <div class="item">
+                                <a href="{{route("product_search", ['brand'=>$brand->id])}}">
+                                    <img src={{$brand->ImageSize600x600}} data-src="{{$brand->ImageSize600x600}}"
+                                         alt="" class="owl-lazy">
+                                </a>
+                            </div><!-- /item -->
+                        @endforeach
+                    </div><!-- /carousel -->
+                </div><!-- /container -->
+            </div>
+            <!-- /bg_gray -->
+
+            <div class="container margin_60_35">
+                <div class="main_title">
+                    <h2>Tin mới nhất</h2>
+                    <span>Blog</span>
+                    <p>Các bài blog về chủ đề nước hoa</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a class="box_news" href="blog.html">
+                            <figure>
+                                <img
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
+                                        alt="" width="400" height="266" class="lazy">
+                                <figcaption><strong>07</strong>Aug</figcaption>
+                            </figure>
+                            <ul>
+                                <li>Hoàng Trần</li>
+                                <li>07.08.2020</li>
+                            </ul>
+                            <h4>Fucking Fabulous – khi tình yêu trở nên mù quáng</h4>
+                            <p>Thật đáng buồn cười khi con người ta liên tục cảm thấy hối hận vì....</p>
+                        </a>
+                    </div>
+                    <!-- /box_news -->
+                    <div class="col-lg-6">
+                        <a class="box_news" href="blog.html">
+                            <figure>
+                                <img
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
+                                        alt="" width="400" height="266" class="lazy">
+                                <figcaption><strong>07</strong>Aug</figcaption>
+                            </figure>
+                            <ul>
+                                <li>Khánh Nam</li>
+                                <li>07.08.2020</li>
+                            </ul>
+                            <h4>Nước hoa và thủ thuật giao tiếp</h4>
+                            <p>Ẩn sau những nốt hương nhè nhẹ, vấn vương là cả một thế giới tràn đầy bí ẩn....</p>
+                        </a>
+                    </div>
+                    <!-- /box_news -->
+                    <div class="col-lg-6">
+                        <a class="box_news" href="blog.html">
+                            <figure>
+                                <img
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
+                                        alt="" width="400" height="266" class="lazy">
+                                <figcaption><strong>07</strong>Aug</figcaption>
+                            </figure>
+                            <ul>
+                                <li>Đỗ Thái</li>
+                                <li>07.08.2020</li>
+                            </ul>
+                            <h4>Bộ sưu tập Gucci Bloom, khi vẻ đẹp của hoa Huệ được tôn vinh</h4>
+                            <p>Tháng 8 năm 2017, Giám đốc sáng tạo Alessandro Michele với nét mặt rạng rỡ, hạnh
+                               phúc....</p>
+                        </a>
+                    </div>
+                    <!-- /box_news -->
+                    <div class="col-lg-6">
+                        <a class="box_news" href="blog.html">
+                            <figure>
+                                <img
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
+                                        alt="" width="400" height="266" class="lazy">
+                                <figcaption><strong>06</strong>Aug</figcaption>
+                            </figure>
+                            <ul>
+                                <li>Bá Lâm</li>
+                                <li>06.08.2020</li>
+                            </ul>
+                            <h4>Alaia – Mùi hương của ký ức, tình yêu và nỗi nhớ</h4>
+                            <p>Thật dễ để yêu ai đó khi họ đã trở thành một phần của ký ức, nhưng thật khó....</p>
+                        </a>
+                    </div>
+                    <!-- /box_news -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </main>
+        <!-- /main -->
+
+
+
+@endsection

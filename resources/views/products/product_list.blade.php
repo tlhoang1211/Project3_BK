@@ -127,22 +127,7 @@
                     <div class="row small-gutters">
                         @foreach($products as $product)
                             <div class="col-6 col-md-4">
-                                <div class="grid_item">
-                                    <figure>
-                                        <a href="{{route('product_detail',$product->slug)}}">
-                                            <img class="img-fluid lazy"
-                                                 src="{{$product->firstThumbnail}}"
-                                                 data-src="{{$product->firstThumbnail}}" alt="">
-                                        </a>
-                                    </figure>
-                                    <a href="{{route('product_detail',$product->slug)}}">
-                                        <h3>{{$product->name}}</h3>
-                                    </a>
-                                    <div class="price_box">
-                                        <span class="new_price">{{$product->formatPrice}}</span>
-                                    </div>
-                                </div>
-                                <!-- /grid_item -->
+                                <x-product.grid-item :product="$product"/>
                             </div>
                     @endforeach
                     <!-- /col -->

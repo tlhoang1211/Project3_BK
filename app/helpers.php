@@ -26,7 +26,7 @@ function format_money($money): string
     return number_format($money, '0', '3', '.') . ' ₫';
 }
 
-function get_cart_total_price(): string
+function get_cart_total_price(): float
 {
     $cart = session('shoppingCart');
     $total_price = 0;
@@ -38,7 +38,7 @@ function get_cart_total_price(): string
             $total_price += order_price($base_price, $volume, $volume_detail['quantity']);
         }
     }
-    return $total_price;
+    return (float)$total_price;
 }
 
 function order_price($base_price, $volume, $quantity)

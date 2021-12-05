@@ -31,7 +31,7 @@ class CommentSeeder extends Seeder
                     'product_id' => $item->id,
                 ]);
             }
-            $item->rate = 1;
+            $item->rate = $item->calculated_rate;
         });
     }
 }

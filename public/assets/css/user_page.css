@@ -367,6 +367,8 @@ input[type='radio']:after {
     display: inline-block;
     visibility: visible;
     border: 2px solid white;
+    left: -4px;
+    top: -2px;
 }
 
 input[type='radio']:checked:after {
@@ -379,6 +381,8 @@ input[type='radio']:checked:after {
     display: inline-block;
     visibility: visible;
     border: 2px solid white;
+    left: -4px;
+    top: -2px;
 }
 
 .input-with-label__wrapper {
@@ -1157,9 +1161,4 @@ input {
 
 .receipt_detail {
     cursor: pointer;
-}
-
-.item-price {
-    height: 32.5px;
-    line-height: 32.5px;
 }

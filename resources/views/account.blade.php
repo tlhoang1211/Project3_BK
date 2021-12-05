@@ -7,9 +7,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <script>
-        $('#datepicker').datepicker({
-            uiLibrary: 'bootstrap4',
-            format: 'dd-mm-yyyy'
+        $("#datepicker").datepicker({
+            uiLibrary: "bootstrap4",
+            format: "dd-mm-yyyy"
         });
     </script>
 @endsection
@@ -27,8 +27,8 @@
                                     <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"
                                          style="margin-right: 4px;">
                                         <path
-                                            d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48"
-                                            fill="#9B9B9B" fill-rule="evenodd"></path>
+                                                d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48"
+                                                fill="#9B9B9B" fill-rule="evenodd"></path>
                                     </svg>
                                     Sửa hồ sơ</a></div>
                         </div>
@@ -52,7 +52,9 @@
                                     </div>
 
                                     <div class="userpage-sidebar-menu-entry__text" style="color: rgb(255, 193, 7)">Tài
-                                        khoản của tôi
+                                                                                                                   khoản
+                                                                                                                   của
+                                                                                                                   tôi
                                     </div>
                                 </a></div>
                         </div>
@@ -86,23 +88,33 @@
                         <div class="my-account-section__header-left">
                             <div class="my-account-section__header-title">Hồ sơ của tôi</div>
                             <div class="my-account-section__header-subtitle">Quản lý thông tin hồ sơ để
-                                bảo mật tài khoản
+                                                                             bảo mật tài khoản
                             </div>
                         </div>
                     </div>
                     <div class="my-account-profile">
-                        <form action="{{route('account_update',$account->id)}}" method="POST" style="width: 100%">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{route('user_account_update')}}" method="POST" style="width: 100%">
                             @csrf
-                            @method('PUT')
-                            {{--                            <div class="my-account-profile__left">--}}
+{{--                            @method('PUT')--}}
                             <div class="input-with-label">
                                 <div class="input-with-label__wrapper">
                                     <div class="input-with-label__label"><label>Tên</label></div>
                                     <div class="input-with-label__content">
                                         <div class="input-with-validator-wrapper">
-                                            <div class="input-with-validator"><input type="text"
-                                                                                     placeholder=""
-                                                                                     value="{{$account->fullName}}">
+                                            <div class="input-with-validator">
+                                                <input type="text"
+                                                       placeholder=""
+                                                       name="fullName"
+                                                       value="{{$account->fullName}}">
                                             </div>
                                         </div>
                                     </div>
@@ -137,20 +149,20 @@
                                             <div class="stardust-radio-group">
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
-                                                           name="inlineRadioOptions" id="inlineRadio1"
-                                                           value="option1"
-                                                           @if ($account->sex == "Male")
+                                                           name="sex" id="inlineRadio1"
+                                                           value="Male"
+                                                           @if ($account->sex === "Male")
                                                            checked
-                                                        @endif>
+                                                            @endif>
                                                     <label class="form-check-label" for="inlineRadio1">Nam</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
-                                                           name="inlineRadioOptions" id="inlineRadio2"
-                                                           value="option2"
-                                                           @if ($account->sex == "Female")
+                                                           name="sex" id="inlineRadio2"
+                                                           value="Female"
+                                                           @if ($account->sex === "Female")
                                                            checked
-                                                        @endif>
+                                                            @endif>
                                                     <label class="form-check-label" for="inlineRadio2">Nữ</label>
                                                 </div>
                                             </div>
@@ -163,7 +175,7 @@
                                 <div class="input-with-label__wrapper birthday-choose">
                                     <div class="input-with-label__label"><label>Ngày sinh</label></div>
                                     <div class="input-with-label__content">
-                                        <input id="datepicker" width="90%"
+                                        <input id="datepicker" width="90%" name="birthDate"
                                                value="{{date("d-m-Y", strtotime($account->birthDate))}}"/>
                                     </div>
                                 </div>
