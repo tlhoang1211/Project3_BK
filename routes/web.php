@@ -4,6 +4,7 @@ use App\Brand;
 use App\Http\Controllers\AccountController;
 use App\Origin;
 use App\Product;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -184,8 +185,11 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
 //==================================================================================================================
 
 // test : route
-Route::get('/test/{token}', function ($request) {
-    return view('test', compact('request'));
+Route::get('/test', function () {
+//    $count = Redis::incr('count');
+    Cache::put('foo', 42);
+    $foo = Cache::get('foo');
+    return $foo;
 });
 
 Route::get('checking_page', function () {
