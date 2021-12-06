@@ -184,8 +184,8 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
 //==================================================================================================================
 
 // test : route
-Route::get('/test', function () {
-    return view('test');
+Route::get('/test/{token}', function ($request) {
+    return view('test', compact('request'));
 });
 
 Route::get('checking_page', function () {

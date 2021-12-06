@@ -33,7 +33,7 @@
                                         {{ $message }}
                                     </div>
                                     @enderror
-                                    <div class="text-danger">
+                                    <div class="invalid-feedback text-danger">
                                         Email is invalid
                                     </div>
                                     <div class="form-text text-muted">

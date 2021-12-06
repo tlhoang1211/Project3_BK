@@ -17,6 +17,10 @@ section.my-login-page {
     margin-top: 0.5rem;
   }
 
+  button[type='submit'] {
+    background: #3A87AD;
+  }
+
   .btn-container {
     height: 50px;
 
@@ -25,9 +29,7 @@ section.my-login-page {
       margin: auto;
     }
 
-    button[type='submit'] {
-      background: #3A87AD;
-    }
+
   }
 
   .brand {

@@ -12,15 +12,15 @@ section.my-login-page {
 section.my-login-page .text-danger {
   margin-top: 0.5rem;
 }
+section.my-login-page button[type=submit] {
+  background: #3A87AD;
+}
 section.my-login-page .btn-container {
   height: 50px;
 }
 section.my-login-page .btn-container .btn {
   font-size: 0.9rem;
   margin: auto;
-}
-section.my-login-page .btn-container button[type=submit] {
-  background: #3A87AD;
 }
 section.my-login-page .brand {
   margin: 40px auto;

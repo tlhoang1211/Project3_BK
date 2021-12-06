@@ -20,31 +20,28 @@
                                 <div class="form-group">
 
                                     {{--Hidden fields--}}
-                                    <label>
-                                        <input name="email" type="hidden" hidden value="{{ $request->email }}">
-                                    </label><label>
-                                        <input name="token" type="hidden" hidden value="{{ $request->route('token') }}">
-                                    </label>
+                                    <input name="email" type="hidden" hidden value="{{ $request->email }}">
+                                    <input name="token" type="hidden" hidden value="{{ $request->route('token') }}">
 
                                     {{--New password--}}
                                     <label for="new-password">New Password</label>
                                     <input id="new-password" type="password" class="form-control" name="password"
-                                           required autofocus data-eye>
+                                           required autofocus data-eye autocomplete="off">
 
                                     {{--Confirm password--}}
                                     <label for="confirm-password">Confirm Password</label>
                                     <input id="confirm-password" type="password" class="form-control"
-                                           name="password_confirmation" required data-eye>
+                                           name="password_confirmation" required data-eye autocomplete="off">
 
                                     <div class="invalid-feedback">
                                         Password is required
                                     </div>
-                                    <div class="form-text text-muted">
+                                    <div class="form-text text-muted mb-3">
                                         Make sure your password is strong and easy to remember
                                     </div>
                                 </div>
 
-                                <div class="form-group m-0">
+                                <div class="form-group m-auto">
                                     <button type="submit" class="btn btn-primary btn-block">
                                         Update Password
                                     </button>
@@ -54,7 +51,7 @@
                         </div>
                     </div>
                     <div class="footer">
-                        Copyright &copy; 2017 &mdash; Your Company
+                        Copyright &copy; 2021 &mdash; Wanderlust
                     </div>
                 </div>
             </div>
