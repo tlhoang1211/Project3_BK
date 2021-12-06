@@ -1,0 +1,73 @@
+main.bg_gray .container .form-group {
+  margin-bottom: 1rem;
+}
+
+html, body {
+  height: 100%;
+}
+
+section.my-login-page {
+  font-size: 14px;
+}
+section.my-login-page .text-danger {
+  margin-top: 0.5rem;
+}
+section.my-login-page button[type=submit] {
+  background: #3A87AD;
+}
+section.my-login-page .btn-container {
+  height: 50px;
+}
+section.my-login-page .btn-container .btn {
+  font-size: 0.9rem;
+  margin: auto;
+}
+section.my-login-page .brand {
+  margin: 40px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 1;
+}
+section.my-login-page .brand img {
+  width: 100%;
+}
+section.my-login-page .card-wrapper {
+  width: 400px;
+}
+section.my-login-page .card {
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+section.my-login-page .card.fat {
+  padding: 10px;
+}
+section.my-login-page .card .card-title {
+  margin-bottom: 30px;
+}
+section.my-login-page .form-control {
+  border-width: 2.3px;
+}
+section.my-login-page .form-group label {
+  width: 100%;
+}
+section.my-login-page .footer {
+  margin: 40px 0;
+  color: #888;
+  text-align: center;
+}
+@media screen and (max-width: 425px) {
+  section.my-login-page .card-wrapper {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 320px) {
+  section.my-login-page .card.fat {
+    padding: 0;
+  }
+  section.my-login-page .card.fat .card-body {
+    padding: 15px;
+  }
+}
+
+/*# sourceMappingURL=auth.css.map */

@@ -15,8 +15,10 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "itsgoingd/clockwork": "^5.1",
+        "laravel/fortify": "^1.8",
         "laravel/framework": "^8.0",
-        "laravel/tinker": "v2.4.1"
+        "laravel/tinker": "v2.4.1",
+        "laravel/ui": "^3.4"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"

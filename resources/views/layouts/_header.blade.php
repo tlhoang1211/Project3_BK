@@ -30,6 +30,7 @@
 
     <!-- BASE CSS -->
     {{--	<link href={{ URL::asset('assets/css/bootstrap.custom.min.css') }} rel="stylesheet">--}}
+    <link href={{ asset('assets/css/fonts.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/bootstrap.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/style.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/toastr.min.css') }} rel="stylesheet">
@@ -37,12 +38,9 @@
 
     <!-- SPECIFIC CSS -->
     @yield('specific_css')
-    @stack('component_css')
 
 <!-- YOUR CUSTOM CSS -->
     {{--    <link href={{ asset('assets/css/custom.css') }} rel="stylesheet">--}}
     <link href={{ asset('assets/css/custom-hung.css') }} rel="stylesheet">
 
-    {{--Alpine JS--}}
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>

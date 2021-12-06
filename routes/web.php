@@ -116,7 +116,6 @@ Route::post('/contact/send', 'SendEmailController@send');
 
 // login - register : route
 Route::get('login', 'AccountController@index')->name('login')->middleware('guest');
-Route::post('registerProcess', 'AccountController@registerProgress')->name('registerP');
 Route::post('loginProcess', 'AccountController@loginProgress')->name('loginP')->middleware('guest');
 Route::get('/logoutAccount', 'AccountController@logOut')->name('logout')->middleware('auth');
 
@@ -185,8 +184,8 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
 //==================================================================================================================
 
 // test : route
-Route::get('/test', function () {
-    return view('test');
+Route::get('/test/{token}', function ($request) {
+    return view('test', compact('request'));
 });
 
 Route::get('checking_page', function () {

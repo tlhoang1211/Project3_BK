@@ -19,7 +19,6 @@ class CreateAccountsTable extends Migration
             $table->foreignId('city_id');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('salt');
             $table->string('fullName');
             $table->string('sex');
             $table->date('birthDate');
