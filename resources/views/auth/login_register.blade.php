@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('specific_css')
     <link href="{{asset('assets/css/user_page.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/auth.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/custom-hung.css')}}" rel="stylesheet">
 @endsection
 @section('specific_js')
@@ -45,7 +46,6 @@
                         <li>Đăng nhập/Đăng ký</li>
                     </ul>
                 </div>
-                <h1>Đăng nhập hoặc đăng ký tài khoản</h1>
             </div>
             <!-- /page_header -->
             <div class="row justify-content-center">

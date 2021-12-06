@@ -1,25 +1,32 @@
 @props(['cities'])
 
 <div class="box_account">
-    <h3 class="new_client">Khách hàng mới</h3> <small class="float-right pt-2">* Phần bắt
-                                                                               buộc</small>
-    <form action="{{route('registerP')}}" method="POST">
+    <h3 class="new_client">Đăng ký</h3> <small class="float-right pt-2">* Phần bắt
+                                                                        buộc</small>
+    <form action="{{route('register')}}" method="POST">
         @csrf
         <div class="form_container">
             <div class="form-group">
                 <input type="email" class="form-control" name="email" id="email_2"
                        placeholder="Email *">
+                @if ($errors->has('email'))
+                    <label class="alert-warning">{{$errors->first('password')}}</label>
+                @endif
             </div>
-            @if ($errors->has('email'))
-                <label class="alert-warning">{{$errors->first('password')}}</label>
-            @endif
             <div class="form-group">
                 <input type="password" class="form-control" name="password" id="password_in_2"
                        value="" placeholder="Mật khẩu *">
+                @if ($errors->has('password'))
+                    <label class="alert-warning">{{$errors->first('password')}}</label>
+                @endif
             </div>
-            @if ($errors->has('password'))
-                <label class="alert-warning">{{$errors->first('password')}}</label>
-            @endif
+            <div class="form-group">
+                <input type="password" class="form-control" name="password_confirmation"
+                       value="" placeholder="Nhập lại mật khẩu *">
+                @error('password_confirmation')
+                <label class="alert-warning">{{ $message }}</label>
+                @enderror
+            </div>
             <hr>
             {{--						<div class="form-group">--}}
             {{--							<label class="container_radio" style="display: inline-block; margin-right: 15px;">Private--}}
@@ -37,28 +44,28 @@
                         <div class="form-group">
                             <input type="text" class="form-control" name="firstName"
                                    placeholder="Tên *">
+                            @if ($errors->has('firstName'))
+                                <label class="alert-warning">{{$errors->first('firstName')}}</label>
+                            @endif
                         </div>
-                        @if ($errors->has('firstName'))
-                            <label class="alert-warning">{{$errors->first('firstName')}}</label>
-                        @endif
                     </div>
                     <div class="col-6 pl-1">
                         <div class="form-group">
                             <input type="text" class="form-control" name="lastName"
                                    placeholder="Họ *">
+                            @if ($errors->has('lastName'))
+                                <label class="alert-warning">{{$errors->first('lastName')}}</label>
+                            @endif
                         </div>
-                        @if ($errors->has('lastName'))
-                            <label class="alert-warning">{{$errors->first('lastName')}}</label>
-                        @endif
                     </div>
                     <div class="col-12">
                         <div class="form-group">
                             <input type="text" class="form-control" name="address"
                                    placeholder="Địa chỉ cụ thể *">
+                            @if ($errors->has('address'))
+                                <label class="alert-warning">{{$errors->first('address')}}</label>
+                            @endif
                         </div>
-                        @if ($errors->has('address'))
-                            <label class="alert-warning">{{$errors->first('address')}}</label>
-                        @endif
                     </div>
                 </div>
                 <div class="row no-gutters">
@@ -77,10 +84,10 @@
                     <div class="col-6 pl-1">
                         <div class="form-group">
                             <input type="date" class="form-control" name="birthDate">
+                            @if ($errors->has('birthDate'))
+                                <label class="alert-warning">{{$errors->first('birthDate')}}</label>
+                            @endif
                         </div>
-                        @if ($errors->has('birthDate'))
-                            <label class="alert-warning">{{$errors->first('birthDate')}}</label>
-                        @endif
                     </div>
                 </div>
                 <div class="row no-gutters">
@@ -103,10 +110,10 @@
                         <div class="form-group">
                             <input type="text" class="form-control" name="phone"
                                    placeholder="Điện thoại *">
+                            @if ($errors->has('phone'))
+                                <label class="alert-warning">{{$errors->first('phone')}}</label>
+                            @endif
                         </div>
-                        @if ($errors->has('phone'))
-                            <label class="alert-warning">{{$errors->first('phone')}}</label>
-                        @endif
                     </div>
                 </div>
                 <!-- /row -->

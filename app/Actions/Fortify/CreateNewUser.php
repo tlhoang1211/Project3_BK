@@ -2,7 +2,7 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\User;
+use App\Account;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -15,27 +15,34 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param  array  $input
-     * @return \App\Models\User
+     * @param array $input
+     * @return Account
      */
-    public function create(array $input)
+    public function create(array $input): Account
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
+            'firstName' => ['required', 'string', 'max:255'],
+            'email'     => [
                 'required',
                 'string',
                 'email',
                 'max:255',
-                Rule::unique(User::class),
+                Rule::unique(Account::class),
             ],
-            'password' => $this->passwordRules(),
+            'password'  => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
+        return Account::create([
+            'email'          => $input['email'],
+            'password'       => Hash::make($input['password']),
+            'fullName'       => $input['lastName'] . ' ' . $input['firstName'],
+            'phoneNumber'    => $input['phone'],
+            'email_verified' => 'unverified',
+            'status'         => 1,
+            'city_id'        => $input['city'],
+            'sex'            => $input['sex'],
+            'birthDate'      => $input['birthDate'],
+            'address'        => $input['address']
         ]);
     }
 }

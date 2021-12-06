@@ -1,5 +1,5 @@
 <div class="box_account">
-    <h3 class="client">Khách hàng</h3>
+    <h3 class="client">Đăng nhập</h3>
     <form action="{{route('loginP')}}" method="POST">
         @csrf
         <div class="form_container">
@@ -11,17 +11,17 @@
             <div class="form-group">
                 <input type="email" class="form-control" name="email" id="email"
                        placeholder="Email *" style="margin-top: 32px">
+                @if ($errors->has('email'))
+                    <label class="alert-warning">{{$errors->first('email')}}</label>
+                @endif
             </div>
-            @if ($errors->has('email'))
-                <label class="alert-warning">{{$errors->first('email')}}</label>
-            @endif
             <div class="form-group">
                 <input type="password" class="form-control" name="password" id="password_in"
                        placeholder="Mật khẩu *">
             </div>
-            @if ($errors->has('password'))
-                <label class="alert-warning">{{$errors->first('password')}}</label>
-            @endif
+            @error('password')
+            <label class="alert-warning">{{ $message }}</label>
+            @enderror
             <div class="clearfix add_bottom_15 mt-2">
                 <div class="checkboxes float-left">
                     <label class="container_check">Nhớ tài khoản
@@ -29,20 +29,11 @@
                         <span class="checkmark"></span>
                     </label>
                 </div>
-                <div class="float-right"><a id="forgot" href="javascript:void(0);">Quên mật
-                                                                                   khẩu?</a></div>
+                <div class="float-right"><a id="forgot" href="{{ route('password.request') }}">Quên mật
+                                                                                               khẩu?</a></div>
             </div>
             <div class="text-center"><input type="submit" value="Đăng nhập"
                                             class="btn_1 full-width">
-            </div>
-            <div id="forgot_pw">
-                <div class="form-group">
-                    <input type="email" class="form-control" name="email_forgot" id="email_forgot"
-                           placeholder="Nhập email">
-                </div>
-                <p>Password mới sẽ được gửi lại trong vài phút.</p>
-                <div class="text-center"><input type="submit" value="Gửi" class="btn_1">
-                </div>
             </div>
         </div>
     </form>

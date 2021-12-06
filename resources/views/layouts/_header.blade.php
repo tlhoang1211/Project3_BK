@@ -38,7 +38,6 @@
 
     <!-- SPECIFIC CSS -->
     @yield('specific_css')
-    @stack('component_css')
 
 <!-- YOUR CUSTOM CSS -->
     {{--    <link href={{ asset('assets/css/custom.css') }} rel="stylesheet">--}}

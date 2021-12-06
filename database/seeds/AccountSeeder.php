@@ -25,8 +25,7 @@ class AccountSeeder extends Seeder
 
         Account::create(array(
             'role_id'        => 2,
-            'password'       => md5("admin" . "12345"),
-            'salt'           => '12345',
+            'password'       => Hash::make('admin'),
             'fullName'       => 'adminer',
             'email'          => 'admin@admin',
             'phoneNumber'    => '084558392801',
@@ -41,8 +40,7 @@ class AccountSeeder extends Seeder
         ));
         Account::create(array(
             'role_id'        => 1,
-            'password'       => md5("guest" . "56789"),
-            'salt'           => '56789',
+            'password'       => Hash::make('guest'),
             'fullName'       => 'guest',
             'email'          => 'guest@guest',
             'city_id'        => 1,
@@ -57,8 +55,7 @@ class AccountSeeder extends Seeder
         ));
         Account::create(array(
             'role_id'        => 1,
-            'password'       => md5("guest" . "56789"),
-            'salt'           => '56789',
+            'password'       => Hash::make('guest'),
             'fullName'       => $faker->name,
             'email'          => $faker->email,
             'city_id'        => 1,

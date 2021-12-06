@@ -17,7 +17,7 @@ class AccountController extends Controller
     {
         $cities = City::all();
         session(['previous_link' => url()->previous()]);
-        return view('login_register', compact('cities'));
+        return view('auth.login_register', compact('cities'));
     }
 
     public function admin_index()
@@ -28,67 +28,23 @@ class AccountController extends Controller
         return view('admin.accounts.account_list', compact('cities', 'accounts'));
     }
 
-    public function registerProgress(RegisterRequest $request)
-    {
-        //        dd($request);
-        //        $request->validate([
-        //            'email' => 'required',
-        //            'password' => 'required',
-        //            'firstName' => 'required',
-        //            'lastName' => 'required',
-        //            'address' => 'required',
-        //            'city' => 'required',
-        //            'phone' => 'required',
-        //            'term' => 'required',
-        //        ]);
-        //        $request->validate();
-        $account = new Account();
-        $account->email = $request->email;
-        $account->address = $request->address;
-        $account->password = md5($request->password . $request->firstName);
-        $account->salt = $request->firstName;
-        $account->fullName = $request->lastName . ' ' . $request->firstName;
-        $account->phoneNumber = $request->phone;
-        $account->email_verified = 'unverified';
-        $account->status = 1;
-        $account->city_id = $request->city;
-        $account->sex = $request->sex;
-        $account->birthDate = $request->birthDate;
-
-        $account->save();
-
-        Auth::login($account);
-        return redirect(session('previous_link'));
-    }
-
     public function loginProgress(Request $request)
     {
-        $attribute = $request->validate([
+        $credentials = $request->validate([
             'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        $condition = ['email' => $request->email, 'status' => "1",];
-        $account = Account::where($condition)->get()->first();
-
-        if (isset($account))
+        if (Auth::attempt($credentials, $request->remembered === 'checked'))
         {
-            $password = $account->password;
-            $salt = $account->salt;
-
-            if ($password === md5($attribute['password'] . $salt))
+            $request->session()->regenerate();
+            if (auth()->user()->role->name === 'admin')
             {
-                //                dd($request->remembered == 'checked');
-                Auth::login($account, $request->remembered == 'checked');
-
-                if (auth()->user()->role->name === 'admin')
-                {
-                    return redirect('/admin');
-                }
-
-                return redirect(session('previous_link'));
+                return redirect('/admin');
             }
+            return redirect(session('previous_link'));
         }
+
         return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
     }
 

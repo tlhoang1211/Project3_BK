@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'passwords' => 'users',
+    'passwords' => 'accounts',
 
     /*
     |--------------------------------------------------------------------------
@@ -103,7 +103,7 @@ return [
     */
 
     'limiters' => [
-        'login' => 'login',
+        'login'      => 'login',
         'two-factor' => 'two-factor',
     ],
 
@@ -132,14 +132,14 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+                Features::registration(),
         Features::resetPasswords(),
-        // Features::emailVerification(),
-        Features::updateProfileInformation(),
+//        Features::emailVerification(),
+        //        Features::updateProfileInformation(),
         Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirmPassword' => true,
-        ]),
+        //        Features::twoFactorAuthentication([
+        //            'confirmPassword' => true,
+        //        ]),
     ],
 
 ];
