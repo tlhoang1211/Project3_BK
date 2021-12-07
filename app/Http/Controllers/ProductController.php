@@ -10,11 +10,16 @@ use App\Product;
 use App\Receipt;
 use Cache;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use JsonException;
 use PhpParser\Node\Expr\Array_;
+use Spatie\ResponseCache\Facades\ResponseCache;
 
 class ProductController extends Controller
 {
@@ -260,7 +265,7 @@ class ProductController extends Controller
         }
     }
 
-    public function add_to_cart(Request $request)
+    public function add_to_cart(Request $request): View|Factory|JsonResponse|Application
     {
 
         $id = $request->id;
@@ -318,6 +323,9 @@ class ProductController extends Controller
         $shopping_cart[$id] = $cartItem;
         Session::put('shoppingCart', $shopping_cart);
         $request->session()->save();
+
+        // Remove cache
+        ResponseCache::clear();
 
         return response()->json(['success' => "Sản phẩm đã được thêm vào giỏ hàng."]);
     }
@@ -637,7 +645,7 @@ class ProductController extends Controller
         {
             foreach ($brand->products as $brand_product)
             {
-                if ($brand_product->sex == "Phi giới tính")
+                if ($brand_product->sex === "Phi giới tính")
                 {
                     if ($brand_amount[$brand->id][$brand_product->id] = null)
                     {
@@ -653,7 +661,7 @@ class ProductController extends Controller
         {
             foreach ($origin->products as $origin_product)
             {
-                if ($origin_product->sex == "Phi giới tính")
+                if ($origin_product->sex === "Phi giới tính")
                 {
                     if ($origin_amount[$origin->id][$origin_product->id] = null)
                     {
@@ -686,10 +694,13 @@ class ProductController extends Controller
         return redirect()->back()->with(['success' => 'Đã xóa sản phẩm thành công.']);
     }
 
+    /**
+     * @throws JsonException
+     */
     public function cart_update(Request $request): JsonResponse
     {
         // Convert from json to associative array then replace current cart in session
-        $parsed_data = json_decode($request->shoppingCart, true);
+        $parsed_data = json_decode($request->shoppingCart, true, 512, JSON_THROW_ON_ERROR);
 
         // Filter out invalid item
         foreach ($parsed_data as $product_id => $item)

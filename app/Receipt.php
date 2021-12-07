@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Receipt extends Model
 {
+    use ClearsResponseCache;
 
     protected $guarded = ['id'];
 
