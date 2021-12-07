@@ -290,7 +290,7 @@
     // Account dropdown
     $(".user-page").click(() =>
     {
-        window.location.href = "/user/account/profile";
+        // window.location.href = "/user/account/profile";
     });
 
     $(".dropdown-cart, .dropdown-access").hover(function ()
@@ -323,12 +323,6 @@
 
     /* Animation on scroll */
     new WOW().init();
-
-    // Forgot Password
-    $("#forgot").on("click", function ()
-    {
-        $("#forgot_pw").fadeToggle("fast");
-    });
 
     //Footer collapse
     const $headingFooter = $("footer h3");

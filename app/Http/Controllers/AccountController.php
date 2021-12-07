@@ -44,13 +44,13 @@ class AccountController extends Controller
             }
             return redirect(session('previous_link'));
         }
-
         return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
     }
 
     public function logOut(Request $request): RedirectResponse
     {
 
+        cache()->flush();
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

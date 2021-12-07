@@ -91,7 +91,7 @@
                                         <ul>
                                             @foreach($filter_cart as $product_id => $product_detail)
                                                 @php
-                                                    $product = \App\Product::find($product_id);
+                                                    $product = \App\Product::find($product_id)
                                                 @endphp
                                                 <li>
                                                     <a href="{{route('product_detail',$product->slug)}}">
@@ -116,7 +116,7 @@
                         {{--                        </li>--}}
                         <li>
                             <div class="dropdown dropdown-access {{auth()->check() ? 'user-page' : ''}}">
-                                <a href="#" class="access_link"
+                                <a href="{{ route('profile') }}" class="access_link"
                                 >
                                     <span>Tài khoản</span>
                                 </a>
@@ -128,10 +128,6 @@
                                             <li>
                                                 <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
                                             </li>
-                                            {{--<li>--}}
-                                            {{--    <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn--}}
-                                            {{--                                                        hàng</a>--}}
-                                            {{--</li>--}}
                                             <li>
                                                 <a href="{{route('mypurchase')}}"><i class="ti-package"></i>Đơn hàng của
                                                                                                             tôi</a>
@@ -140,8 +136,11 @@
                                                 <a href="{{route('help')}}"><i class="ti-help-alt"></i>Trợ giúp</a>
                                             </li>
                                             <li>
-                                                <a class="log-out-btn" href="{{ route('logout') }}"
-                                                >
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                    @csrf
+                                                </form>
+                                                <a onclick="document.getElementById('logout-form').submit(); this.preventDefault();"
+                                                   class="log-out-btn" href="#">
                                                     <i
                                                             class="fa fa-sign-out" aria-hidden="true"
                                                             style="color: #3a87ad">

@@ -15,22 +15,22 @@ class OrderDetail extends Model
         return $this->belongsTo(Account::class);
     }
 
-    public function receipt()
+    public function receipt(): BelongsTo
     {
         return $this->belongsTo(Receipt::class);
     }
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function getCreatedAtAttribute($date)
+    public function getCreatedAtAttribute($date): string
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
     }
 
-    public function getFormatPriceAttribute()
+    public function getFormatPriceAttribute(): string
     {
         return format_money($this->price);
     }

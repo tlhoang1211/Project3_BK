@@ -1,5 +1,6 @@
 <?php
 
+use App\Account;
 use App\Brand;
 use App\Http\Controllers\AccountController;
 use App\Origin;
@@ -20,8 +21,12 @@ use Illuminate\Support\Facades\Route;
 
 // user : route
 Route::get('/', function () {
-    $products = Product::all()->sortByDesc('rate')->take(12);
-    $brands = Brand::all();
+    $products = cache()->remember('home-products', now()->addDay(), function () {
+        return Product::all()->sortByDesc('rate')->take(12);
+    });
+    $brands = cache()->remember('home-products', now()->addDay(), function () {
+        return Brand::all();
+    });
     return view('index', compact('products', 'brands'));
 })->name('home');
 
@@ -118,7 +123,7 @@ Route::post('/contact/send', 'SendEmailController@send');
 // login - register : route
 Route::get('login', 'AccountController@index')->name('login')->middleware('guest');
 Route::post('loginProcess', 'AccountController@loginProgress')->name('loginP')->middleware('guest');
-Route::get('/logoutAccount', 'AccountController@logOut')->name('logout')->middleware('auth');
+//Route::get('/logoutAccount', 'AccountController@logOut')->name('logout')->middleware('auth');
 
 //==================================================================================================================
 
@@ -186,10 +191,9 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
 
 // test : route
 Route::get('/test', function () {
-//    $count = Redis::incr('count');
-    Cache::put('foo', 42);
-    $foo = Cache::get('foo');
-    return $foo;
+    Cache::put('user_' . '1', Account::find('1'));
+    $user = Cache::get('user_1');
+    return $user;
 });
 
 Route::get('checking_page', function () {
