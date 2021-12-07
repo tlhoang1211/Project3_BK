@@ -5,7 +5,6 @@ use App\Brand;
 use App\Http\Controllers\AccountController;
 use App\Origin;
 use App\Product;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,26 +20,16 @@ use Illuminate\Support\Facades\Route;
 
 // user : route
 Route::get('/', function () {
-    $products = cache()->remember('home-products', now()->addDay(), function () {
-        return Product::all()->sortByDesc('rate')->take(12);
-    });
-    $brands = cache()->remember('home-products', now()->addDay(), function () {
-        return Brand::all();
-    });
+    $products = cache()->remember('home-products', now()->addDay(), fn() => Product::all()->sortByDesc('rate')->take(12));
+    $brands = cache()->remember('home-products', now()->addDay(), fn() => Brand::all());
     return view('index', compact('products', 'brands'));
 })->name('home');
 
 //==================================================================================================================
 
-Route::get('/service', function () {
-    return view('service.service');
-});
-Route::get('/about_us', function () {
-    return view('service.about_us');
-});
-Route::get('/contact', function () {
-    return view('service.contact');
-});
+Route::get('/service', fn() => view('service.service'));
+Route::get('/about_us', fn() => view('service.about_us'));
+Route::get('/contact', fn() => view('service.contact'));
 
 //==================================================================================================================
 
@@ -75,41 +64,23 @@ Route::post('/cart/update', 'ProductController@cart_update')->name('cart_update'
 
 //==================================================================================================================
 
-Route::get('/leave_review', function () {
-    return view('leave_review');
-});
+Route::get('/leave_review', fn() => view('leave_review'));
 
-Route::get('/confirm_review', function () {
-    return view('confirm_review');
-});
+Route::get('/confirm_review', fn() => view('confirm_review'));
 
-Route::get('/blog', function () {
-    return view('blog');
-});
+Route::get('/blog', fn() => view('blog'));
 
-Route::get('/faq', function () {
-    return view('service.faq');
-})->name('help');
+Route::get('/faq', fn() => view('service.faq'))->name('help');
 
-Route::get('/faq_2', function () {
-    return view('service.faq_2');
-});
+Route::get('/faq_2', fn() => view('service.faq_2'));
 
-Route::get('/ordering_guide', function () {
-    return view('service.ordering_guide');
-});
+Route::get('/ordering_guide', fn() => view('service.ordering_guide'));
 
-Route::get('/mode_of_transportation', function () {
-    return view('service.mode_of_transportation');
-});
+Route::get('/mode_of_transportation', fn() => view('service.mode_of_transportation'));
 
-Route::get('/payment_methods', function () {
-    return view('service.payment_methods');
-});
+Route::get('/payment_methods', fn() => view('service.payment_methods'));
 
-Route::get('/policy', function () {
-    return view('service.policy');
-});
+Route::get('/policy', fn() => view('service.policy'));
 
 //mail
 Route::get('/contact', 'SendEmailController@index');
@@ -182,9 +153,7 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
         Route::put('/delete/{id}', 'ReceiptController@delete')->name('admin_receipt_delete');
         Route::put('/deleteAll', 'ReceiptController@delete_multi')->name('admin_receipt_delete_multi');
     });
-    Route::get('/demo_table', function () {
-        return view('admin.tables_datatable');
-    });
+    Route::get('/demo_table', fn() => view('admin.tables_datatable'));
 });
 
 //==================================================================================================================
@@ -196,12 +165,8 @@ Route::get('/test', function () {
     return $user;
 });
 
-Route::get('checking_page', function () {
-    return view('session_checking');
-});
-Route::get('/test/{haha}', function () {
-    return 'haha';
-});
+Route::get('checking_page', fn() => view('session_checking'));
+Route::get('/test/{haha}', fn() => 'haha');
 Route::get('/multi_delete', function () {
     $products = Product::all()->where('status', '=', '1');
     return view('test_multi_delete', compact('products'));
