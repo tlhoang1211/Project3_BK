@@ -327,7 +327,9 @@ class ProductController extends Controller
         // Remove cache
         ResponseCache::clear();
 
-        return response()->json(['success' => "Sản phẩm đã được thêm vào giỏ hàng."]);
+        return response()->json([
+            'success'         => "Sản phẩm đã được thêm vào giỏ hàng.",
+            "cart_item_count" => count(session('shoppingCart'))]);
     }
 
     public function add(Request $request)
@@ -691,6 +693,10 @@ class ProductController extends Controller
             unset($cart[$request->id]);
         }
         Session::put('shoppingCart', $cart);
+
+        // Remove cache
+        ResponseCache::forget(route('cart'));
+
         return redirect()->back()->with(['success' => 'Đã xóa sản phẩm thành công.']);
     }
 
