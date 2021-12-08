@@ -20,15 +20,6 @@
 <!-- Back to top button -->
 <div id="toTop"></div>
 
-<!-- COMMON SCRIPTS -->
-<script src={{asset('assets/js/common_scripts.min.js')}}></script>
-<script src={{asset('assets/js/main.js')}}></script>
-<script src={{asset('assets/js/bootstrap.bundle.min.js')}}></script>
-<script src={{asset('assets/js/toastr.min.js')}}></script>
-<script src={{asset('assets/js/SaveScrollPosition.js')}}></script>
-<!-- SPECIFIC SCRIPTS -->
-@yield('specific_js')
-
 <!-- Messenger Plugin chat Code -->
 <div id="fb-root"></div>
 
@@ -60,4 +51,14 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
+
+<!-- COMMON SCRIPTS -->
+<script src={{asset('assets/js/common_scripts.min.js')}}></script>
+<script src={{asset('assets/js/main.js')}}></script>
+<script src={{asset('assets/js/bootstrap.bundle.min.js')}}></script>
+<script src={{asset('assets/js/toastr.min.js')}}></script>
+<script src={{asset('assets/js/SaveScrollPosition.js')}}></script>
+<!-- SPECIFIC SCRIPTS -->
+@yield('specific_js')
+
 </body>
