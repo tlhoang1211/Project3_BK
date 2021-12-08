@@ -1,7 +1,7 @@
 <?php
 
-use App\Account;
 use App\Brand;
+use App\Comment;
 use App\Http\Controllers\AccountController;
 use App\Origin;
 use App\Product;
@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 // user : route
 Route::get('/', function () {
-    $products = cache()->remember('home-products', now()->addDay(), fn() => Product::all()->sortByDesc('rate')->take(12));
-    $brands = cache()->remember('home-products', now()->addDay(), fn() => Brand::all());
+    $products = Product::all()->sortByDesc('rate')->take(12);
+    $brands = Brand::all();
     return view('index', compact('products', 'brands'));
 })->name('home');
 
@@ -160,9 +160,7 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
 
 // test : route
 Route::get('/test', function () {
-    Cache::put('user_' . '1', Account::find('1'));
-    $user = Cache::get('user_1');
-    return $user;
+    dd(Comment::where('product_id', '1')->paginate(5));
 });
 
 Route::get('checking_page', fn() => view('session_checking'));
