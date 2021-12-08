@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Traits\ClearsAllResponseCache;
+use App\Observers\ReceiptObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,9 +10,13 @@ use JetBrains\PhpStorm\Pure;
 
 class Receipt extends Model
 {
-    use ClearsAllResponseCache;
-
     protected $guarded = ['id'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(ReceiptObserver::class);
+    }
 
     public function account(): BelongsTo
     {

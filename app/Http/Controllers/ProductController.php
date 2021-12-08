@@ -46,9 +46,6 @@ class ProductController extends Controller
         $product->rate = $product->calculated_rate;
         $product->save();
 
-        // Remove product view cache to update comment section
-        ResponseCache::forget(route('product_detail', $product->slug));
-
         return back();
     }
 
