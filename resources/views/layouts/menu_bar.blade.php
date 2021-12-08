@@ -35,7 +35,7 @@
                     <div id="logo" class="m-auto w-50">
                         <a href="{{route('home')}}">
                             <img class="swing" alt="logo" src={{asset('assets/img/logo-3.png')}}
-                                    width="435" height="83" style="margin-left: -30px">
+                                width="435" height="83" style="margin-left: -30px">
                         </a>
                     </div>
 
@@ -69,7 +69,7 @@
                         {{--Search icon --}}
                         <li>
                             <div id="search_icon">
-                                <a href="#" class="header-icon_search_custom fa-2x" style="padding-top: 3px;">
+                                <a href="#" class="header-icon_search_custom fa-2x" style="padding-top: 5px;">
                                     <span>Search</span>
                                 </a>
                             </div>
@@ -80,7 +80,8 @@
                             <div class="dropdown dropdown-cart">
                                 <a href="{{route('cart')}}" class="cart_bt position-relative">
                                     @if ($filter_cart)
-                                        <div class="position-absolute bottom-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        <div
+                                            class="position-absolute bottom-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             {{ count($product_cart) }}
                                             <span class="visually-hidden">unread messages</span>
                                         </div>
@@ -96,8 +97,8 @@
                                                 <li>
                                                     <a href="{{route('product_detail',$product->slug)}}">
                                                         <figure><img
-                                                                    src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
-                                                                    alt="" width="50" height="50" class="lazy"></figure>
+                                                                src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
+                                                                alt="" width="50" height="50" class="lazy"></figure>
                                                         <strong><span>{{$product->name}}</span>{{$product->FormatPrice}}
                                                         </strong>
                                                     </a>
@@ -123,7 +124,7 @@
                                 <div class="dropdown-menu">
                                     @auth()
                                         <strong
-                                                style="font-size: 20px">{{auth()->user()->fullName}}</strong>
+                                            style="font-size: 20px">{{auth()->user()->fullName}}</strong>
                                         <ul>
                                             <li>
                                                 <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
@@ -134,7 +135,7 @@
                                             {{--</li>--}}
                                             <li>
                                                 <a href="{{route('mypurchase')}}"><i class="ti-package"></i>Đơn hàng của
-                                                                                                            tôi</a>
+                                                    tôi</a>
                                             </li>
                                             <li>
                                                 <a href="{{route('help')}}"><i class="ti-help-alt"></i>Trợ giúp</a>
@@ -143,8 +144,8 @@
                                                 <a class="log-out-btn" href="{{ route('logout') }}"
                                                 >
                                                     <i
-                                                            class="fa fa-sign-out" aria-hidden="true"
-                                                            style="color: #3a87ad">
+                                                        class="fa fa-sign-out" aria-hidden="true"
+                                                        style="color: #3a87ad">
 
                                                     </i>
                                                     Đăng xuất

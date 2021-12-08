@@ -3,6 +3,7 @@
 use App\Account;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 class AccountSeeder extends Seeder
@@ -14,59 +15,42 @@ class AccountSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
         $data_check = Account::all()->first();
-        if ($data_check != null)
-        {
+        if ($data_check != null) {
             Schema::disableForeignKeyConstraints();
             Account::query()->truncate();
             Schema::enableForeignKeyConstraints();
         }
 
         Account::create(array(
-            'role_id'        => 2,
-            'password'       => Hash::make('admin'),
-            'fullName'       => 'adminer',
-            'email'          => 'admin@admin',
-            'phoneNumber'    => '084558392801',
+            'role_id' => 2,
+            'password' => Hash::make('admin'),
+            'fullName' => 'adminer',
+            'email' => 'admin@admin',
+            'phoneNumber' => '084558392801',
             'email_verified' => 'verified',
-            'sex'            => 'Female',
-            'birthDate'      => '2002-07-29',
-            'city_id'        => 2,
-            'status'         => 1,
-            'created_at'     => Carbon::now(),
-            'updated_at'     => Carbon::now(),
-            'address'        => $faker->address
+            'sex' => 'Female',
+            'birthDate' => '2002-07-29',
+            'city_id' => 2,
+            'status' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            'address' => '1 Lang Ha'
         ));
         Account::create(array(
-            'role_id'        => 1,
-            'password'       => Hash::make('guest'),
-            'fullName'       => 'guest',
-            'email'          => 'guest@guest',
-            'city_id'        => 1,
-            'sex'            => 'Male',
-            'birthDate'      => '1996-05-22',
-            'phoneNumber'    => '084558392801',
+            'role_id' => 1,
+            'password' => Hash::make('guest'),
+            'fullName' => 'guest',
+            'email' => 'guest@guest',
+            'city_id' => 1,
+            'sex' => 'Male',
+            'birthDate' => '1996-05-22',
+            'phoneNumber' => '084558392801',
             'email_verified' => 'verified',
-            'status'         => 1,
-            'created_at'     => Carbon::now(),
-            'updated_at'     => Carbon::now(),
-            'address'        => $faker->address
-        ));
-        Account::create(array(
-            'role_id'        => 1,
-            'password'       => Hash::make('guest'),
-            'fullName'       => $faker->name,
-            'email'          => $faker->email,
-            'city_id'        => 1,
-            'sex'            => 'Male',
-            'birthDate'      => '1996-05-22',
-            'phoneNumber'    => $faker->phoneNumber,
-            'email_verified' => 'verified',
-            'status'         => 1,
-            'created_at'     => Carbon::now(),
-            'updated_at'     => Carbon::now(),
-            'address'        => $faker->address
+            'status' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            'address' => '2 Lang Ha'
         ));
 //        $account = array(
 //            array(
