@@ -2234,7 +2234,7 @@ header ul.top_tools > li a > span {
 }
 
 header ul.top_tools > li a > .badge {
-    padding: 0.45em 0.65em 0.5em 0.65em;
+    padding: 0.45em 0.65em;
 }
 
 header ul.top_tools > li a:before {
