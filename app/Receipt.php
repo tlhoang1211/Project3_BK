@@ -2,14 +2,15 @@
 
 namespace App;
 
-use App\Traits\ClearsResponseCache;
+use App\Traits\ClearsAllResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use JetBrains\PhpStorm\Pure;
 
 class Receipt extends Model
 {
-    use ClearsResponseCache;
+    use ClearsAllResponseCache;
 
     protected $guarded = ['id'];
 
@@ -33,7 +34,7 @@ class Receipt extends Model
         return $general_detail;
     }
 
-    public function getFormatPriceAttribute(): string
+    #[Pure] public function getFormatPriceAttribute(): string
     {
         return format_money($this->total_money);
 

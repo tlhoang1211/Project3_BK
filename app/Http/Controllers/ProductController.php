@@ -46,8 +46,8 @@ class ProductController extends Controller
         $product->rate = $product->calculated_rate;
         $product->save();
 
-        // Remove product view cache
-        cache()->forget('product-data-' . $product->id);
+        // Remove product view cache to update comment section
+        ResponseCache::forget(route('product_detail', $product->slug));
 
         return back();
     }
@@ -55,38 +55,25 @@ class ProductController extends Controller
     /**
      * @throws Exception
      */
-    public function index(Product $product)
+    public function index(Product $product): Factory|View|Application
     {
-        $currentPage = request()->get('page', 1);
+        $product_style = $product->style;
+        $style_arr = explode(',', $product_style);
+        $item_query = Product::where('status', '1')->where('slug', '!=', $product->slug);
+        foreach ($style_arr as $style)
+        {
+            $item_query->orWhere('style', '=', '%' . $style . '%');
+        }
+        $eloquent_product = $item_query->take(3)->get();
+        $eloquent_product_5 = $item_query->take(5)->get();
+        $item_brand_query = Product::where('status', '1')->where('id', '!=', $product->id);
+        $item_brand_query->where('brand_id', '=', $product->brand->id);
+        $eloquent_product_brand = $item_brand_query->get();
 
-        $data = cache()->remember('product-data-' . $product->id . 'comment-page-' . $currentPage, now()->addDay(), function () use ($product) {
-            $temp_data = [];
-
-            $product_style = $product->style;
-            $style_arr = explode(',', $product_style);
-            $item_query = Product::where('status', '1')->where('slug', '!=', $product->slug);
-            foreach ($style_arr as $style)
-            {
-                $item_query->orWhere('style', '=', '%' . $style . '%');
-            }
-            $temp_data['eloquent_product'] = $item_query->take(3)->get();
-            $temp_data['eloquent_product_5'] = $item_query->take(5)->get();
-
-            $item_brand_query = Product::where('status', '1')->where('id', '!=', $product->id);
-            $item_brand_query->where('brand_id', '=', $product->brand->id);
-            $temp_data['eloquent_product_brand'] = $item_brand_query->get();
-
-            $temp_data['comments'] = Comment::latest()->where('product_id', $product->id)->paginate(5);
-
-            return $temp_data;
-        });
-
-        return view('products.product_detail', [
-            'eloquent_product_brand' => $data['eloquent_product_brand'],
-            'eloquent_product_5'     => $data['eloquent_product_5']
-        ])->with('product', $product)
-            ->with('eloquent_product', $data['eloquent_product'])
-            ->with('comments', $data['comments']);
+        return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
+            ->with('product', $product)
+            ->with('eloquent_product', $eloquent_product)
+            ->with('comments', Comment::latest()->where('product_id', $product->id)->paginate(5));
     }
 
     public function admin_index(Request $request)
@@ -324,7 +311,7 @@ class ProductController extends Controller
         Session::put('shoppingCart', $shopping_cart);
         $request->session()->save();
 
-        // Remove cache
+        // Remove cache to reset cart item dropdown view
         ResponseCache::clear();
 
         return response()->json([
@@ -695,7 +682,7 @@ class ProductController extends Controller
         Session::put('shoppingCart', $cart);
 
         // Remove cache
-        ResponseCache::forget(route('cart'));
+        ResponseCache::clear();
 
         return redirect()->back()->with(['success' => 'Đã xóa sản phẩm thành công.']);
     }

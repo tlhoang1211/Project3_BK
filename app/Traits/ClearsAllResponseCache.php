@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use Spatie\ResponseCache\Facades\ResponseCache;
 
-trait ClearsResponseCache
+trait ClearsAllResponseCache
 {
     public static function bootClearsResponseCache(): void
     {
