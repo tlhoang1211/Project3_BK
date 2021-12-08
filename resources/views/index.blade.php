@@ -95,9 +95,9 @@
                 <li>
                     <a href="{{route('female_product')}}" class="img_container">
                         <img
-                                src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
-                                data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
-                                alt="" class="lazy">
+                            src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
+                            data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
+                            alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST Nữ</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -107,9 +107,9 @@
                 <li>
                     <a href="{{route('male_product')}}" class="img_container">
                         <img
-                                src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
-                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
-                                alt="" class="lazy">
+                            src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
+                            data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
+                            alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST Nam</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -119,9 +119,9 @@
                 <li>
                     <a href="{{route('unisex_product')}}" class="img_container">
                         <img
-                                src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
-                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
-                                alt="" class="lazy">
+                            src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
+                            data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
+                            alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST đa giới</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -212,13 +212,13 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
-                                        alt="" width="400" height="266" class="lazy">
+                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
+                                    alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
                                 <li>Hoàng Trần</li>
-                                <li>07.08.2020</li>
+                                <li>11.11.2021</li>
                             </ul>
                             <h4>Fucking Fabulous – khi tình yêu trở nên mù quáng</h4>
                             <p>Thật đáng buồn cười khi con người ta liên tục cảm thấy hối hận vì....</p>
@@ -229,13 +229,13 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
-                                        alt="" width="400" height="266" class="lazy">
+                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
+                                    alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
                                 <li>Khánh Nam</li>
-                                <li>07.08.2020</li>
+                                <li>11.11.2021</li>
                             </ul>
                             <h4>Nước hoa và thủ thuật giao tiếp</h4>
                             <p>Ẩn sau những nốt hương nhè nhẹ, vấn vương là cả một thế giới tràn đầy bí ẩn....</p>
@@ -246,17 +246,17 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
-                                        alt="" width="400" height="266" class="lazy">
+                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
+                                    alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
-                                <li>Đỗ Thái</li>
-                                <li>07.08.2020</li>
+                                <li>Việt Hoàng</li>
+                                <li>11.11.2021</li>
                             </ul>
                             <h4>Bộ sưu tập Gucci Bloom, khi vẻ đẹp của hoa Huệ được tôn vinh</h4>
                             <p>Tháng 8 năm 2017, Giám đốc sáng tạo Alessandro Michele với nét mặt rạng rỡ, hạnh
-                               phúc....</p>
+                                phúc....</p>
                         </a>
                     </div>
                     <!-- /box_news -->
@@ -264,13 +264,13 @@
                         <a class="box_news" href="blog.html">
                             <figure>
                                 <img
-                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
-                                        alt="" width="400" height="266" class="lazy">
+                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
+                                    alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>06</strong>Aug</figcaption>
                             </figure>
                             <ul>
                                 <li>Bá Lâm</li>
-                                <li>06.08.2020</li>
+                                <li>01.11.2021</li>
                             </ul>
                             <h4>Alaia – Mùi hương của ký ức, tình yêu và nỗi nhớ</h4>
                             <p>Thật dễ để yêu ai đó khi họ đã trở thành một phần của ký ức, nhưng thật khó....</p>
