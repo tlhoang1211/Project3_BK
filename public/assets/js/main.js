@@ -1,62 +1,47 @@
-(function ($)
-{
+(function ($) {
 
     "use strict";
 
     // Sticky nav
     const $headerStick = $(".Sticky");
-    $(window).on("scroll", function ()
-    {
-        if ($(this).scrollTop() > 80)
-        {
+    $(window).on("scroll", function () {
+        if ($(this).scrollTop() > 80) {
             $headerStick.addClass("fade-away");
-        }
-        else
-        {
+        } else {
             $headerStick.removeClass("fade-away");
         }
     });
 
     // Menu Categories
-    $(window).resize(function ()
-    {
-        if ($(window).width() >= 768)
-        {
-            $("a[href=\"#\"]").on("click", function (e)
-            {
+    $(window).resize(function () {
+        if ($(window).width() >= 768) {
+            $("a[href=\"#\"]").on("click", function (e) {
                 e.preventDefault();
             });
             $(".categories").addClass("menu");
 
-            $(".menu ul > li").hover(function (e)
-            {
+            $(".menu ul > li").hover(function (e) {
                 e.stopPropagation();
 
                 $(this).find("ul:first").delay(50).fadeIn();
                 $(this).find("> span a").addClass("active");
-            }, function ()
-            {
+            }, function () {
                 $(this).find("ul:first").delay(50).fadeOut();
                 $(this).find("> span a").removeClass("active");
             });
 
-            $(".menu ul li li").stop().on("mouseover", function (e)
-            {
-                if ($(this).has("ul").length)
-                {
+            $(".menu ul li li").stop().on("mouseover", function (e) {
+                if ($(this).has("ul").length) {
                     $(this).parent().addClass("expanded");
                 }
                 $(".menu ul:first", this).parent().find("> span a").addClass("active");
                 $(".menu ul:first", this).show();
-            }).stop().on("mouseout", function (e)
-            {
+            }).stop().on("mouseout", function (e) {
                 $(this).parent().removeClass("expanded");
                 $(".menu ul:first", this).parent().find("> span a").removeClass("active");
                 $(".menu ul:first", this).hide();
             });
-        }
-        else
-        {
+        } else {
             $(".categories").removeClass("menu");
         }
     }).resize();
@@ -75,7 +60,7 @@
             offCanvas: {
                 pageSelector: "#page"
             },
-            navbars: [{position: "bottom", content: ["<a href=\"#0\">© 2020 Allaia</a>"]}]
+            navbars: [{position: "bottom", content: ["<a href=\"#0\">© 2021 Wanderlust</a>"]}]
         },
         {
             // configuration
@@ -88,22 +73,18 @@
         });
 
     // Menu
-    $("a.open_close").on("click", function ()
-    {
+    $("a.open_close").on("click", function () {
         $(".main-menu").toggleClass("show");
         $(".layer").toggleClass("layer-is-visible");
     });
-    $("a.show-submenu").on("click", function ()
-    {
+    $("a.show-submenu").on("click", function () {
         $(this).next().toggleClass("show_normal");
     });
-    $("a.show-submenu-mega").on("click", function ()
-    {
+    $("a.show-submenu-mega").on("click", function () {
         $(this).next().toggleClass("show_mega");
     });
 
-    $("a.btn_search_mob").on("click", function ()
-    {
+    $("a.btn_search_mob").on("click", function () {
         $(".search_mob_wp").slideToggle("fast");
     });
 
@@ -199,11 +180,9 @@
     });
 
     // Countdown offers
-    $("[data-countdown]").each(function ()
-    {
+    $("[data-countdown]").each(function () {
         const $this = $(this), finalDate = $(this).data("countdown");
-        $this.countdown(finalDate, function (event)
-        {
+        $this.countdown(finalDate, function (event) {
             $this.html(event.strftime("%DD %H:%M:%S"));
         });
     });
@@ -217,32 +196,24 @@
     $(".custom-select-form select").niceSelect();
 
     // Product page color select
-    $(".color").on("click", function ()
-    {
+    $(".color").on("click", function () {
         $(".color").removeClass("active");
         $(this).addClass("active");
     });
 
     /* Input incrementer*/
     $(".numbers-row").append("<div class=\"inc button_inc\">+</div><div class=\"dec button_inc\">-</div>");
-    $(".button_inc").on("click", function ()
-    {
+    $(".button_inc").on("click", function () {
         let newVal;
         const $button = $(this);
         const oldValue = $button.parent().find("input").val();
-        if ($button.text() === "+")
-        {
+        if ($button.text() === "+") {
             newVal = parseFloat(oldValue) + 1;
-        }
-        else
-        {
+        } else {
             // Don't allow decrementing below zero
-            if (oldValue > 1)
-            {
+            if (oldValue > 1) {
                 newVal = parseFloat(oldValue) - 1;
-            }
-            else
-            {
+            } else {
                 newVal = 0;
             }
         }
@@ -251,14 +222,11 @@
 
     // Hide logo, display search bar
     let logo_is_displayed = true;
-    $("#search_icon").stop().click(function (e)
-    {
+    $("#search_icon").stop().click(function (e) {
         e.stopPropagation();
 
-        $(`#${logo_is_displayed ? "logo" : "search_bar"}`).delay(50).fadeToggle(200, (e) =>
-        {
-            $(`#${logo_is_displayed ? "search_bar" : "logo"}`).delay(50).fadeToggle(100, (e) =>
-            {
+        $(`#${logo_is_displayed ? "logo" : "search_bar"}`).delay(50).fadeToggle(200, (e) => {
+            $(`#${logo_is_displayed ? "search_bar" : "logo"}`).delay(50).fadeToggle(100, (e) => {
                 logo_is_displayed = !logo_is_displayed;
                 $(this).css("pointer-events", 'auto');
             });
@@ -266,10 +234,8 @@
     });
 
     // Switch back to logo if click outside of the searchbar
-    $(document).click((e) =>
-    {
-        if (!logo_is_displayed && !$(e.target).closest("#search_bar").length && !$(e.target).closest("#search_icon").length)
-        {
+    $(document).click((e) => {
+        if (!logo_is_displayed && !$(e.target).closest("#search_bar").length && !$(e.target).closest("#search_icon").length) {
             $("#search_icon").trigger("click");
         }
     });
@@ -282,42 +248,33 @@
     // });
 
     /* Cart dropdown */
-    $(".dropdown-cart").click(() =>
-    {
+    $(".dropdown-cart").click(() => {
         window.location.href = "/cart/page";
     });
 
     // Account dropdown
-    $(".user-page").click(() =>
-    {
+    $(".user-page").click(() => {
         window.location.href = "/user/account/profile";
     });
 
-    $(".dropdown-cart, .dropdown-access").hover(function ()
-    {
+    $(".dropdown-cart, .dropdown-access").hover(function () {
         $(this).find(".dropdown-menu").stop().delay(50).fadeIn(300);
-    }, function ()
-    {
+    }, function () {
         $(this).find(".dropdown-menu").stop().delay(50).fadeOut(300);
     });
 
     /* Cart Dropdown Hidden From tablet */
-    $(window).bind("load resize", function ()
-    {
+    $(window).bind("load resize", function () {
         const width = $(window).width();
-        if (width <= 768)
-        {
+        if (width <= 768) {
             $("a.cart_bt, a.access_link").removeAttr("data-toggle", "dropdown");
-        }
-        else
-        {
+        } else {
             $("a.cart_bt,a.access_link").attr("data-toggle", "dropdown");
         }
     });
 
     // Opacity mask
-    $(".opacity-mask").each(function ()
-    {
+    $(".opacity-mask").each(function () {
         $(this).css("background-color", $(this).attr("data-opacity-mask"));
     });
 
@@ -325,32 +282,25 @@
     new WOW().init();
 
     // Forgot Password
-    $("#forgot").on("click", function ()
-    {
+    $("#forgot").on("click", function () {
         $("#forgot_pw").fadeToggle("fast");
     });
 
     //Footer collapse
     const $headingFooter = $("footer h3");
-    $(window).resize(function ()
-    {
-        if ($(window).width() <= 768)
-        {
+    $(window).resize(function () {
+        if ($(window).width() <= 768) {
             $headingFooter.attr("data-toggle", "collapse");
-        }
-        else
-        {
+        } else {
             $headingFooter.removeAttr("data-toggle", "collapse");
         }
     }).resize();
-    $headingFooter.on("click", function ()
-    {
+    $headingFooter.on("click", function () {
         $(this).toggleClass("opened");
     });
 
     /* Footer reveal */
-    if ($(window).width() >= 1024)
-    {
+    if ($(window).width() >= 1024) {
         $("footer.revealed").footerReveal({
             shadow: false,
             opacity: 0.6,
@@ -361,32 +311,23 @@
     // Scroll to top
     const pxShow = 800; // height on which the button will show
     const scrollSpeed = 500; // how slow / fast you want the button to scroll to top.
-    $(window).scroll(function ()
-    {
-        if ($(window).scrollTop() >= pxShow)
-        {
+    $(window).scroll(function () {
+        if ($(window).scrollTop() >= pxShow) {
             $("#toTop").addClass("visible");
-        }
-        else
-        {
+        } else {
             $("#toTop").removeClass("visible");
         }
     });
-    $("#toTop").on("click", function ()
-    {
+    $("#toTop").on("click", function () {
         $("html, body").animate({scrollTop: 0}, scrollSpeed);
         return false;
     });
 
     // Tooltip
-    $(window).resize(function ()
-    {
-        if ($(window).width() <= 768)
-        {
+    $(window).resize(function () {
+        if ($(window).width() <= 768) {
             $(".tooltip-1").tooltip("disable");
-        }
-        else
-        {
+        } else {
             $(".tooltip-1").tooltip({html: true});
         }
     }).resize();
@@ -406,8 +347,7 @@
     });
 
     // Image popups
-    $(".magnific-gallery").each(function ()
-    {
+    $(".magnific-gallery").each(function () {
         $(this).magnificPopup({
             delegate: "a",
             type: "image",
@@ -417,8 +357,7 @@
             },
             removalDelay: 500, //delay removal by X to allow out-animation
             callbacks: {
-                beforeOpen: function ()
-                {
+                beforeOpen: function () {
                     // just a hack that adds mfp-anim class to markup
                     this.st.image.markup = this.st.image.markup.replace("mfp-figure", "mfp-figure mfp-with-anim");
                     this.st.mainClass = this.st.el.attr("data-effect");
@@ -430,14 +369,12 @@
     });
 
     // Popup up
-    setTimeout(function ()
-    {
+    setTimeout(function () {
         $(".popup_wrapper").css({
             "opacity": "1",
             "visibility": "visible"
         });
-        $(".popup_close").on("click", function ()
-        {
+        $(".popup_close").on("click", function () {
             $(".popup_wrapper").fadeOut(300);
         });
     }, 1500);
