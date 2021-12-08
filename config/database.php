@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
 
     /*
@@ -140,7 +138,15 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port'     => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_CACHE_DB', '0'),
-            'prefix'   => 'c:',
+        ],
+
+        'session' => [
+            'url'      => env('REDIS_URL'),
+            'host'     => env('REDIS_HOST', '127.0.0.1'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port'     => env('REDIS_PORT', '6379'),
+            'database' => '1',
+            'prefix'   => 's:'
         ],
 
     ],
