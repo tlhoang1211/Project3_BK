@@ -63,22 +63,22 @@
                         <h5>Theo dõi ủng hộ Wanderlust</h5>
                         <ul>
                             <li><a href="#0"><img
-                                            src="{{asset("assets/img/twitter_icon.svg")}}"
-                                            data-src="{{asset("assets/img/twitter_icon.svg")}}" alt="" class="lazy"></a>
+                                        src="{{asset("assets/img/twitter_icon.svg")}}"
+                                        data-src="{{asset("assets/img/twitter_icon.svg")}}" alt="" class="lazy"></a>
                             </li>
                             <li><a href="#0"><img
-                                            src="{{asset("assets/img/facebook_icon.svg")}}"
-                                            data-src="{{asset("assets/img/facebook_icon.svg")}}" alt=""
-                                            class="lazy"></a>
+                                        src="{{asset("assets/img/facebook_icon.svg")}}"
+                                        data-src="{{asset("assets/img/facebook_icon.svg")}}" alt=""
+                                        class="lazy"></a>
                             </li>
                             <li><a href="#0"><img
-                                            src="{{asset("assets/img/instagram_icon.svg")}}"
-                                            data-src="{{asset("assets/img/instagram_icon.svg")}}" alt=""
-                                            class="lazy"></a>
+                                        src="{{asset("assets/img/instagram_icon.svg")}}"
+                                        data-src="{{asset("assets/img/instagram_icon.svg")}}" alt=""
+                                        class="lazy"></a>
                             </li>
                             <li><a href="#0"><img
-                                            src="{{asset("assets/img/youtube_icon.svg")}}"
-                                            data-src="{{asset("assets/img/youtube_icon.svg")}}" alt="" class="lazy"></a>
+                                        src="{{asset("assets/img/youtube_icon.svg")}}"
+                                        data-src="{{asset("assets/img/youtube_icon.svg")}}" alt="" class="lazy"></a>
                             </li>
                         </ul>
                     </div>
@@ -109,9 +109,9 @@
                         </div>
                     </li>
                     <li><img
-                                src="{{asset("assets/img/cards_all.svg")}}"
-                                data-src="{{asset("assets/img/cards_all.svg")}}" alt="" width="198" height="30"
-                                class="lazy">
+                            src="{{asset("assets/img/cards_all.svg")}}"
+                            data-src="{{asset("assets/img/cards_all.svg")}}" alt="" width="198" height="30"
+                            class="lazy">
                     </li>
                 </ul>
             </div>
@@ -119,7 +119,7 @@
                 <ul class="additional_links">
                     <li><a href="#0">Các điều khoản và điều kiện</a></li>
                     <li><a href="#0">Bảo mật</a></li>
-                    <li><span>© 2020 Wanderlust</span></li>
+                    <li><span>© 2021 Wanderlust</span></li>
                 </ul>
             </div>
         </div>
