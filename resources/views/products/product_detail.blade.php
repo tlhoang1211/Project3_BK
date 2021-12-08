@@ -69,7 +69,12 @@
                             toastr.success(data["success"]);
 
                             // Update cart item count
-                            $("div#cart_item_count").text(data["cart_item_count"]);
+                            const count = $("div#cart_item_count");
+                            if (count.hasClass("invisible"))
+                            {
+                                count.removeClass("invisible");
+                            }
+                            count.text(data["cart_item_count"]);
                         }
                         else if (data["error"])
                         {

@@ -79,13 +79,13 @@
                         <li>
                             <div class="dropdown dropdown-cart">
                                 <a href="{{route('cart')}}" class="cart_bt position-relative">
-                                    @if ($filter_cart)
-                                        <div id="cart_item_count"
-                                             class="position-absolute bottom-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {{ count($product_cart) }}
-                                            <span class="visually-hidden">unread messages</span>
-                                        </div>
-                                    @endif
+                                    {{--                                    @if ($filter_cart)--}}
+                                    <div id="cart_item_count"
+                                         class="position-absolute bottom-0 start-100 translate-middle badge rounded-pill bg-danger {{$filter_cart ? '' : 'invisible' }}">
+                                        {{ $filter_cart ? count($product_cart) : '' }}
+                                        <span class="visually-hidden">unread messages</span>
+                                    </div>
+                                    {{--                                    @endif--}}
                                 </a>
                                 @if ($filter_cart)
                                     <div class="dropdown-menu">
