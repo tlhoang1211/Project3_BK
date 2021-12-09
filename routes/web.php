@@ -33,26 +33,40 @@ Route::get('/contact', fn() => view('service.contact'));
 //==================================================================================================================
 
 //User routes
-Route::get('/user/account/profile', function () {
-    $account = auth()->user();
-    return view('account', compact('account'));
-})->name('profile')->middleware('auth');
-Route::post('/user/account/profile_update', [AccountController::class, 'user_update'])
-    ->name('user_account_update')->middleware('auth');
-Route::get('/user/purchase', 'UserController@orderList')->name('mypurchase')->middleware('auth');
+Route::prefix('account')->group(function () {
+
+    Route::get('/profile', function () {
+        $account = auth()->user();
+        return view('account', compact('account'));
+    })->name('profile')->middleware('auth');
+
+    Route::post('/update', [AccountController::class, 'user_update'])
+        ->name('user_account_update')->middleware('auth');
+
+    Route::get('/receipts', 'UserController@orderList')->name('mypurchase')->middleware('auth');
+});
 
 //==================================================================================================================
 
 //Product routes
 Route::prefix('product')->group(function () {
+
     Route::get('/list', 'ProductController@productList')->name('product_list');
+
     Route::get('/find', 'ProductController@search')->name('product_search');
+
     Route::get('/male', 'ProductController@male_product')->name('male_product');
+
     Route::get('/female', [ProductController::class, 'female_product'])->name('female_product');
+
     Route::get('/unisex', 'ProductController@unisex_product')->name('unisex_product');
+
     Route::post('/add_cart/item', 'ProductController@add_to_cart')->name('add_to_cart');
+
     Route::get('/{product:slug}', 'ProductController@index')->name('product_detail');
+
     Route::post('{product:slug}/comment', 'ProductController@productComment')->name('comment')->middleware('auth');
+
 });
 
 //==================================================================================================================
@@ -87,10 +101,7 @@ Route::get('/policy', fn() => view('service.policy'));
 
 //mail
 Route::get('/contact', 'SendEmailController@index');
-
 Route::post('/contact/send', 'SendEmailController@send');
-
-//Route::get('/product', 'ProductController@index');
 
 //==================================================================================================================
 
