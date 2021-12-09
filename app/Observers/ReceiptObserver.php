@@ -13,8 +13,12 @@ class ReceiptObserver
 
     private function remove_receipt_page_cache(): void
     {
+        $receipt_urls = [];
         // Get all pagination pages
-        $receipt_urls = session('receipt-page-urls');
+        if (session()->has('receipt-page-urls'))
+        {
+            $receipt_urls = session('receipt-page-urls');
+        }
 
         ResponseCache::forget([
             route('mypurchase'),
