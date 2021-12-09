@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// user : route
 Route::get('/', function () {
     $products = Product::all()->sortByDesc('rate')->take(12);
     $brands = Brand::all();
@@ -159,12 +157,19 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], function ()
 //==================================================================================================================
 
 // test : route
-Route::get('/test', function () {
-    dd(Comment::where('product_id', '1')->paginate(5));
+Route::get('test', function () {
+    $pagination = Comment::where('product_id', '1')->paginate(5);
+    $result = $pagination->lastPage;
+    dd('something');
+    return view('test');
 });
 
-Route::get('checking_page', fn() => view('session_checking'));
-Route::get('/test/{haha}', fn() => 'haha');
+Route::get('checking_page', function () {
+    $pagination = Comment::where('product_id', '1')->paginate(5);
+    $result = $pagination->lastPage;
+    return view('session_checking');
+});
+
 Route::get('/multi_delete', function () {
     $products = Product::all()->where('status', '=', '1');
     return view('test_multi_delete', compact('products'));

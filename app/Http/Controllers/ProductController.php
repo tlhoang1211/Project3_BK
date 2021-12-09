@@ -67,10 +67,15 @@ class ProductController extends Controller
         $item_brand_query->where('brand_id', '=', $product->brand->id);
         $eloquent_product_brand = $item_brand_query->get();
 
+        $comment_pages = Comment::latest()->where('product_id', $product->id)->paginate(5);
+
+        // Save comment pagination URLS to session
+        session(["comment-page-urls-{$product->id}" => $comment_pages->getUrlRange(1, $comment_pages->lastPage())]);
+
         return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
             ->with('product', $product)
             ->with('eloquent_product', $eloquent_product)
-            ->with('comments', Comment::latest()->where('product_id', $product->id)->paginate(5));
+            ->with('comments', $comment_pages);
     }
 
     public function admin_index(Request $request)

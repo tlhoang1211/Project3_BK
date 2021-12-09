@@ -14,9 +14,12 @@ class CommentObserver
 
     private function remove_product_page_cache(Comment $comment): void
     {
+        // Get all pagination pages
+        $comment_pages = session("comment-page-urls-{$comment->product->id}");
+
         ResponseCache::forget([
             route('product_detail', $comment->product->slug),
-            route('product_detail', ['product' => $comment->product, 'page' => 1])
+            ...$comment_pages
         ]);
     }
 

@@ -16,7 +16,10 @@ class UserController extends Controller
     public function orderList(): Factory|View|Application
     {
         $account = auth()->user();
-        $receipts = Receipt::where("account_id", $account->id)->latest()->paginate(5);
+        $receipts = Receipt::latest()->where("account_id", $account->id)->paginate(5);
+
+        // Save receipts pagination URLS to session
+        session(["receipt-page-urls" => $receipts->getUrlRange(1, $receipts->lastPage())]);
 
         return view('purchase', compact('account', 'receipts'));
     }
