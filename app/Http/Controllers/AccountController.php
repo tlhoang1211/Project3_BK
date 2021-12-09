@@ -4,23 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\City;
-use App\Http\Requests\RegisterRequest;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AccountController extends Controller
 {
-    public function index()
+    public function index(): Factory|View|Application
     {
         $cities = City::all();
         session(['previous_link' => url()->previous()]);
         return view('auth.login_register', compact('cities'));
     }
 
-    public function admin_index()
+    public function admin_index(): Factory|View|Application
     {
         $cities = City::all();
         $account_cur = \auth()->user();
@@ -28,7 +31,7 @@ class AccountController extends Controller
         return view('admin.accounts.account_list', compact('cities', 'accounts'));
     }
 
-    public function loginProgress(Request $request)
+    public function loginProgress(Request $request): Redirector|Application|RedirectResponse
     {
         $credentials = $request->validate([
             'email'    => 'required|email',
@@ -57,7 +60,7 @@ class AccountController extends Controller
         return redirect('/');
     }
 
-    public function edit($id)
+    public function edit($id): Factory|View|Application
     {
         $account_cur = Session::get('current_account');
         $account = Account::where('id', '=', $id)->where('id', '!=', $account_cur->id)->first();
@@ -65,7 +68,7 @@ class AccountController extends Controller
         return view('admin.accounts.edit', compact('account', 'cities'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): Redirector|Application|RedirectResponse
     {
         $request->validate([
             'fullName'    => 'required',
@@ -85,13 +88,13 @@ class AccountController extends Controller
         return redirect(route('admin_account_list'));
     }
 
-    public function create()
+    public function create(): Factory|View|Application
     {
         $cities = City::all();
         return view('admin.accounts.create', compact('cities'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): Redirector|Application|RedirectResponse
     {
 
         $request->validate([
@@ -107,7 +110,7 @@ class AccountController extends Controller
         return redirect(route('admin_account_list'));
     }
 
-    public function delete($id)
+    public function delete($id): Redirector|Application|RedirectResponse
     {
         $account = Account::find($id);
         $account->status = 0;
