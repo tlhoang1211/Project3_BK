@@ -2,7 +2,7 @@
     <h3 class="client">Đăng nhập</h3>
     <form action="{{route('loginP')}}" method="POST">
         @csrf
-        <div class="form_container">
+        <div class="form_container mb-3">
 
             @if ($errors->has('credentials'))
                 <label class="alert-warning">{{$errors->first('credentials')}}</label>
@@ -32,11 +32,25 @@
                 <div class="float-right"><a id="forgot" href="{{ route('password.request') }}">Quên mật
                                                                                                khẩu?</a></div>
             </div>
-            <div class="text-center"><input type="submit" value="Đăng nhập"
-                                            class="btn_1 full-width">
+            <div class="text-center">
+                <button type="submit"
+                        class="btn_1 full-width">Đăng nhập
+                </button>
             </div>
         </div>
     </form>
+    <h5 class="text-center">OR</h5>
+
+    {{--Social login--}}
+    <a class="btn btn-block btn-social btn-google">
+        <i class="fa fa-google"></i>
+        Đăng nhập bằng tài khoản Google
+    </a>
+    <a class="btn btn-block btn-social btn-facebook">
+        <i class="fa fa-facebook"></i>
+        Đăng nhập bằng tài khoản Facebook
+    </a>
+
     <!-- /form_container -->
 </div>
 <!-- /box_account -->
