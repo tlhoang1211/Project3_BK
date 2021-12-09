@@ -101,7 +101,7 @@ Route::post('/contact/send', 'SendEmailController@send');
 //==================================================================================================================
 
 // login - register : route
-Route::get('login', 'AccountController@index')->name('login')->middleware('guest');
+Route::get('login', 'AccountController@index')->name('login')->middleware(['guest', 'doNotCacheResponse']);
 Route::post('loginProcess', 'AccountController@loginProgress')->name('loginP')->middleware('guest');
 
 //==================================================================================================================
