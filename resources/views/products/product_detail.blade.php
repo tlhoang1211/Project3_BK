@@ -67,6 +67,14 @@
                                 "hideMethod": "fadeOut"
                             };
                             toastr.success(data["success"]);
+
+                            // Update cart item count
+                            const count = $("div#cart_item_count");
+                            if (count.hasClass("invisible"))
+                            {
+                                count.removeClass("invisible");
+                            }
+                            count.text(data["cart_item_count"]);
                         }
                         else if (data["error"])
                         {

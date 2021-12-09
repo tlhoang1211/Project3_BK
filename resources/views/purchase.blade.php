@@ -1,10 +1,6 @@
 @extends('layouts.master')
 @section('specific_css')
-    <link href="{{asset('assets/css/account.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/user_page.css')}}" rel="stylesheet">
-@endsection
-@section('specific_js')
-    <script src="{{asset('assets/js/custome_select.js')}}"></script>
 @endsection
 @section('content')
     <div class="container margin_30">
@@ -18,8 +14,8 @@
                                     <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"
                                          style="margin-right: 4px;">
                                         <path
-                                            d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48"
-                                            fill="#9B9B9B" fill-rule="evenodd"></path>
+                                                d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48"
+                                                fill="#9B9B9B" fill-rule="evenodd"></path>
                                     </svg>
                                     Sửa hồ sơ</a></div>
                         </div>
@@ -47,19 +43,19 @@
                                 <div class="userpage-sidebar-menu__subsection">
                                     <a class="_17BcjA _1EUbVp"
                                        href="account/profile"><span
-                                            class="_2ilxaJ">Hồ sơ</span>
+                                                class="_2ilxaJ">Hồ sơ</span>
                                     </a>
                                     <a class="_17BcjA"
                                        href="account/payment"><span
-                                            class="_2ilxaJ">Ngân hàng</span>
+                                                class="_2ilxaJ">Ngân hàng</span>
                                     </a>
                                     <a class="_17BcjA"
                                        href="account/address"><span
-                                            class="_2ilxaJ">Địa chỉ</span>
+                                                class="_2ilxaJ">Địa chỉ</span>
                                     </a>
                                     <a class="_17BcjA"
                                        href="/account/password"><span
-                                            class="_2ilxaJ">Đổi mật khẩu</span>
+                                                class="_2ilxaJ">Đổi mật khẩu</span>
                                     </a>
                                 </div>
                             </div>
@@ -92,15 +88,15 @@
                 <div class="purchase-list-page__wrapper">
                     <div class="purchase-list-page__tabs-container">
                         <div class="purchase-list-page__tab purchase-list-page__tab--selected"><span
-                                class="purchase-list-page__tab-label">Tất cả</span></div>
+                                    class="purchase-list-page__tab-label">Tất cả</span></div>
                         <div class="purchase-list-page__tab"><span
-                                class="purchase-list-page__tab-label">Chờ xác nhận</span>
+                                    class="purchase-list-page__tab-label">Chờ xác nhận</span>
                         </div>
                         <div class="purchase-list-page__tab"><span
-                                class="purchase-list-page__tab-label">Chờ lấy hàng</span>
+                                    class="purchase-list-page__tab-label">Chờ lấy hàng</span>
                         </div>
                         <div class="purchase-list-page__tab"><span
-                                class="purchase-list-page__tab-label">Đang giao</span>
+                                    class="purchase-list-page__tab-label">Đang giao</span>
                         </div>
                         <div class="purchase-list-page__tab"><span class="purchase-list-page__tab-label">Đã giao</span>
                         </div>
@@ -162,10 +158,10 @@
 
                             <!-- Modal -->
                                 <x-modal.modal
-                                    id="exampleModal{{$index}}"
-                                    width="650px"
-                                    title="Receipt #{{$index}}"
-                                    closeText="Đóng"
+                                        id="exampleModal{{$index}}"
+                                        width="650px"
+                                        title="Receipt #{{$index}}"
+                                        closeText="Đóng"
                                 >
                                     <table class="table table-bordered">
                                         <thead>

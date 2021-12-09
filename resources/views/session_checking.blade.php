@@ -1,4 +1,6 @@
-{{-- {{ Session::get('current_account')}}--}}
- {{ dd(auth()->user()->orders->pluck('product_id')->contains('19')) }}
-{{--{{dd(Session::get('shoppingCart'))}}--}}
-{{--{{ dd(Session::get('shoppingCart', 'default')) }}--}}
+<?php
+$pages = App\Comment::where('product_id', '1')->paginate(5);
+$start = 1;
+$last = $pages->lastPage();
+dd($pages->getUrlRange($start, $last));
+?>

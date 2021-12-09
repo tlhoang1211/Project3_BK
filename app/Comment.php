@@ -2,13 +2,19 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Observers\CommentObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
     protected $guarded = ['id'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(CommentObserver::class);
+    }
 
     public function account(): BelongsTo
     {

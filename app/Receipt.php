@@ -2,14 +2,21 @@
 
 namespace App;
 
+use App\Observers\ReceiptObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use JetBrains\PhpStorm\Pure;
 
 class Receipt extends Model
 {
-
     protected $guarded = ['id'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(ReceiptObserver::class);
+    }
 
     public function account(): BelongsTo
     {
@@ -31,7 +38,7 @@ class Receipt extends Model
         return $general_detail;
     }
 
-    public function getFormatPriceAttribute(): string
+    #[Pure] public function getFormatPriceAttribute(): string
     {
         return format_money($this->total_money);
 

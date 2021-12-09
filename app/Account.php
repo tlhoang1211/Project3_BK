@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Observers\AccountObserver;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +16,12 @@ class Account extends Authenticatable implements CanResetPassword
     protected $table = 'accounts';
     protected $guarded = ['id'];
     protected $hidden = ['password', 'remember_token'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(AccountObserver::class);
+    }
 
     public function role(): BelongsTo
     {

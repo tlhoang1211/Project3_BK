@@ -35,7 +35,7 @@
                     <div id="logo" class="m-auto w-50">
                         <a href="{{route('home')}}">
                             <img class="swing" alt="logo" src={{asset('assets/img/logo-3.png')}}
-                                width="435" height="83" style="margin-left: -30px">
+                                    width="435" height="83" style="margin-left: -30px">
                         </a>
                     </div>
 
@@ -69,7 +69,7 @@
                         {{--Search icon --}}
                         <li>
                             <div id="search_icon">
-                                <a href="#" class="header-icon_search_custom fa-2x" style="padding-top: 5px;">
+                                <a href="#" class="header-icon_search_custom fa-2x" style="padding-top: 3px;">
                                     <span>Search</span>
                                 </a>
                             </div>
@@ -79,26 +79,26 @@
                         <li>
                             <div class="dropdown dropdown-cart">
                                 <a href="{{route('cart')}}" class="cart_bt position-relative">
-                                    @if ($filter_cart)
-                                        <div
-                                            class="position-absolute bottom-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {{ count($product_cart) }}
-                                            <span class="visually-hidden">unread messages</span>
-                                        </div>
-                                    @endif
+                                    {{--                                    @if ($filter_cart)--}}
+                                    <div id="cart_item_count"
+                                         class="position-absolute bottom-0 start-100 translate-middle badge rounded-pill bg-danger {{$filter_cart ? '' : 'invisible' }}">
+                                        {{ $filter_cart ? count($product_cart) : '' }}
+                                        <span class="visually-hidden">unread messages</span>
+                                    </div>
+                                    {{--                                    @endif--}}
                                 </a>
                                 @if ($filter_cart)
                                     <div class="dropdown-menu">
                                         <ul>
                                             @foreach($filter_cart as $product_id => $product_detail)
                                                 @php
-                                                    $product = \App\Product::find($product_id);
+                                                    $product = \App\Product::find($product_id)
                                                 @endphp
                                                 <li>
                                                     <a href="{{route('product_detail',$product->slug)}}">
                                                         <figure><img
-                                                                src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
-                                                                alt="" width="50" height="50" class="lazy"></figure>
+                                                                    src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
+                                                                    alt="" width="50" height="50" class="lazy"></figure>
                                                         <strong><span>{{$product->name}}</span>{{$product->FormatPrice}}
                                                         </strong>
                                                     </a>
@@ -117,35 +117,34 @@
                         {{--                        </li>--}}
                         <li>
                             <div class="dropdown dropdown-access {{auth()->check() ? 'user-page' : ''}}">
-                                <a href="#" class="access_link"
+                                <a href="{{ route('profile') }}" class="access_link"
                                 >
                                     <span>Tài khoản</span>
                                 </a>
                                 <div class="dropdown-menu">
                                     @auth()
                                         <strong
-                                            style="font-size: 20px">{{auth()->user()->fullName}}</strong>
+                                                style="font-size: 20px">{{auth()->user()->fullName}}</strong>
                                         <ul>
                                             <li>
                                                 <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
                                             </li>
-                                            {{--<li>--}}
-                                            {{--    <a href="#track-order.html"><i class="ti-truck"></i>Theo dõi đơn--}}
-                                            {{--                                                        hàng</a>--}}
-                                            {{--</li>--}}
                                             <li>
                                                 <a href="{{route('mypurchase')}}"><i class="ti-package"></i>Đơn hàng của
-                                                    tôi</a>
+                                                                                                            tôi</a>
                                             </li>
                                             <li>
                                                 <a href="{{route('help')}}"><i class="ti-help-alt"></i>Trợ giúp</a>
                                             </li>
                                             <li>
-                                                <a class="log-out-btn" href="{{ route('logout') }}"
-                                                >
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                    @csrf
+                                                </form>
+                                                <a onclick="document.getElementById('logout-form').submit(); this.preventDefault();"
+                                                   class="log-out-btn" href="#">
                                                     <i
-                                                        class="fa fa-sign-out" aria-hidden="true"
-                                                        style="color: #3a87ad">
+                                                            class="fa fa-sign-out" aria-hidden="true"
+                                                            style="color: #3a87ad">
 
                                                     </i>
                                                     Đăng xuất

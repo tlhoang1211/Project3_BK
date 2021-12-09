@@ -8,14 +8,24 @@ use App\OrderDetail;
 use App\Origin;
 use App\Product;
 use App\Receipt;
+use Cache;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use JsonException;
 use PhpParser\Node\Expr\Array_;
+use Spatie\ResponseCache\Facades\ResponseCache;
 
 class ProductController extends Controller
 {
+    /**
+     * @throws Exception
+     */
     public function productComment(Request $request, Product $product): RedirectResponse
     {
         $request->validate([
@@ -39,12 +49,13 @@ class ProductController extends Controller
         return back();
     }
 
-    public function index(Product $product)
+    /**
+     * @throws Exception
+     */
+    public function index(Product $product): Factory|View|Application
     {
-        //        $product = Product::where('slug', $slug)->first();
         $product_style = $product->style;
         $style_arr = explode(',', $product_style);
-        //        dd($style_arr);
         $item_query = Product::where('status', '1')->where('slug', '!=', $product->slug);
         foreach ($style_arr as $style)
         {
@@ -55,12 +66,16 @@ class ProductController extends Controller
         $item_brand_query = Product::where('status', '1')->where('id', '!=', $product->id);
         $item_brand_query->where('brand_id', '=', $product->brand->id);
         $eloquent_product_brand = $item_brand_query->get();
-        //        dd($eloquent_product_brand);
-        //        dd($product->brand->id);
+
+        $comment_pages = Comment::latest()->where('product_id', $product->id)->paginate(5);
+
+        // Save comment pagination URLS to session
+        session(["comment-page-urls-{$product->id}" => $comment_pages->getUrlRange(1, $comment_pages->lastPage())]);
+
         return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
             ->with('product', $product)
             ->with('eloquent_product', $eloquent_product)
-            ->with('comments', Comment::latest()->where('product_id', $product->id)->paginate(5));
+            ->with('comments', $comment_pages);
     }
 
     public function admin_index(Request $request)
@@ -232,12 +247,14 @@ class ProductController extends Controller
 
             // Clear shopping cart
             session()->forget('shoppingCart');
+            // Remove user receipts from cache
+            Cache::forget('receipts-id-' . $account->id);
 
             return redirect()->route('mypurchase');
         }
     }
 
-    public function add_to_cart(Request $request)
+    public function add_to_cart(Request $request): View|Factory|JsonResponse|Application
     {
 
         $id = $request->id;
@@ -296,7 +313,12 @@ class ProductController extends Controller
         Session::put('shoppingCart', $shopping_cart);
         $request->session()->save();
 
-        return response()->json(['success' => "Sản phẩm đã được thêm vào giỏ hàng."]);
+        // Remove cache to reset cart item dropdown view
+        ResponseCache::clear();
+
+        return response()->json([
+            'success'         => "Sản phẩm đã được thêm vào giỏ hàng.",
+            "cart_item_count" => count(session('shoppingCart'))]);
     }
 
     public function add(Request $request)
@@ -533,7 +555,7 @@ class ProductController extends Controller
         return redirect(route('admin_product_list'));
     }
 
-    public function female_product(Request $request)
+    public function female_product(Request $request): Factory|View|Application
     {
         $product_query = Product::where('status', '=', '1');
 
@@ -614,7 +636,7 @@ class ProductController extends Controller
         {
             foreach ($brand->products as $brand_product)
             {
-                if ($brand_product->sex == "Phi giới tính")
+                if ($brand_product->sex === "Phi giới tính")
                 {
                     if ($brand_amount[$brand->id][$brand_product->id] = null)
                     {
@@ -630,7 +652,7 @@ class ProductController extends Controller
         {
             foreach ($origin->products as $origin_product)
             {
-                if ($origin_product->sex == "Phi giới tính")
+                if ($origin_product->sex === "Phi giới tính")
                 {
                     if ($origin_amount[$origin->id][$origin_product->id] = null)
                     {
@@ -660,13 +682,20 @@ class ProductController extends Controller
             unset($cart[$request->id]);
         }
         Session::put('shoppingCart', $cart);
+
+        // Remove cache
+        ResponseCache::clear();
+
         return redirect()->back()->with(['success' => 'Đã xóa sản phẩm thành công.']);
     }
 
+    /**
+     * @throws JsonException
+     */
     public function cart_update(Request $request): JsonResponse
     {
         // Convert from json to associative array then replace current cart in session
-        $parsed_data = json_decode($request->shoppingCart, true);
+        $parsed_data = json_decode($request->shoppingCart, true, 512, JSON_THROW_ON_ERROR);
 
         // Filter out invalid item
         foreach ($parsed_data as $product_id => $item)
@@ -696,6 +725,9 @@ class ProductController extends Controller
         $cart = update_cart_item_price();
         $cart['total_price'] = format_money(get_cart_total_price() + $ship_fee);
         $cart['price_no_ship'] = format_money(get_cart_total_price());
+
+        // Remove cache
+        ResponseCache::forget(route('cart'));
 
         return response()->json(['success' => $cart]);
     }
