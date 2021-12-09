@@ -52,7 +52,6 @@ class AccountController extends Controller
 
     public function logOut(Request $request): RedirectResponse
     {
-
         cache()->flush();
         Auth::logout();
         $request->session()->invalidate();
