@@ -3,6 +3,7 @@
 use App\Brand;
 use App\Comment;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ProductController;
 use App\Origin;
 use App\Product;
 use Illuminate\Support\Facades\Route;
@@ -43,18 +44,20 @@ Route::get('/user/purchase', 'UserController@orderList')->name('mypurchase')->mi
 //==================================================================================================================
 
 //Product routes
-Route::post('/product/{product:slug}/comment', 'ProductController@productComment')->name('comment')->middleware('auth');
-Route::get('/product_list', 'ProductController@productList')->name('product_list');
-Route::get('/product/{product:slug}', 'ProductController@index')->name('product_detail');
-Route::get('/product_find', 'ProductController@search')->name('product_search');
-Route::get('/male_product', 'ProductController@male_product')->name('male_product');
-Route::get('/female_product', 'ProductController@female_product')->name('female_product');
-Route::get('/unisex_product', 'ProductController@unisex_product')->name('unisex_product');
+Route::prefix('product')->group(function () {
+    Route::get('/list', 'ProductController@productList')->name('product_list');
+    Route::get('/find', 'ProductController@search')->name('product_search');
+    Route::get('/male', 'ProductController@male_product')->name('male_product');
+    Route::get('/female', [ProductController::class, 'female_product'])->name('female_product');
+    Route::get('/unisex', 'ProductController@unisex_product')->name('unisex_product');
+    Route::post('/add_cart/item', 'ProductController@add_to_cart')->name('add_to_cart');
+    Route::get('/{product:slug}', 'ProductController@index')->name('product_detail');
+    Route::post('{product:slug}/comment', 'ProductController@productComment')->name('comment')->middleware('auth');
+});
 
 //==================================================================================================================
 
 //Cart routes
-Route::post('product/add_cart/item', 'ProductController@add_to_cart')->name('add_to_cart');
 Route::get('/cart/page', 'ProductController@cart')->name('cart');
 Route::post('/new/receipt', 'ProductController@cart_store')->name('new_receipt')->middleware('auth');
 Route::get('/cart/page/{id}', 'ProductController@cart_remove')->name('cart_remove');

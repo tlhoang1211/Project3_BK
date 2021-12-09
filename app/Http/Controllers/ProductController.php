@@ -555,7 +555,7 @@ class ProductController extends Controller
         return redirect(route('admin_product_list'));
     }
 
-    public function female_product(Request $request)
+    public function female_product(Request $request): Factory|View|Application
     {
         $product_query = Product::where('status', '=', '1');
 
