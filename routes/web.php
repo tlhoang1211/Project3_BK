@@ -58,10 +58,12 @@ Route::prefix('product')->group(function () {
 //==================================================================================================================
 
 //Cart routes
-Route::get('/cart/page', 'ProductController@cart')->name('cart');
-Route::post('/new/receipt', 'ProductController@cart_store')->name('new_receipt')->middleware('auth');
-Route::get('/cart/page/{id}', 'ProductController@cart_remove')->name('cart_remove');
-Route::post('/cart/update', 'ProductController@cart_update')->name('cart_update');
+Route::prefix('cart')->group(function () {
+    Route::post('/new/receipt', 'ProductController@cart_store')->name('new_receipt')->middleware('auth');
+    Route::post('/update', 'ProductController@cart_update')->name('cart_update');
+    Route::get('/page', 'ProductController@cart')->name('cart');
+    Route::get('/page/{id}', 'ProductController@cart_remove')->name('cart_remove');
+});
 
 //==================================================================================================================
 

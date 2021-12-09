@@ -726,6 +726,9 @@ class ProductController extends Controller
         $cart['total_price'] = format_money(get_cart_total_price() + $ship_fee);
         $cart['price_no_ship'] = format_money(get_cart_total_price());
 
+        // Remove cache
+        ResponseCache::forget(route('cart'));
+
         return response()->json(['success' => $cart]);
     }
 }

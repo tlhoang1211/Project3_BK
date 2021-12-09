@@ -367,7 +367,7 @@ if ($cart)
                        title="Shipment Detail"
                        closeText="Hủy"
         >
-            <form id="ship_detail" method="POST" action="/new/receipt">
+            <form id="ship_detail" method="POST" action="{{route('new_receipt')}}">
                 @csrf
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
