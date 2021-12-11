@@ -8,7 +8,10 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\City;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Contracts\LogoutResponse;
@@ -25,7 +28,7 @@ class FortifyServiceProvider extends ServiceProvider
     {
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse
         {
-            public function toResponse($request)
+            public function toResponse($request): Redirector|Application|RedirectResponse
             {
                 cache()->flush();
                 return redirect('/');

@@ -3,6 +3,7 @@
 use App\Brand;
 use App\Comment;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Origin;
 use App\Product;
@@ -30,7 +31,7 @@ Route::prefix('account')->group(function () {
         return view('account', compact('account'));
     })->name('profile')->middleware('auth');
 
-    Route::post('/update', [AccountController::class, 'user_update'])
+    Route::put('/update', [AccountController::class, 'user_update'])
         ->name('user_account_update')->middleware('auth');
 
     Route::get('/receipts', 'UserController@orderList')->name('mypurchase')->middleware('auth');
@@ -101,8 +102,22 @@ Route::post('/contact/send', 'SendEmailController@send');
 //==================================================================================================================
 
 // login - register : route
-Route::get('login', 'AccountController@index')->name('login')->middleware('guest');
-Route::post('loginProcess', 'AccountController@loginProgress')->name('loginP')->middleware('guest');
+Route::prefix('login')->middleware('doNotCacheResponse')->group(function () {
+
+    Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
+
+    Route::post('/process', [LoginController::class, 'login'])->name('loginP')->middleware('guest');
+
+    // Google login
+    Route::get('google/redirect', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+    Route::get('/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('login.google-callback');
+
+    // Facebook login
+    Route::get('facebook/redirect', [LoginController::class, 'redirectToFacebook'])->name('login.facebook');
+    Route::get('/facebook/callback', [LoginController::class, 'handleFacebookCallback'])->name('login.facebook-callback');
+
+});
+
 
 //==================================================================================================================
 

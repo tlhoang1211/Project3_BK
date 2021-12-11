@@ -20,7 +20,7 @@ class CreateReceiptsTable extends Migration
             $table->string('ship_name');
             $table->text('name_address');
             $table->string('phone');
-            $table->string('note');
+            $table->text('note');
             $table->integer('status');
             $table->timestamps();
         });

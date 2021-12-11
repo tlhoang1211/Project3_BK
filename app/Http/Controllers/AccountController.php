@@ -13,41 +13,17 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
+use ResponseCache;
 
 class AccountController extends Controller
 {
-    public function index(): Factory|View|Application
-    {
-        $cities = City::all();
-        session(['previous_link' => url()->previous()]);
-        return view('auth.login_register', compact('cities'));
-    }
-
     public function admin_index(): Factory|View|Application
     {
         $cities = City::all();
         $account_cur = \auth()->user();
         $accounts = Account::where('id', '!=', auth()->id())->paginate(5);
         return view('admin.accounts.account_list', compact('cities', 'accounts'));
-    }
-
-    public function loginProgress(Request $request): Redirector|Application|RedirectResponse
-    {
-        $credentials = $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::attempt($credentials, $request->remembered === 'checked'))
-        {
-            $request->session()->regenerate();
-            if (auth()->user()->role->name === 'admin')
-            {
-                return redirect('/admin');
-            }
-            return redirect(session('previous_link'));
-        }
-        return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
     }
 
     public function logOut(Request $request): RedirectResponse
@@ -134,10 +110,16 @@ class AccountController extends Controller
     public function user_update(Request $request): RedirectResponse
     {
         $account = auth()->user();
+
+        // Remove cache to render render errors
+        ResponseCache::forget(route('profile'));
+
         $attributes = $request->validate([
-            'fullName'  => 'required',
-            'birthDate' => 'required',
-            'sex'       => 'required'
+            'fullName'    => 'required|max:20',
+            'birthDate'   => 'nullable',
+            'sex'         => Rule::in(['Male', 'Female']),
+            'address'     => 'nullable|max:250',
+            'phoneNumber' => 'nullable|numeric|digits_between:9,15'
         ]);
         $attributes['birthDate'] = date("Y-m-d", strtotime($attributes['birthDate']));
         $account->update($attributes);
