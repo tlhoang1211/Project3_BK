@@ -98,8 +98,8 @@ Start the server
 ## Features
 
 - Basic e-commerce website functions:
-  - View all products (with)
-  - View product detail
+  - View all products (with filters)
+  - View product details
   - Rate, comment
   - Add a product to cart
   - Place an order (create new receipt)
