@@ -3,13 +3,12 @@
 namespace App;
 
 use App\Observers\AccountObserver;
-use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Account extends Authenticatable implements CanResetPassword
+class Account extends Authenticatable
 {
     use Notifiable;
 

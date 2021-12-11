@@ -16,38 +16,12 @@ use Illuminate\Support\Facades\Session;
 
 class AccountController extends Controller
 {
-    public function index(): Factory|View|Application
-    {
-        $cities = City::all();
-        session(['previous_link' => url()->previous()]);
-        return view('auth.login_register', compact('cities'));
-    }
-
     public function admin_index(): Factory|View|Application
     {
         $cities = City::all();
         $account_cur = \auth()->user();
         $accounts = Account::where('id', '!=', auth()->id())->paginate(5);
         return view('admin.accounts.account_list', compact('cities', 'accounts'));
-    }
-
-    public function loginProgress(Request $request): Redirector|Application|RedirectResponse
-    {
-        $credentials = $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::attempt($credentials, $request->remembered === 'checked'))
-        {
-            $request->session()->regenerate();
-            if (auth()->user()->role->name === 'admin')
-            {
-                return redirect('/admin');
-            }
-            return redirect(session('previous_link'));
-        }
-        return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
     }
 
     public function logOut(Request $request): RedirectResponse

@@ -42,11 +42,11 @@
     <h5 class="text-center">OR</h5>
 
     {{--Social login--}}
-    <a class="btn btn-block btn-social btn-google">
+    <a class="btn btn-block btn-social btn-google" href="{{ route('login.google') }}">
         <i class="fa fa-google"></i>
         Đăng nhập bằng tài khoản Google
     </a>
-    <a class="btn btn-block btn-social btn-facebook">
+    <a class="btn btn-block btn-social btn-facebook" href="{{ route('login.facebook') }}">
         <i class="fa fa-facebook"></i>
         Đăng nhập bằng tài khoản Facebook
     </a>
