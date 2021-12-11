@@ -13,6 +13,7 @@
 @php
     if(!isset($withFooter)) $withFooter = true;
 @endphp
+
 @if($withFooter)
     @include('layouts._footer')
 @endif

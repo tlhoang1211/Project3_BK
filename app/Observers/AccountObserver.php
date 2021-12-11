@@ -7,7 +7,7 @@ use Spatie\ResponseCache\Facades\ResponseCache;
 
 class AccountObserver
 {
-    public function updated(Account $account)
+    public function updated(Account $account): void
     {
         $this->remove_profile_page_cache($account);
     }
@@ -23,7 +23,7 @@ class AccountObserver
         }
     }
 
-    public function saved(Account $account)
+    public function saved(Account $account): void
     {
         $this->remove_profile_page_cache($account);
     }

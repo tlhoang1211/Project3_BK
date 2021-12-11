@@ -31,7 +31,7 @@ Route::prefix('account')->group(function () {
         return view('account', compact('account'));
     })->name('profile')->middleware('auth');
 
-    Route::post('/update', [AccountController::class, 'user_update'])
+    Route::put('/update', [AccountController::class, 'user_update'])
         ->name('user_account_update')->middleware('auth');
 
     Route::get('/receipts', 'UserController@orderList')->name('mypurchase')->middleware('auth');

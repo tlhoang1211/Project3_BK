@@ -104,22 +104,12 @@
                         @endif
                         <form action="{{route('user_account_update')}}" method="POST" style="width: 100%">
                             @csrf
-{{--                            @method('PUT')--}}
-                            <div class="input-with-label">
-                                <div class="input-with-label__wrapper">
-                                    <div class="input-with-label__label"><label>Tên</label></div>
-                                    <div class="input-with-label__content">
-                                        <div class="input-with-validator-wrapper">
-                                            <div class="input-with-validator">
-                                                <input type="text"
-                                                       placeholder=""
-                                                       name="fullName"
-                                                       value="{{$account->fullName}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @method('PUT')
+
+                            {{--Name--}}
+                            <x-profile.input label="Họ và tên" :defaultValue="$account->fullName" name="fullName"/>
+
+                            {{--Email--}}
                             <div class="input-with-label">
                                 <div class="input-with-label__wrapper">
                                     <div class="input-with-label__label"><label>Email</label></div>
@@ -130,17 +120,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="input-with-label">
-                                <div class="input-with-label__wrapper">
-                                    <div class="input-with-label__label"><label>Số điện thoại</label>
-                                    </div>
-                                    <div class="input-with-label__content">
-                                        <div class="my-account__inline-container">
-                                            <div class="my-account__input-text">{{$account->phoneNumber}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                            {{--Phone number--}}
+                            <x-profile.input label="Số điện thoại" :defaultValue="$account->phoneNumber" type="number"
+                                             name="phoneNumber"/>
+
+                            {{--Address--}}
+                            <x-profile.input label="Địa chỉ" :defaultValue="$account->address" name="address"/>
+
+                            {{--Sex--}}
                             <div class="input-with-label">
                                 <div class="input-with-label__wrapper">
                                     <div class="input-with-label__label"><label>Giới tính</label></div>
@@ -171,6 +159,7 @@
                                 </div>
                             </div>
 
+                            {{--Birthdate--}}
                             <div class="input-with-label">
                                 <div class="input-with-label__wrapper birthday-choose">
                                     <div class="input-with-label__label"><label>Ngày sinh</label></div>
@@ -180,6 +169,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {{--Save button--}}
                             <div class="my-account-page__submit">
                                 <button type="submit" class="btn btn-solid-primary btn--m btn--inline"
                                         aria-disabled="false">Lưu

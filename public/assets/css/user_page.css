@@ -352,8 +352,13 @@
     margin-bottom: 30px;
 }
 
+.form-check-label, .form-check-input {
+    cursor: pointer;
+}
+
 .form-check-inline {
     padding-right: 25px;
+    cursor: pointer;
 }
 
 input[type='radio']:after {

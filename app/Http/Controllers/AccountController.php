@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
+use ResponseCache;
 
 class AccountController extends Controller
 {
@@ -108,10 +110,16 @@ class AccountController extends Controller
     public function user_update(Request $request): RedirectResponse
     {
         $account = auth()->user();
+
+        // Remove cache to render render errors
+        ResponseCache::forget(route('profile'));
+
         $attributes = $request->validate([
-            'fullName'  => 'required',
-            'birthDate' => 'required',
-            'sex'       => 'required'
+            'fullName'    => 'required|max:20',
+            'birthDate'   => 'nullable',
+            'sex'         => Rule::in(['Male', 'Female']),
+            'address'     => 'nullable|max:250',
+            'phoneNumber' => 'nullable|numeric|digits_between:9,15'
         ]);
         $attributes['birthDate'] = date("Y-m-d", strtotime($attributes['birthDate']));
         $account->update($attributes);
