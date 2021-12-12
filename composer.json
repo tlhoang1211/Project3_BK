@@ -69,7 +69,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate"
+            "@php artisan key:generate --ansi"
         ],
         "deploy": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
@@ -77,6 +77,7 @@
             "php artisan migrate:refresh --seed"
         ],
         "post-install-cmd": [
+            "Illuminate\\Console",
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize",
             "@deploy"
