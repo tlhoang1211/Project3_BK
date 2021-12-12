@@ -146,7 +146,6 @@ if ($cart)
                                         {
                                             location.reload();
                                         }
-
                                     }
                                     else
                                     {
