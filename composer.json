@@ -74,7 +74,7 @@
         "deploy": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "php artisan key:generate",
-            "php artisan migrate",
+            "php artisan migrate:refresh --seed",
             "npm install",
             "npm run production"
         ],
