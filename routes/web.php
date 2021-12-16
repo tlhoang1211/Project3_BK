@@ -1,7 +1,6 @@
 <?php
 
 use App\Brand;
-use App\Comment;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
@@ -183,16 +182,7 @@ Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], static func
 
 // test : route
 Route::get('test', static function () {
-    $pagination = Comment::where('product_id', '1')->paginate(5);
-    $result = $pagination->lastPage;
-    dd('something');
     return view('test');
-});
-
-Route::get('checking_page', static function () {
-    $pagination = Comment::where('product_id', '1')->paginate(5);
-    $result = $pagination->lastPage;
-    return view('session_checking');
 });
 
 Route::get('/multi_delete', static function () {
@@ -203,11 +193,11 @@ Route::get('/multi_delete2', static function () {
     $products = Product::all()->where('status', '=', '1');
     return view('test_multi_delete', compact('products'));
 });
-Route::post('/multi_delete_action', static function (Illuminate\Http\Request $request) {
-    $products_array = $request->products_id;
-    //    dd($products_array);
-    //check product con ton` tai hay khong
-    dd(Product::whereIn('id', $request['products_id'])->update(['status' => 0]));
-})->name('multi_delete_action');
+//Route::post('/multi_delete_action', static function (Illuminate\Http\Request $request) {
+//    $products_array = $request->products_id;
+//    dd($products_array);
+//check product con ton` tai hay khong
+//    dd(Product::whereIn('id', $request['products_id'])->update(['status' => 0]));
+//})->name('multi_delete_action');
 
 //==================================================================================================================
