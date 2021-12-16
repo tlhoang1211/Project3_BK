@@ -29,7 +29,7 @@
                                                 A powerfully fresh trail, wild and noble all at once.
                                             </p>
                                             <div class="owl-slide-animated owl-slide-cta"><a class="btn_1"
-                                                                                             href="/product/sauvage_p"
+                                                                                             href="{{ route('product_detail', 'sauvage_p') }}"
                                                                                              role="button">Mua ngay</a>
                                             </div>
                                         </div>
@@ -52,7 +52,7 @@
                                                 Powerful & juicy freshness with a woody amber trail
                                             </p>
                                             <div class="owl-slide-animated owl-slide-cta"><a class="btn_1"
-                                                                                             href="/product/sauvage_edt"
+                                                                                             href="{{ route('product_detail', 'sauvage_edt') }}"
                                                                                              role="button">Mua ngay</a>
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@
                                                 spicy freshness with a woody trail envelopped in vanilla absolute
                                             </p>
                                             <div class="owl-slide-animated owl-slide-cta"><a class="btn_1"
-                                                                                             href="/product/sauvage_edp"
+                                                                                             href="{{ route('product_detail', 'sauvage_edp') }}"
                                                                                              role="button">Mua ngay</a>
                                             </div>
                                         </div>
@@ -95,9 +95,9 @@
                 <li>
                     <a href="{{route('female_product')}}" class="img_container">
                         <img
-                            src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
-                            data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
-                            alt="" class="lazy">
+                                src='https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/c_scale,w_700/v1596722168/perfume_project/female_ueuy87.png"
+                                alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST Nữ</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -107,9 +107,9 @@
                 <li>
                     <a href="{{route('male_product')}}" class="img_container">
                         <img
-                            src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
-                            data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
-                            alt="" class="lazy">
+                                src='https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722166/perfume_project/male_hy7gxe.jpg"
+                                alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST Nam</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -119,9 +119,9 @@
                 <li>
                     <a href="{{route('unisex_product')}}" class="img_container">
                         <img
-                            src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
-                            data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
-                            alt="" class="lazy">
+                                src='https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg'
+                                data-src="https://res.cloudinary.com/vernom/image/upload/v1596722169/perfume_project/unisex_phbqbj.jpg"
+                                alt="" class="lazy">
                         <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                             <h3>BST đa giới</h3>
                             <div><span class="btn_1">Xem ngay</span></div>
@@ -144,20 +144,11 @@
                             <x-product.grid-item :product="$product"/>
                         </div>
                     @endforeach
-                    @auth
-                        <?php $sex = auth()->user()->sex ?>
-                        <a href="{{ $sex === 'Male' ? route('male_product') : route('female_product') }}"
-                           class="btn_1 fs-5">
-                            Xem toàn bộ sản phẩm cho {{ $sex === 'Male' ? 'nam' : 'nữ' }}
-                        </a>
-                    @else
-                        <a href="{{ route('product_list') }}"
-                           class="btn_1 fs-5">
-                            Xem toàn bộ sản phẩm
-                        </a>
-                @endauth
-
-                <!-- /col -->
+                    <a href="{{ route('product_list') }}"
+                       class="btn_1 fs-5">
+                        Xem toàn bộ sản phẩm
+                    </a>
+                    <!-- /col -->
                 </div>
                 <!-- /row -->
             </div>
@@ -176,7 +167,7 @@
                                         <span class="new_price">6.000.000₫</span>
                                         <span class="old_price">6.500.000₫</span>
                                     </div>
-                                    <a class="btn_1" href="/product/another_13_edp" role="button">Mua ngay</a>
+                                    <a class="btn_1" href="{{ route('product_detail', 'another_13_edp') }}" role="button">Mua ngay</a>
                                 </div>
                             </div>
                         </div>
@@ -209,11 +200,11 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <a class="box_news" href="blog.html">
+                        <a class="box_news" href="#">
                             <figure>
                                 <img
-                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
-                                    alt="" width="400" height="266" class="lazy">
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800928/perfume_project/article/1_byoh6y.jpg'
+                                        alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -226,11 +217,11 @@
                     </div>
                     <!-- /box_news -->
                     <div class="col-lg-6">
-                        <a class="box_news" href="blog.html">
+                        <a class="box_news" href="#">
                             <figure>
                                 <img
-                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
-                                    alt="" width="400" height="266" class="lazy">
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/c_scale,h_266,w_400/v1596800928/perfume_project/article/2_us9yma.jpg'
+                                        alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -243,11 +234,11 @@
                     </div>
                     <!-- /box_news -->
                     <div class="col-lg-6">
-                        <a class="box_news" href="blog.html">
+                        <a class="box_news" href="#">
                             <figure>
                                 <img
-                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
-                                    alt="" width="400" height="266" class="lazy">
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800930/perfume_project/article/3_ffvjlv.jpg'
+                                        alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>07</strong>Aug</figcaption>
                             </figure>
                             <ul>
@@ -256,16 +247,16 @@
                             </ul>
                             <h4>Bộ sưu tập Gucci Bloom, khi vẻ đẹp của hoa Huệ được tôn vinh</h4>
                             <p>Tháng 8 năm 2017, Giám đốc sáng tạo Alessandro Michele với nét mặt rạng rỡ, hạnh
-                                phúc....</p>
+                               phúc....</p>
                         </a>
                     </div>
                     <!-- /box_news -->
                     <div class="col-lg-6">
-                        <a class="box_news" href="blog.html">
+                        <a class="box_news" href="#">
                             <figure>
                                 <img
-                                    src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
-                                    alt="" width="400" height="266" class="lazy">
+                                        src='https://res.cloudinary.com/vernom/image/upload/c_scale,h_266,w_400/v1596800929/perfume_project/article/4_yxxipn.jpg'
+                                        alt="" width="400" height="266" class="lazy">
                                 <figcaption><strong>06</strong>Aug</figcaption>
                             </figure>
                             <ul>
