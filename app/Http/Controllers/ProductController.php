@@ -56,7 +56,7 @@ class ProductController extends Controller
     {
         $product_style = $product->style;
         $style_arr = explode(',', $product_style);
-        $item_query = Product::where('status', '1')->where('slug', '!=', $product->slug);
+        $item_query = Product::where("status", '1')->where('slug', '!=', $product->slug);
         foreach ($style_arr as $style)
         {
             $item_query->orWhere('style', '=', '%' . $style . '%');
