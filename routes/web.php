@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('doNotCacheResponse')->group(function () {
 
+    //section  home routes
     Route::get('/', [HomePageController::class, 'index'])->name('home');
 
     //==================================================================================================================
@@ -21,7 +22,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //User routes
+    //section User routes
     Route::prefix('account')->group(function () {
 
         Route::get('/profile', static function () {
@@ -37,7 +38,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //Product routes
+    //section Product routes
     Route::prefix('product')->group(function () {
 
         Route::get('/list', 'ProductController@productList')->name('product_list');
@@ -60,7 +61,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //Cart routes
+    //section Cart routes
     Route::prefix('cart')->group(function () {
 
         Route::post('/new/receipt', 'ProductController@cart_store')->name('new_receipt')->middleware('auth');
@@ -69,7 +70,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
         Route::get('/page', 'ProductController@cart')->name('cart');
 
-        Route::get('/remove/{id}', 'ProductController@cart_remove')->name('cart_remove');
+        Route::delete('/remove', 'ProductController@cart_remove')->name('cart_remove');
 
     });
 
@@ -99,7 +100,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    // login - register : route
+    //section  login - register : routes
     Route::prefix('login')->middleware('doNotCacheResponse')->group(function () {
 
         Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
@@ -118,7 +119,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    // admin : route
+    //section  admin : routes
     Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], static function () {
         Route::get('/', static function () {
             $male_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nam')->get());
@@ -178,7 +179,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    // test : route
+    //section  test : routes
     Route::get('test', static function () {
         return view('test');
     });
@@ -191,12 +192,6 @@ Route::middleware('doNotCacheResponse')->group(function () {
         $products = Product::all()->where('status', '=', '1');
         return view('test_multi_delete', compact('products'));
     });
-    //Route::post('/multi_delete_action', static function (Illuminate\Http\Request $request) {
-    //    $products_array = $request->products_id;
-    //    dd($products_array);
-    //check product con ton` tai hay khong
-    //    dd(Product::whereIn('id', $request['products_id'])->update(['status' => 0]));
-    //})->name('multi_delete_action');
 
     //==================================================================================================================
 });

@@ -233,3 +233,19 @@ main > img {
     margin-left: 5px;
   }
 }
+
+.remove {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: end;
+  width: fit-content;
+
+  form {
+    padding: 0.6vh 0;
+  }
+
+  button[type='submit'] {
+    all: unset;
+    cursor: pointer;
+  }
+}

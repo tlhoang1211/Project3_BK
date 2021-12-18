@@ -680,11 +680,24 @@ class ProductController extends Controller
 
     public function cart_remove(Request $request): RedirectResponse
     {
-        $cart = Session::get('shoppingCart'); // Second argument is a default value
-        if (array_key_exists($request->id, $cart))
+        $id = request('id');
+        $volume = request('volume');
+
+        $cart = Session::get('shoppingCart');
+
+        if (array_key_exists($id, $cart))
         {
-            unset($cart[$request->id]);
+            if (array_key_exists($volume, $cart[$id]))
+            {
+                unset($cart[$id][$volume]);
+            }
+
+            if (empty($cart[$id]))
+            {
+                unset($cart[$request->id]);
+            }
         }
+
         Session::put('shoppingCart', $cart);
 
         // Remove cache
