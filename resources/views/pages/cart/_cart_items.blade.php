@@ -18,19 +18,15 @@
             <div class="row main align-items-center">
 
                 {{--Image--}}
-                <a href="{{route('product_detail',$product_detail->slug)}}">
-                    <div class="col-2"><img class="img-fluid"
-                                            src="{{$product_detail->firstThumbnail150}}">
-                    </div>
-                </a>
+                <div class="col-2"><img class="img-fluid"
+                                        src="{{$product_detail->firstThumbnail150}}">
+                </div>
 
                 {{--Name--}}
 
-                <a href="{{route('product_detail',$product_detail->slug)}}">
-                    <div class="col">
-                        <div class="row text-muted fs-6">{{$product_detail->name}}</div>
-                    </div>
-                </a>
+                <div class="col">
+                    <div class="row text-muted fs-6">{{$product_detail->name}}</div>
+                </div>
 
                 {{-- Volume select --}}
                 <span class="w-auto">
