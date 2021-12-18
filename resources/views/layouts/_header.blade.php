@@ -23,20 +23,24 @@
           href={{ asset('assets/img/apple-touch-icon-144x144-precomposed.png') }}>
 
     <!-- FONT AWESOME -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <!-- GOOGLE WEB FONT -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+{{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">--}}
+{{--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"--}}
+{{--      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">--}}
+<!-- GOOGLE WEB FONT -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
 
     <!-- BASE CSS -->
     {{--	<link href={{ URL::asset('assets/css/bootstrap.custom.min.css') }} rel="stylesheet">--}}
     <link href={{ asset('assets/css/fonts.css') }} rel="stylesheet">
-    <link href={{ asset('assets/css/bootstrap.css') }} rel="stylesheet">
-    <link href={{ asset('assets/css/style.css') }} rel="stylesheet">
+    <link href={{ asset('assets/css/Bootstrap/bootstrap.min.css') }} rel="stylesheet">
+    <link href={{ asset('assets/css/scss/style.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/toastr.min.css') }} rel="stylesheet">
     <link href={{ asset('assets/css/layout.css') }} rel="stylesheet">
 
     <!-- SPECIFIC CSS -->
+    {{--Use in view extended this layout--}}
     @yield('specific_css')
 
 <!-- YOUR CUSTOM CSS -->

@@ -1,0 +1,22 @@
+.tooltip {
+  font-size: 1rem;
+  padding: 10px 5px;
+
+  &.show {
+    opacity: 0.9;
+  }
+
+  .tooltip-arrow {
+    background: #9acbe6;
+
+  }
+
+  .tooltip-inner {
+    line-height: 1.3;
+    max-height: 150px;
+    max-width: 350px;
+    overflow: hidden;
+    color: black;
+    background: #d5d5d5;
+  }
+}

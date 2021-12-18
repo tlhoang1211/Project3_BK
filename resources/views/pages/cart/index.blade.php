@@ -9,7 +9,7 @@ if ($cart)
 
 @extends('layouts.master', ['withFooter' => empty($cart)])
 @section('specific_css')
-    <link href="{{asset('assets/css/cart-page.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/scss/cart-page.css')}}" rel="stylesheet">
 @endsection
 @section('specific_js')
     <script type="module" src="{{asset('assets/js/cart_page.js')}}"></script>
@@ -17,25 +17,6 @@ if ($cart)
     <script>
         $(document).ready(() =>
         {
-            // Config toast message
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-top-center",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-
             // Display remove successfully notification
             @if (session()->has('success'))
             toastr.success("{{ session()->get('success') }}");
@@ -237,105 +218,13 @@ if ($cart)
                         $cart = Session::get('shoppingCart')
                     @endphp
                     @if (!empty($cart))
-                        <div class="col-md-8 cart d-flex flex-column">
-                            <div class="title">
-                                <div class="row">
-                                    <div class="col">
-                                        <h4><b>Giỏ Hàng</b></h4>
-                                    </div>
-                                    <div class="col fs-6 align-self-center text-end text-muted">
-                                        {{ count($cart) }} sản phẩm
-                                    </div>
-                                </div>
-                            </div>
 
-                            {{--Display all cart items--}}
-                            @foreach ($cart as $product_id => $product_volume)
-                                @php
-                                    $product_detail = \App\Product::find($product_id)
-                                @endphp
-                                <div class="row border-top border-bottom">
-                                    <div class="row main align-items-center">
+                        {{--Display all cart items--}}
+                        @include('pages.cart._cart_items')
 
-                                        {{--Image--}}
-                                        <div class="col-2"><img class="img-fluid"
-                                                                src="{{$product_detail->firstThumbnail150}}">
-                                        </div>
+                        {{--Payment info--}}
+                        @include('pages.cart._payment')
 
-                                        {{--Name--}}
-                                        <div class="col">
-                                            <div class="row text-muted fs-6">{{$product_detail->name}}</div>
-                                        </div>
-
-                                        {{-- Volume select --}}
-                                        <span class="w-auto">
-                                            @foreach($product_volume as $volume => $volume_detail)
-                                                <x-product-detail.select :options="['100ml', '90ml', '50ml', '10ml']"
-                                                                         selected="{{$volume}}"
-                                                                         :class='"volume-$product_detail->id $volume"'
-                                                />
-                                            @endforeach
-                                        </span>
-
-                                        {{-- Quantity input --}}
-                                        <span class="quantity">
-                                            @foreach($product_volume as $volume => $volume_detail)
-                                                <div class="numbers-row">
-                                                    <input type="text"
-                                                           value="{{$volume_detail['quantity']}}"
-                                                           class='{{"qty2 quantity-$product_detail->id $volume"}}'
-                                                           name="{{'quantity-' . $product_detail->id}}"
-                                                    >
-                                                </div>
-                                            @endforeach
-                                        </span>
-
-                                        {{--Price--}}
-                                        <div class="align-items-center col d-flex fs-6">
-                                                <span class="col">
-                                                    @foreach($product_volume as $volume => $volume_detail)
-                                                        <span class="{{"item-price $product_detail->id-$volume"}} ">
-                                                            {{ $volume_detail['subprice'] }}
-                                                        </span>
-                                                    @endforeach
-                                            </span>
-                                            <a href="{{route('cart_remove',$product_detail->id)}}" class="close">&#10005;</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            @endforeach
-
-                            <div class="back-to-shop mt-auto"><a href="{{ route('product_list') }}">&leftarrow;<span
-                                            class="text-muted">Tiếp tục mua sắm</span></a></div>
-                        </div>
-                        <div class="col-md-4 summary">
-                            <div>
-                                <h5><b class="fs-3">Thanh toán</b></h5>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col fs-6" style="padding-left:0;">Số sản phẩm: {{ count($cart) }}</div>
-                                <div id="price_no_ship" class="col text-end fs-6">{{format_money($total_price)}}</div>
-                            </div>
-                            <form>
-                                <p class="fs-6">SHIPPING</p> <select disabled>
-                                    <option class="text-muted">Standard-Delivery- 200,000 đ</option>
-                                </select>
-                                <p class="fs-6">GIVE CODE</p> <input disabled id="code" placeholder="Enter your code">
-                            </form>
-                            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                                <div class="col fs-5 text-uppercase">Tổng thanh toán</div>
-                                <div
-                                        id="total-price"
-                                        class="col text-end fs-5">{{format_money($total_price + 200000)}}</div>
-                            </div>
-                            <a role="button" class="btn_1 full-width text-uppercase"
-                               {!! auth()->check() ? 'data-bs-toggle="modal"' : '' !!}
-                               href="{{auth()->check() ? '#exampleModalToggle' : route('login')}}">
-                                Mua hàng
-                            </a>
-                        </div>
                     @else
                         @php
                             $class = '';

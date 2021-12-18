@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('specific_css')
     <link href="{{asset('assets/css/listing.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/test-grid-item.css') }}">
 @endsection
 @section('specific_js')
     <script src="{{asset('assets/js/sticky_sidebar.min.js')}}"></script>
@@ -98,14 +99,10 @@
                     <div class="toolbox elemento_stick add_bottom_30">
                     </div>
                     <!-- /toolbox -->
-                    <div class="row small-gutters">
-                        @foreach($products as $product)
-                            <div class="col-6 col-md-4">
-                                <x-product.grid-item :product="$product"/>
-                            </div>
-                    @endforeach
-                    <!-- /col -->
-                    </div>
+
+                    {{--Display all products--}}
+                    <x-product.gid :products="$products"/>
+
                     <!-- /row -->
                     <div class="pagination__wrapper">
                         {{ $products->links() }}

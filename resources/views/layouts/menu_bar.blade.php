@@ -52,17 +52,6 @@
                     </div>
                 </div>
 
-
-                @php
-                    $product_cart = Session::get('shoppingCart');
-                    $filter_cart = null;
-
-                    if($product_cart !== null){
-                        // Get 3 latest item added to the cart
-                        $filter_cart = array_reverse(array_slice($product_cart, -3, 3, true), true);
-                    }
-                @endphp
-
                 <div>
                     <ul class="top_tools">
 
@@ -75,102 +64,12 @@
                             </div>
                         </li>
 
-                        {{-- Dropdown cart --}}
-                        <li>
-                            <div class="dropdown dropdown-cart">
-                                <a href="{{route('cart')}}" class="cart_bt position-relative">
-                                    {{--                                    @if ($filter_cart)--}}
-                                    <div id="cart_item_count"
-                                         class="position-absolute bottom-0 start-100 translate-middle badge rounded-pill bg-danger {{$filter_cart ? '' : 'invisible' }}">
-                                        {{ $filter_cart ? count($product_cart) : '' }}
-                                        <span class="visually-hidden">unread messages</span>
-                                    </div>
-                                    {{--                                    @endif--}}
-                                </a>
-                                @if ($filter_cart)
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            @foreach($filter_cart as $product_id => $product_detail)
-                                                @php
-                                                    $product = \App\Product::find($product_id)
-                                                @endphp
-                                                <li>
-                                                    <a href="{{route('product_detail',$product->slug)}}">
-                                                        <figure><img
-                                                                    src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
-                                                                    alt="" width="50" height="50" class="lazy"></figure>
-                                                        <strong><span>{{$product->name}}</span>{{$product->FormatPrice}}
-                                                        </strong>
-                                                    </a>
-                                                    {{--                                                    <a href="0" class="action"><i class="ti-trash"></i></a>--}}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                            </div>
+                        {{--Dropdown cart--}}
+                        @include('layouts._dropdown_cart')
 
-                            <!-- /dropdown-cart-->
-                        </li>
-                        {{--                        <li>--}}
-                        {{--                            <a href="#0" class="wishlist"><span>Wishlist</span></a>--}}
-                        {{--                        </li>--}}
-                        <li>
-                            <div class="dropdown dropdown-access {{auth()->check() ? 'user-page' : ''}}">
-                                <a href="{{ route('profile') }}" class="access_link"
-                                >
-                                    <span>Tài khoản</span>
-                                </a>
-                                <div class="dropdown-menu">
-                                    @auth()
-                                        <strong
-                                                style="font-size: 20px">{{auth()->user()->fullName}}</strong>
-                                        <ul>
-                                            <li>
-                                                <a href="{{route('profile')}}"><i class="ti-user"></i>Hồ sơ của tôi</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('mypurchase')}}"><i class="ti-package"></i>Đơn hàng của
-                                                                                                            tôi</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('help')}}"><i class="ti-help-alt"></i>Trợ giúp</a>
-                                            </li>
-                                            <li>
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                                    @csrf
-                                                </form>
-                                                <a onclick="document.getElementById('logout-form').submit(); this.preventDefault();"
-                                                   class="log-out-btn" href="#">
-                                                    <i
-                                                            class="fa fa-sign-out" aria-hidden="true"
-                                                            style="color: #3a87ad">
+                        {{--Account--}}
+                        @include('layouts._dropdown_account')
 
-                                                    </i>
-                                                    Đăng xuất
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    @else
-                                        <a href="{{route('login')}}" class="btn_1">Đăng nhập/Đăng ký</a>
-                                    @endauth
-                                </div>
-                            </div>
-                            <!-- /dropdown-access-->
-                        </li>
-                        {{--                        <li>--}}
-                        {{--                            <a href="javascript:void(0);" class="btn_search_mob"><span>Search</span></a>--}}
-                        {{--                        </li>--}}
-                        {{--                        <li>--}}
-                        {{--                            <a href="#menu" class="btn_cat_mob">--}}
-                        {{--                                <div class="hamburger hamburger--spin" id="hamburger">--}}
-                        {{--                                    <div class="hamburger-box">--}}
-                        {{--                                        <div class="hamburger-inner"></div>--}}
-                        {{--                                    </div>--}}
-                        {{--                                </div>--}}
-                        {{--                                Nước hoa--}}
-                        {{--                            </a>--}}
-                        {{--                        </li>--}}
                     </ul>
                 </div>
             </div>

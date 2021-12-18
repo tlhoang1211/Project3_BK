@@ -1,0 +1,27 @@
+.rating {
+  color: #ccc;
+  margin-bottom: 15px;
+  display: inline-block;
+
+  i {
+    &.voted {
+      color: #fec348;
+    }
+
+    &:before {
+      margin: 2px;
+    }
+  }
+
+  em a {
+    display: inline-block;
+    color: #999;
+    margin-left: 10px;
+    text-decoration: underline;
+    display: inline-block;
+
+    &:hover {
+      color: black;
+    }
+  }
+}

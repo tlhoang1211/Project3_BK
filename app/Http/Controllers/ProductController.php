@@ -316,9 +316,12 @@ class ProductController extends Controller
         // Remove cache to reset cart item dropdown view
         ResponseCache::clear();
 
+        $cart_item_count = array_sum(array_map('count', $shopping_cart));
+
         return response()->json([
             'success'         => "Sản phẩm đã được thêm vào giỏ hàng.",
-            "cart_item_count" => count(session('shoppingCart'))]);
+            "cart_item_count" => $cart_item_count
+        ]);
     }
 
     public function add(Request $request)
@@ -671,7 +674,7 @@ class ProductController extends Controller
 
     public function cart()
     {
-        return view('cart');
+        return view('pages.cart.index');
     }
 
     public function cart_remove(Request $request): RedirectResponse

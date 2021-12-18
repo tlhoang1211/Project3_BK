@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', static function () {
     $products = Product::all()->sortByDesc('rate')->take(12);
     $brands = Brand::all();
-    return view('index', compact('products', 'brands'));
+    return view('pages.home.index', compact('products', 'brands'));
 })->name('home');
 
 //==================================================================================================================
@@ -70,7 +70,7 @@ Route::prefix('cart')->group(function () {
 
     Route::get('/page', 'ProductController@cart')->name('cart');
 
-    Route::get('/page/{id}', 'ProductController@cart_remove')->name('cart_remove');
+    Route::get('/remove/{id}', 'ProductController@cart_remove')->name('cart_remove');
 
 });
 

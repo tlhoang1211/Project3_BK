@@ -1,14 +1,16 @@
 @extends('layouts.master')
 @section('specific_css')
     <link href="{{asset('assets/css/listing.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/test-grid-item.css') }}">
 @endsection
 @section('specific_js')
     <script src="{{asset('assets/js/sticky_sidebar.min.js')}}"></script>
     <script src="{{asset('assets/js/specific_listing.min.js')}}"></script>
     <script>
-         $('#reset_filter').click(function(){
-                $('#filter_form').trigger("reset");
-          });
+        $("#reset_filter").click(function ()
+        {
+            $("#filter_form").trigger("reset");
+        });
     </script>
 @endsection
 @section('content')
@@ -30,12 +32,13 @@
                                         @foreach($origins as $origin)
                                             <li style="display: flex">
                                                 <input type="radio" name="origin" id="origin{{$origin->id}}"
-                                                       value="{{$origin->id}}" @if ($origin->id == Request::get('origin')) checked @endif>
+                                                       value="{{$origin->id}}"
+                                                       @if ($origin->id == Request::get('origin')) checked @endif>
                                                 <label for="origin{{$origin->id}}" class="container_check"
                                                        style="width: 100%">{{$origin->name}}
                                                     <small>@if (isset($origin_amount[$origin->id]))
-                                                        {{count($origin_amount[$origin->id])}}@else 0
-                                                    @endif</small>
+                                                            {{count($origin_amount[$origin->id])}}@else 0
+                                                        @endif</small>
                                                 </label>
                                             </li>
                                         @endforeach
@@ -53,12 +56,13 @@
                                             {{--                                            {{dd($brand)}}--}}
                                             <li style="display: flex">
                                                 <input type="radio" name="brand" id="brand{{$brand->id}}"
-                                                       value="{{$brand->id}}" @if ($brand->id == Request::get('brand')) checked @endif>
+                                                       value="{{$brand->id}}"
+                                                       @if ($brand->id == Request::get('brand')) checked @endif>
                                                 <label for="brand{{$brand->id}}" class="container_check"
                                                        style="width: 100%">{{$brand->brand_name}}
                                                     <small>@if (isset($brand_amount[$brand->id]))
-                                                        {{count($brand_amount[$brand->id])}}@else 0
-                                                    @endif</small>
+                                                            {{count($brand_amount[$brand->id])}}@else 0
+                                                        @endif</small>
                                                 </label>
                                             </li>
                                         @endforeach
@@ -95,22 +99,20 @@
                     <div class="toolbox elemento_stick add_bottom_30">
                     </div>
                     <!-- /toolbox -->
-                    <div class="row small-gutters">
-                        @foreach($products as $product)
-                            <div class="col-6 col-md-4">
-                                <x-product.grid-item :product="$product"/>
-                            </div>
-                    @endforeach
+
+                    {{--Display femail products--}}
+                    <x-product.gid :products="$products"/>
+
                     <!-- /col -->
-                    </div>
-                    <!-- /row -->
-                    <div class="pagination__wrapper">
-                        {{ $products->links() }}
-                    </div>
                 </div>
-                <!-- /col -->
+                <!-- /row -->
+                <div class="pagination__wrapper">
+                    {{ $products->links() }}
+                </div>
             </div>
-            <!-- /row -->
+            <!-- /col -->
+        </div>
+        <!-- /row -->
         </div>
         <!-- /container -->
     </main>

@@ -15,7 +15,7 @@ mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
     .browserSync({
         proxy: {
-            target: "localhost:8000"
+            target: "127.0.0.1:8000"
         },
         notify: false,
         reloadDelay: 0
