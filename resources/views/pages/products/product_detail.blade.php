@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('specific_css')
-    <link href="{{asset('assets/css/product_page.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/scss/product_page.css')}}" rel="stylesheet">
 @endsection
 @section('specific_js')
     <script src="{{asset('assets/js/carousel_with_thumbs.js')}}"></script>

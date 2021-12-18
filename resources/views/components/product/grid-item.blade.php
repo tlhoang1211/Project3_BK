@@ -2,14 +2,23 @@
 
 <div class="grid_item">
 
-    {{--Image--}}
-    <figure>
-        <a href="{{route('product_detail',$product->slug)}}">
+    <div class="media">
+
+        {{--Image--}}
+        <figure>
             <img class="img-fluid lazy"
                  src="{{$product->firstThumbnail}}" data-src="{{$product->firstThumbnail}}"
                  alt="">
+        </figure>
+
+        {{--Rating--}}
+        <a href="{{route('product_detail',$product->slug)}}">
+            <div class="media__rating">
+                <x-product-detail.rating :rate="$product->rate" isOverview="true"/>
+            </div>
         </a>
-    </figure>
+
+    </div>
 
     <div class="bottom">
 

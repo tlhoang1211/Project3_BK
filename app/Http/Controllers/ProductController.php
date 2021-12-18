@@ -72,7 +72,7 @@ class ProductController extends Controller
         // Save comment pagination URLS to session
         session(["comment-page-urls-{$product->id}" => $comment_pages->getUrlRange(1, $comment_pages->lastPage())]);
 
-        return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
+        return view('pages.products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
             ->with('product', $product)
             ->with('eloquent_product', $eloquent_product)
             ->with('comments', $comment_pages);
@@ -422,7 +422,7 @@ class ProductController extends Controller
         $female_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nữ')->get());
         $unisex_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Phi giới tính')->get());
 
-        return view('products.product_list', compact('brands', 'origins', 'male_product_amount', 'female_product_amount', 'unisex_product_amount'))
+        return view('pages.products.product_list', compact('brands', 'origins', 'male_product_amount', 'female_product_amount', 'unisex_product_amount'))
             ->with('products', $product);
     }
 
@@ -478,7 +478,7 @@ class ProductController extends Controller
 
         //        dd($origin_amount);
 
-        return view('products.male_product_list', compact('brands', 'origins'))
+        return view('pages.products.male_product_list', compact('brands', 'origins'))
             ->with('products', $products)
             ->with('brand_amount', $brand_amount)
             ->with('origin_amount', $origin_amount);
@@ -610,7 +610,7 @@ class ProductController extends Controller
 
         //        dd($origin_amount);
 
-        return view('products.female_product_list', compact('brands', 'origins'))
+        return view('pages.products.female_product_list', compact('brands', 'origins'))
             ->with('products', $products)
             ->with('brand_amount', $brand_amount)
             ->with('origin_amount', $origin_amount);
@@ -666,7 +666,7 @@ class ProductController extends Controller
             }
         }
 
-        return view('products.unisex_product_list', compact('brands', 'origins'))
+        return view('pages.products.unisex_product_list', compact('brands', 'origins'))
             ->with('products', $products)
             ->with('brand_amount', $brand_amount)
             ->with('origin_amount', $origin_amount);

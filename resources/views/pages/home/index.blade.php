@@ -3,7 +3,7 @@
     Wanderlust
 @endsection
 @section('specific_css')
-    <link href={{ asset('assets/css/home_1.css') }} rel="stylesheet">
+    <link href={{ asset('assets/css/scss/home.css') }} rel="stylesheet">
 @endsection
 @section('specific_js')
     <script src={{asset('assets/js/carousel-home.min.js')}}></script>
@@ -35,19 +35,20 @@
                     <p>Các thương hiệu nước hoa được feedback nhiều nhất tại Việt Nam</p>
                 </div>
 
-                <x-product.gid :products="$products">
-                    <a href="{{ route('product_list') }}"
-                       class="btn_1 fs-5">
-                        Xem toàn bộ sản phẩm
-                    </a>
-                </x-product.gid>
+                <x-product.gid :products="$products_male"
+                               category="Nam Giới"
+                               :categoryLink="route('male_product')"
+                />
 
-                <x-product.gid :products="$products">
-                    <a href="{{ route('product_list') }}"
-                       class="btn_1 fs-5">
-                        Xem toàn bộ sản phẩm
-                    </a>
-                </x-product.gid>
+                <x-product.gid :products="$products_female"
+                               category="Nữ Giới"
+                               :categoryLink="route('female_product')"
+                />
+
+                <x-product.gid :products="$products_unisex"
+                               category="Phi Giới Tính"
+                               :categoryLink="route('unisex_product')"
+                />
             </div>
 
             @include('pages.home._feature')

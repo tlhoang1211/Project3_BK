@@ -2,6 +2,7 @@
 
 use App\Brand;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Origin;
@@ -10,13 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('doNotCacheResponse')->group(function () {
 
-    Route::get('/', static function () {
-        $products = Product::all()->sortByDesc('rate')->take(4);
-        //        $products_female = Product::all()->where('sex', 'Nữ')->sortByDesc('rate')->take(12);
-        //        $products_female = Product::all()->where('sex', 'Nam')->sortByDesc('rate')->take(12);
-        $brands = Brand::all();
-        return view('pages.home.index', compact('products', 'brands'));
-    })->name('home');
+    Route::get('/', [HomePageController::class, 'index'])->name('home');
 
     //==================================================================================================================
 
@@ -120,7 +115,6 @@ Route::middleware('doNotCacheResponse')->group(function () {
         Route::get('/facebook/callback', [LoginController::class, 'handleFacebookCallback'])->name('login.facebook-callback');
 
     });
-
 
     //==================================================================================================================
 
