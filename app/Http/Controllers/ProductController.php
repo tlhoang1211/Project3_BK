@@ -16,6 +16,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use JsonException;
 use PhpParser\Node\Expr\Array_;
@@ -78,7 +79,7 @@ class ProductController extends Controller
             ->with('comments', $comment_pages);
     }
 
-    public function admin_index(Request $request)
+    public function admin_index(Request $request): Factory|View|Application
     {
 
         $numberItem = 5;
@@ -115,14 +116,14 @@ class ProductController extends Controller
 
     }
 
-    public function create()
+    public function create(): Factory|View|Application
     {
         $brands = Brand::where('status', '=', '1')->orderBy('id', 'ASC')->get();
         $origins = Origin::where('status', '=', '1')->orderBy('id', 'ASC')->get();
         return view('admin.products.create')->with(compact('brands', 'origins'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): Redirector|Application|RedirectResponse
     {
         //        dd($request);
         $request->validate([
@@ -194,7 +195,7 @@ class ProductController extends Controller
         return redirect(route('admin_product_list'));
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $id): Factory|View|Application
     {
         $brands = Brand::where('status', '=', '1')->orderBy('id', 'ASC')->get();
         $origins = Origin::where('status', '=', '1')->orderBy('id', 'ASC')->get();
@@ -374,7 +375,7 @@ class ProductController extends Controller
         //        return redirect('/shopping-cart/show');
     }
 
-    public function search(Request $request)
+    public function search(Request $request): Factory|View|Application
     {
         //        dd($request);
         $keyword = $request->keyword;
@@ -408,7 +409,7 @@ class ProductController extends Controller
             ->with('keyword', $keyword);
     }
 
-    public function productList(Request $request)
+    public function productList(Request $request): Factory|View|Application
     {
 
         $product = Product::where('status', '=', '1');
@@ -426,7 +427,7 @@ class ProductController extends Controller
             ->with('products', $product);
     }
 
-    public function male_product(Request $request)
+    public function male_product(Request $request): Factory|View|Application
     {
         $product_query = Product::where('status', '=', '1');
 
@@ -484,7 +485,7 @@ class ProductController extends Controller
             ->with('origin_amount', $origin_amount);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): Redirector|Application|RedirectResponse
     {
         //        dd($request);
         $request->validate([
@@ -616,7 +617,7 @@ class ProductController extends Controller
             ->with('origin_amount', $origin_amount);
     }
 
-    public function unisex_product(Request $request)
+    public function unisex_product(Request $request): Factory|View|Application
     {
         $product_query = Product::where('status', '=', '1');
 
@@ -672,7 +673,7 @@ class ProductController extends Controller
             ->with('origin_amount', $origin_amount);
     }
 
-    public function cart()
+    public function cart(): Factory|View|Application
     {
         return view('pages.cart.index');
     }
