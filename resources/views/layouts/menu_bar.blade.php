@@ -18,10 +18,10 @@
 							<div id="menu">
 								<ul>
 									<li><span><a href="{{route('product_list')}}">SẢN PHẨM</a></span></li>
-									<li><span><a href="{{route('male_product')}}">NAM</a></span>
+									<li><span><a href="{{route('product_search', ['sex' => 'Nam'])}}">NAM</a></span>
 									</li>
-									<li><span><a href="{{route('female_product')}}">NỮ</a></span>
-									<li><span><a href="{{route('unisex_product')}}">PHI GIỚI TÍNH</a></span>
+									<li><span><a href="{{route('product_search', ['sex' => 'Nữ'])}}">NỮ</a></span>
+									<li><span><a href="{{route('product_search', ['sex' => 'Phi giới tính'])}}">PHI GIỚI TÍNH</a></span>
 									</li>
 								</ul>
 							</div>

@@ -4,7 +4,6 @@ use App\Brand;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ProductController;
 use App\Origin;
 use App\Product;
 use Illuminate\Support\Facades\Route;
@@ -44,12 +43,6 @@ Route::middleware('doNotCacheResponse')->group(function () {
         Route::get('/list', 'ProductController@productList')->name('product_list');
 
         Route::get('/find', 'ProductController@search')->name('product_search');
-
-        Route::get('/male', 'ProductController@male_product')->name('male_product');
-
-        Route::get('/female', [ProductController::class, 'female_product'])->name('female_product');
-
-        Route::get('/unisex', 'ProductController@unisex_product')->name('unisex_product');
 
         Route::post('/add_cart/item', 'ProductController@add_to_cart')->name('add_to_cart');
 
