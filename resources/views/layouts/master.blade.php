@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{{-- section Header--}}
 @include('layouts._header')
 
 <body>
@@ -9,17 +10,18 @@
 
 @yield('content')
 
+{{-- section Footer --}}
 @php
-    if(!isset($withFooter)) $withFooter = true
+	if(!isset($withFooter)) $withFooter = true
 @endphp
 
 @if($withFooter)
-    @include('layouts._footer')
+	@include('layouts._footer')
 @endif
 <!-- Back to top button -->
 <div id="toTop"><i class="fad fa-arrow-up"></i></div>
 
-<!-- COMMON SCRIPTS -->
+<!-- section COMMON SCRIPTS -->
 <script src={{asset('assets/js/common_scripts.min.js')}}></script>
 <script src={{asset('assets/js/main.js')}}></script>
 <script src={{asset('assets/js/Bootstrap/bootstrap.bundle.min.js')}}></script>
@@ -28,7 +30,7 @@
 <script src={{asset('assets/js/enable_tooltip.js')}}></script>
 <script src={{asset('assets/js/config_toastr.js')}}></script>
 
-<!-- SPECIFIC SCRIPTS -->
+<!-- section SPECIFIC SCRIPTS -->
 @yield('specific_js')
 @stack('specific_js')
 
