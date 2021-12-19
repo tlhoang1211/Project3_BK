@@ -11,21 +11,21 @@
 					<ul>
 						<li style="display: flex">
 							<input type="radio" value="Nam" name="sex" id="Male"
-							       @if ("Nam" == Request::get('sex')) checked @endif>
+							       @if ("Nam" === Request::get('sex')) checked @endif>
 							<label for="Male" class="container_check" style="width: 100%">Nam
 								<small>{{$male_product_amount}}</small>
 							</label>
 						</li>
 						<li style="display: flex">
 							<input type="radio" value="Nữ" name="sex" id="Female"
-							       @if ("Nữ" == Request::get('sex')) checked @endif>
+							       @if ("Nữ" === Request::get('sex')) checked @endif>
 							<label for="Female" class="container_check" style="width: 100%">Nữ
 								<small>{{$female_product_amount}}</small>
 							</label>
 						</li>
 						<li style="display: flex">
 							<input type="radio" value="Phi giới tính" name="sex" id="Unisex"
-							       @if ("Unisex" == Request::get('sex')) checked @endif>
+							       @if ("Unisex" === Request::get('sex')) checked @endif>
 							<label for="Unisex" class="container_check" style="width: 100%">Phi giới
 							                                                                tính
 								<small>{{$unisex_product_amount}}</small>
@@ -45,7 +45,7 @@
 							<li style="display: flex">
 								<input type="radio" name="origin" id="origin{{$origin->id}}"
 								       value="{{$origin->id}}"
-								       @if ($origin->id == Request::get('origin')) checked @endif>
+								       @if ($origin->id === Request::get('origin')) checked @endif>
 								<label for="origin{{$origin->id}}" class="container_check"
 								       style="width: 100%">{{$origin->name}}
 									<small>{{count($origin->products)}}</small>
@@ -67,7 +67,7 @@
 							<li style="display: flex">
 								<input type="radio" name="brand" id="brand{{$brand->id}}"
 								       value="{{$brand->id}}"
-								       @if ($brand->id == Request::get('brand')) checked @endif>
+								       @if ($brand->id === Request::get('brand')) checked @endif>
 								<label for="brand{{$brand->id}}" class="container_check"
 								       style="width: 100%">{{$brand->brand_name}}
 									<small>{{count($brand->products)}}</small>
