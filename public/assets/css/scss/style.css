@@ -4639,9 +4639,12 @@ body.modal-open .mm-slideout {
 }
 .grid_item .bottom .name {
   text-align: center;
-  padding: 10px 10px;
+  padding: 10px 15px;
 }
 .grid_item .bottom .name a h3 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-size: 1.25rem;
   margin: 0 0;
   color: #444;

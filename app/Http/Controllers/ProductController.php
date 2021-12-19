@@ -377,7 +377,6 @@ class ProductController extends Controller
 
     public function search(Request $request): Factory|View|Application
     {
-        //        dd($request);
         $keyword = $request->keyword;
 
         $product_search = Product::where('status', '=', '1')->where('slug', 'LIKE', '%' . $keyword . '%');
@@ -404,7 +403,7 @@ class ProductController extends Controller
         $female_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nữ')->get());
         $unisex_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Phi giới tính')->get());
 
-        return view('products.product_list', compact('brands', 'origins', 'male_product_amount', 'female_product_amount', 'unisex_product_amount'))
+        return view('pages.products.product_list', compact('brands', 'origins', 'male_product_amount', 'female_product_amount', 'unisex_product_amount'))
             ->with('products', $product_search)
             ->with('keyword', $keyword);
     }
