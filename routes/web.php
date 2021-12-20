@@ -57,13 +57,13 @@ Route::middleware('doNotCacheResponse')->group(function () {
     //section Cart routes
     Route::prefix('cart')->group(function () {
 
-        Route::post('/new/receipt', 'ProductController@cart_store')->name('new_receipt')->middleware('auth');
+        Route::post('/new/receipt', 'CartController@cart_store')->name('new_receipt')->middleware('auth');
 
-        Route::post('/update', 'ProductController@cart_update')->name('cart_update');
+        Route::post('/update', 'CartController@cart_update')->name('cart_update');
 
-        Route::get('/page', 'ProductController@cart')->name('cart');
+        Route::get('/page', 'CartController@cart')->name('cart');
 
-        Route::delete('/remove', 'ProductController@cart_remove')->name('cart_remove');
+        Route::delete('/remove', 'CartController@cart_remove')->name('cart_remove');
 
     });
 

@@ -8,6 +8,8 @@
 			<div class="filter_type version_2">
 				<h4><a href="#filter_1" data-toggle="collapse" class="closed">Nước hoa</a></h4>
 				<div class="collapse show" id="filter_1">
+
+					{{-- section Sex checkboxes--}}
 					<ul>
 						<li style="display: flex">
 							<input type="radio" value="Nam" name="sex" id="Male"
@@ -32,10 +34,11 @@
 							</label>
 						</li>
 					</ul>
+
 				</div>
-				<!-- /filter_type -->
 			</div>
-			<!-- /filter_type -->
+
+			{{-- section Origin checkboxes--}}
 			<div class="filter_type version_2">
 				<h4><a href="#filter_2" data-toggle="collapse" class="closed">Xuất xứ</a></h4>
 
@@ -55,8 +58,8 @@
 					</ul>
 				</div>
 			</div>
-			<!-- /filter_type -->
 
+			{{-- section Brand  checkboxes--}}
 			<div class="filter_type version_2">
 				<h4><a href="#filter_3" data-toggle="collapse" class="closed">Thương hiệu</a></h4>
 
@@ -77,6 +80,8 @@
 					</ul>
 				</div>
 			</div>
+
+			{{-- section Filter + Reset buttons--}}
 			<div class="buttons">
 				<button href="" type="submit" class="btn_1">Filter</button>
 				<a href="{{route("product_list")}}" class="btn_1 gray" id="reset_filter">Reset</a>
