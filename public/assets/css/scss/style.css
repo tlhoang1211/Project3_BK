@@ -4784,10 +4784,9 @@ body.modal-open .mm-slideout {
   opacity: 0.9;
 }
 .tooltip .tooltip-arrow {
-  background: #9acbe6;
+  color: #d5d5d5;
 }
 .tooltip .tooltip-inner {
-  line-height: 1.3;
   max-height: 150px;
   max-width: 350px;
   overflow: hidden;
