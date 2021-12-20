@@ -32,7 +32,7 @@
 	<!-- section BASE CSS -->
 	{{--	<link href={{ URL::asset('assets/css/bootstrap.custom.min.css') }} rel="stylesheet">--}}
 	<link href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/css/Bootstrap/bootstrap.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/css/Bootstrap/custom-bootstrap.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/scss/style.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/layout.css') }}" rel="stylesheet">

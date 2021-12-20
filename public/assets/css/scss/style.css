@@ -4776,24 +4776,6 @@ body.modal-open .mm-slideout {
   font-size: 1rem;
 }
 
-.tooltip {
-  font-size: 1rem;
-  padding: 10px 5px;
-}
-.tooltip.show {
-  opacity: 0.9;
-}
-.tooltip .tooltip-arrow {
-  color: #d5d5d5;
-}
-.tooltip .tooltip-inner {
-  max-height: 150px;
-  max-width: 350px;
-  overflow: hidden;
-  color: black;
-  background: #d5d5d5;
-}
-
 .countdown {
   color: #fff;
   font-weight: 600;
