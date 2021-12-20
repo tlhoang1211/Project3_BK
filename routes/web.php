@@ -44,8 +44,6 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
         Route::get('/find', 'ProductController@search')->name('product_search');
 
-        Route::post('/add_cart/item', 'ProductController@add_to_cart')->name('add_to_cart');
-
         Route::get('/{product:slug}', 'ProductController@index')->name('product_detail');
 
         Route::post('{product:slug}/comment', 'ProductController@productComment')->name('comment')->middleware('auth');
@@ -57,13 +55,15 @@ Route::middleware('doNotCacheResponse')->group(function () {
     //section Cart
     Route::prefix('cart')->group(function () {
 
-        Route::post('/new/receipt', 'CartController@cart_store')->name('new_receipt')->middleware('auth');
+        Route::post('/add', 'CartController@add')->name('add_to_cart');
 
-        Route::post('/update', 'CartController@cart_update')->name('cart_update');
+        Route::post('/new/receipt', 'CartController@payment')->name('new_receipt')->middleware('auth');
 
-        Route::get('/page', 'CartController@cart')->name('cart');
+        Route::post('/update', 'CartController@update')->name('cart_update');
 
-        Route::delete('/remove', 'CartController@cart_remove')->name('cart_remove');
+        Route::get('/page', 'CartController@index')->name('cart');
+
+        Route::delete('/remove', 'CartController@remove')->name('cart_remove');
 
     });
 
@@ -173,8 +173,8 @@ Route::middleware('doNotCacheResponse')->group(function () {
     //==================================================================================================================
 
     //section  Test
-    Route::get('test', static function () {
-        return view('test');
+    Route::get('test/cart', static function () {
+        dd(session('shoppingCart'));
     });
 
     Route::get('/multi_delete', static function () {

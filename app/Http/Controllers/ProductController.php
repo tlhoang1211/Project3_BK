@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Expr\Array_;
-use Spatie\ResponseCache\Facades\ResponseCache;
 
 class ProductController extends Controller
 {
@@ -380,35 +379,5 @@ class ProductController extends Controller
         //        dd($product);
         return redirect(route('admin_product_list'));
     }
-
-    //section Remove cart item
-    public function cart_remove(Request $request): RedirectResponse
-    {
-        $id = request('id');
-        $volume = request('volume');
-
-        $cart = Session::get('shoppingCart');
-
-        if (array_key_exists($id, $cart))
-        {
-            if (array_key_exists($volume, $cart[$id]))
-            {
-                unset($cart[$id][$volume]);
-            }
-
-            if (empty($cart[$id]))
-            {
-                unset($cart[$request->id]);
-            }
-        }
-
-        Session::put('shoppingCart', $cart);
-
-        // Remove cache
-        ResponseCache::clear();
-
-        return redirect()->back()->with(['success' => 'Đã xóa sản phẩm thành công.']);
-    }
-
 
 }

@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Spatie\ResponseCache\Facades\ResponseCache;
@@ -17,13 +18,13 @@ class CartController extends Controller
 {
 
     //section View
-    public function cart(): Factory|View|Application
+    public function index(): Factory|View|Application
     {
         return view('pages.cart.index');
     }
 
     //section Store
-    public function cart_store(Request $request)
+    public function payment(Request $request)
     {
         $cart = session()->get('shoppingCart');
         $account = auth()->user();
@@ -76,7 +77,7 @@ class CartController extends Controller
     }
 
     //section Add
-    public function add_to_cart(Request $request): View|Factory|JsonResponse|Application
+    public function add(Request $request): View|Factory|JsonResponse|Application
     {
 
         $id = $request->id;
@@ -86,7 +87,7 @@ class CartController extends Controller
         // kiểm tra sản phẩm theo id truyền lên.
         $product = Product::where('status', '=', '1')->find($id);
 
-        if ($product == null)
+        if ($product === null)
         {
             return view('404');
         }
@@ -94,7 +95,7 @@ class CartController extends Controller
         // lấy thông tin giỏ hàng từ trong session.
         $shopping_cart = Session::get('shoppingCart');
 
-        if ($shopping_cart == null)
+        if ($shopping_cart === null)
         {
             // thì tạo mới giỏ hàng là một mảng các key và value
             $shopping_cart = array(); // key và value
@@ -109,7 +110,7 @@ class CartController extends Controller
         }
 
         // nếu không, tạo mới một cart item.
-        if ($cartItem == null)
+        if ($cartItem === null)
         {
             $cartItem[$volume]['quantity'] = $quantity;
         }
@@ -151,7 +152,7 @@ class CartController extends Controller
     /**
      * @throws JsonException
      */
-    public function cart_update(Request $request): JsonResponse
+    public function update(Request $request): JsonResponse
     {
         // Convert from json to associative array then replace current cart in session
         $parsed_data = json_decode($request->shoppingCart, true, 512, JSON_THROW_ON_ERROR);
@@ -190,4 +191,35 @@ class CartController extends Controller
 
         return response()->json(['success' => $cart]);
     }
+
+
+    //section Remove
+    public function remove(Request $request): RedirectResponse
+    {
+        $id = request('id');
+        $volume = request('volume');
+
+        $cart = Session::get('shoppingCart');
+
+        if (array_key_exists($id, $cart))
+        {
+            if (array_key_exists($volume, $cart[$id]))
+            {
+                unset($cart[$id][$volume]);
+            }
+
+            if (empty($cart[$id]))
+            {
+                unset($cart[$request->id]);
+            }
+        }
+
+        Session::put('shoppingCart', $cart);
+
+        // Remove cache
+        ResponseCache::clear();
+
+        return redirect()->back()->with(['success' => 'Đã xóa sản phẩm thành công.']);
+    }
+
 }
