@@ -2,7 +2,7 @@
 	<div class="Sticky inner main_nav shadow sticky_element">
 		<div class="container" style="max-width: 90%;">
 			<div class="align-items-center d-flex justify-content-between" style="min-height: 83px;">
-				
+
 				{{-- section Hamburger menu--}}
 				<nav class="categories d-block menu">
 					<ul class="clearfix">
@@ -69,7 +69,11 @@
 							</div>
 						</li>
 
-						{{-- section Dropdown cart--}} @include('layouts._dropdown_cart') {{-- section Dropdown Account--}} @include('layouts._dropdown_account')
+						{{-- section Dropdown cart--}}
+						@include('layouts._dropdown_cart')
+						{{-- section Dropdown Account--}}
+						@include('layouts._dropdown_account')
+
 					</ul>
 				</div>
 			</div>

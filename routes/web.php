@@ -173,8 +173,8 @@ Route::middleware('doNotCacheResponse')->group(function () {
     //==================================================================================================================
 
     //section  Test
-    Route::get('test/cart', static function () {
-        dd(session('shoppingCart'));
+    Route::get('test', static function () {
+        return view('test', ['var' => session('shoppingCart')]);
     });
 
     Route::get('/multi_delete', static function () {

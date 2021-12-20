@@ -293,7 +293,7 @@
         // window.location.href = "/user/account/profile";
     });
 
-    $(".dropdown-cart, .dropdown-access").hover(function ()
+    $("#dropdown-cart, .dropdown-access").hover(function ()
     {
         $(this).find(".dropdown-menu").stop().show();
     }, function ()

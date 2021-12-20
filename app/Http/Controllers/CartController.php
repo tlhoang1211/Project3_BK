@@ -7,18 +7,18 @@ use App\Product;
 use App\Receipt;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 use Spatie\ResponseCache\Facades\ResponseCache;
 
 class CartController extends Controller
 {
 
     //section View
-    public function index(): Factory|View|Application
+    public function index(): Factory|\Illuminate\Contracts\View\View|Application
     {
         return view('pages.cart.index');
     }
@@ -69,8 +69,6 @@ class CartController extends Controller
 
             // Clear shopping cart
             session()->forget('shoppingCart');
-            // Remove user receipts from cache
-            Cache::forget('receipts-id-' . $account->id);
 
             return redirect()->route('mypurchase');
         }
@@ -102,12 +100,7 @@ class CartController extends Controller
         }
 
         // Generate cart item
-        $cartItem = null;
-
-        if (array_key_exists($id, $shopping_cart))
-        {
-            $cartItem = $shopping_cart[$id];
-        }
+        $cartItem = $shopping_cart[$id] ?? null;
 
         // nếu không, tạo mới một cart item.
         if ($cartItem === null)
@@ -115,8 +108,6 @@ class CartController extends Controller
             $cartItem[$volume]['quantity'] = $quantity;
         }
         else
-        {
-            // nếu có, cộng số lượng sản phẩm thêm.
             if (array_key_exists($volume, $shopping_cart[$id]))
             {
                 $cartItem[$volume]['quantity'] += $quantity;
@@ -125,11 +116,11 @@ class CartController extends Controller
             {
                 $cartItem[$volume]['quantity'] = $quantity;
             }
-        }
 
         // Generate each cart item's cost
         $order_price = order_price($product->price, $volume, $cartItem[$volume]['quantity']);
-        $cartItem[$volume]['subprice'] = format_money($order_price);
+        $subprice = format_money($order_price);
+        $cartItem[$volume]['subprice'] = $subprice;
 
         // Add cart item to session
         $shopping_cart[$id] = $cartItem;
@@ -141,9 +132,12 @@ class CartController extends Controller
 
         $cart_item_count = array_sum(array_map('count', $shopping_cart));
 
+        $updated_dropdown_cart = view('layouts._dropdown_cart')->render();
+
         return response()->json([
-            'success'         => "Sản phẩm đã được thêm vào giỏ hàng.",
-            "cart_item_count" => $cart_item_count
+            'success'               => "Sản phẩm đã được thêm vào giỏ hàng.",
+            "cart_item_count"       => $cart_item_count,
+            'updated_dropdown_cart' => $updated_dropdown_cart
         ]);
     }
 

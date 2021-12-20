@@ -43,7 +43,7 @@
 		<p class="price">{{format_money($product->price)}}</p>
 
 		{{-- section Add to cart button--}}
-		<div class="position-relative add-to-cart" data-id="{{ $product->id }}">
+		<div class="position-relative add_to_cart" data-id="{{ $product->id }}">
 			<span class="position-absolute top-50 start-50 translate-middle fw-bold">ADD</span>
 		</div>
 

@@ -1,3 +1,4 @@
+{{-- section Retrive cart items--}}
 @php
 	$shopping_cart = Session::get('shoppingCart');
 	$quantity = 0;
@@ -11,7 +12,7 @@
 	}
 @endphp
 
-<li>
+<li id="dropdown-cart">
 	<div class="dropdown dropdown-cart">
 		<a href="{{route('cart')}}" class="cart_bt position-relative">
 			<div id="cart_item_count"
@@ -28,21 +29,27 @@
 							$product = \App\Product::find($product_id)
 						@endphp
 
+						{{-- section Cart item --}}
 						@foreach($product_detail as $volume => $volume_detail)
 							<li>
 								<a href="{{route('product_detail',$product->slug)}}">
-									<figure><img
-												src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
-												alt="" width="50" height="50" class="lazy"></figure>
+
+									{{-- section Image --}}
+									<figure>
+										<img src={{$product->firstThumbnail}} data-src="{{$product->firstThumbnail}}"
+										     alt="" width="50" height="50" class="lazy">
+									</figure>
+
+									{{-- section Details --}}
 									<strong>
-										<span>{{$product->name}}</span>
-										<span>{{$volume}}</span>
+										<span>{{  $product->name }}</span>
+										<span>{{ $volume }}</span>
 										<span>x {{ $volume_detail['quantity'] }}</span>
 										{{ $volume_detail['subprice'] }}
 									</strong>
 								</a>
-								{{--<a href="0" class="action"><i class="ti-trash"></i></a>--}}
 							</li>
+
 						@endforeach
 					@endforeach
 					<a href="{{ route('cart') }}" class="btn_1">
