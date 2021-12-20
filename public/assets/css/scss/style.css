@@ -4546,6 +4546,8 @@ body.modal-open .mm-slideout {
   position: relative;
   overflow: hidden;
   transition: all 0.3s;
+  padding: 10px 0;
+  background: white;
 }
 .grid_item .media figure img:nth-child(1) {
   visibility: visible;

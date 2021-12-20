@@ -24,6 +24,8 @@
       position: relative;
       overflow: hidden;
       transition: all 0.3s;
+      padding: 10px 0;
+      background: white;
 
       img {
         &:nth-child(1) {
