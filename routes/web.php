@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('doNotCacheResponse')->group(function () {
 
-    //section  home routes
+    //section  Home
     Route::get('/', [HomePageController::class, 'index'])->name('home');
 
     //==================================================================================================================
@@ -21,7 +21,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //section User routes
+    //section User
     Route::prefix('account')->group(function () {
 
         Route::get('/profile', static function () {
@@ -37,7 +37,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //section Product routes
+    //section Product
     Route::prefix('product')->group(function () {
 
         Route::get('/list', 'ProductController@productList')->name('product_list');
@@ -54,7 +54,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //section Cart routes
+    //section Cart
     Route::prefix('cart')->group(function () {
 
         Route::post('/new/receipt', 'CartController@cart_store')->name('new_receipt')->middleware('auth');
@@ -93,7 +93,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //section  Login - Register : routes
+    //section  Login - Register :
     Route::prefix('login')->middleware('doNotCacheResponse')->group(function () {
 
         Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
@@ -112,7 +112,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //section  admin : routes
+    //section  Admin
     Route::group(['middleware' => ['admin_check'], 'prefix' => 'admin'], static function () {
         Route::get('/', static function () {
             $male_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nam')->get());
@@ -172,7 +172,7 @@ Route::middleware('doNotCacheResponse')->group(function () {
 
     //==================================================================================================================
 
-    //section  test : routes
+    //section  Test
     Route::get('test', static function () {
         return view('test');
     });
