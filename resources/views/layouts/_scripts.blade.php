@@ -17,8 +17,8 @@
         $(".add_to_cart").on("click", function (e)
         {
             const id = $(this).data("id");
-            const quantity = $("#quantity_1").val() ? undefined : 1;
-            const volume = $("select[name=\"volume\"]").val() ? undefined : "100ml";
+            const quantity = $("#quantity_1").val() ?? "1";
+            const volume = $("select[name=\"volume\"]").val() ?? "100ml";
 
             $.ajax({
                 url: '{{route('add_to_cart')}}',
