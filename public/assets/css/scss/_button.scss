@@ -1,0 +1,74 @@
+.btn_1 {
+  text-align: center;
+  border: none;
+  color: #fff;
+  background: #3a87ad;
+  outline: none;
+  text-decoration: none;
+  padding: 12px 25px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+  line-height: normal;
+  font-family: var(--bs-body-font-family);
+}
+
+a.btn_1:focus, .btn_1:focus {
+  outline: none;
+}
+
+a.btn_1:hover, .btn_1:hover {
+  background-color: #FFC107;
+  color: #111 !important;
+}
+
+a.btn_1.full-width, .btn_1.full-width {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+a.btn_1.medium, .btn_1.medium {
+  font-size: 16px;
+  font-size: 1rem;
+  padding: 18px 40px;
+}
+
+a.btn_1.outline, .btn_1.outline {
+  border: 2px solid #111;
+  color: #111;
+  padding: 10px 30px;
+  background: none;
+}
+
+a.btn_1.outline:hover, .btn_1.outline:hover {
+  border-color: black;
+  color: black !important;
+}
+
+a.btn_1.outline:focus, .btn_1.outline:focus {
+  outline: none;
+}
+
+a.btn_1.gray, .btn_1.gray {
+  background: #f0f0f0;
+  color: #111 !important;
+}
+
+a.btn_1.gray:hover, .btn_1.gray:hover {
+  background-color: #FFC107;
+  color: #111 !important;
+}
+
+a.btn_1 i, .btn_1 i {
+  font-weight: 600;
+}

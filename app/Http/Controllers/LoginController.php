@@ -39,7 +39,9 @@ class LoginController extends Controller
             }
             return redirect(session('previous_link'));
         }
-        return redirect(route('login'))->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
+
+        return redirect(route('login'))
+            ->withErrors([['emailLogin' => 'account not found'], ['passwordLogin' => 'Account not found']]);
     }
 
     // Google login

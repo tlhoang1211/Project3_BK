@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{{-- section Header --}}
 @include('layouts._header')
 
 <body>
 
-
+{{-- section Menu bar--}}
 @include('layouts.menu_bar')
 
 @yield('content')
 
+{{-- section Footer --}}
 @php
-    if(!isset($withFooter)) $withFooter = true;
+	if(!isset($withFooter)) $withFooter = true
 @endphp
 
 @if($withFooter)
-    @include('layouts._footer')
+	@include('layouts._footer')
 @endif
 <!-- Back to top button -->
-<div id="toTop"></div>
+<div id="toTop"><i class="fad fa-arrow-up"></i></div>
 
-<!-- COMMON SCRIPTS -->
-<script src={{asset('assets/js/common_scripts.min.js')}}></script>
-<script src={{asset('assets/js/main.js')}}></script>
-<script src={{asset('assets/js/bootstrap.bundle.min.js')}}></script>
-<script src={{asset('assets/js/toastr.min.js')}}></script>
-<script src={{asset('assets/js/SaveScrollPosition.js')}}></script>
-<!-- SPECIFIC SCRIPTS -->
-@yield('specific_js')
+{{-- section Scripts--}}
+@include('layouts._scripts')
 
+{{-- section Facebook chat--}}
 <x-facebook-chat/>
 
 </body>

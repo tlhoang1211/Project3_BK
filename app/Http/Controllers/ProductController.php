@@ -4,25 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use App\Comment;
-use App\OrderDetail;
 use App\Origin;
 use App\Product;
-use App\Receipt;
-use Cache;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
-use JsonException;
 use PhpParser\Node\Expr\Array_;
-use Spatie\ResponseCache\Facades\ResponseCache;
 
 class ProductController extends Controller
 {
+    //section Comment
     /**
      * @throws Exception
      */
@@ -49,6 +45,8 @@ class ProductController extends Controller
         return back();
     }
 
+    //section Product detail view
+
     /**
      * @throws Exception
      */
@@ -56,7 +54,7 @@ class ProductController extends Controller
     {
         $product_style = $product->style;
         $style_arr = explode(',', $product_style);
-        $item_query = Product::where('status', '1')->where('slug', '!=', $product->slug);
+        $item_query = Product::where("status", '1')->where('slug', '!=', $product->slug);
         foreach ($style_arr as $style)
         {
             $item_query->orWhere('style', '=', '%' . $style . '%');
@@ -72,13 +70,13 @@ class ProductController extends Controller
         // Save comment pagination URLS to session
         session(["comment-page-urls-{$product->id}" => $comment_pages->getUrlRange(1, $comment_pages->lastPage())]);
 
-        return view('products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
+        return view('pages.products.product_detail', compact('eloquent_product_5', 'eloquent_product_brand'))
             ->with('product', $product)
             ->with('eloquent_product', $eloquent_product)
             ->with('comments', $comment_pages);
     }
 
-    public function admin_index(Request $request)
+    public function admin_index(Request $request): Factory|View|Application
     {
 
         $numberItem = 5;
@@ -115,14 +113,14 @@ class ProductController extends Controller
 
     }
 
-    public function create()
+    public function create(): Factory|View|Application
     {
         $brands = Brand::where('status', '=', '1')->orderBy('id', 'ASC')->get();
         $origins = Origin::where('status', '=', '1')->orderBy('id', 'ASC')->get();
         return view('admin.products.create')->with(compact('brands', 'origins'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): Redirector|Application|RedirectResponse
     {
         //        dd($request);
         $request->validate([
@@ -194,7 +192,7 @@ class ProductController extends Controller
         return redirect(route('admin_product_list'));
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $id): Factory|View|Application
     {
         $brands = Brand::where('status', '=', '1')->orderBy('id', 'ASC')->get();
         $origins = Origin::where('status', '=', '1')->orderBy('id', 'ASC')->get();
@@ -202,125 +200,7 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'brands', 'origins'));
     }
 
-    public function cart_store(Request $request)
-    {
-        $cart = session()->get('shoppingCart');
-        $account = auth()->user();
-
-        if ($cart !== null)
-        {
-            // Validate shipment info
-            $attributes = $request->validate([
-                'ship_name'    => 'required|max:255|min:3',
-                'phone'        => 'required|max:13',
-                'name_address' => 'required|max:255',
-                'note'         => 'max:255',
-            ]);
-
-            $attributes['total_money'] = get_cart_total_price() ?? 0;
-            $attributes['account_id'] = $account->id;
-            if (is_null($attributes['note'])) $attributes['note'] = 'No note';
-            $attributes['status'] = '0';
-
-            // Add new receipt
-            $receipt = Receipt::create($attributes);
-
-            // Add order detail to the above receipt
-            foreach ($cart as $product_id => $volumes)
-            {
-                $product = Product::find($product_id);
-
-                foreach ($volumes as $volume => $volume_detail)
-                {
-                    $order_detail = [];
-
-                    $order_detail['receipt_id'] = $receipt->id;
-                    $order_detail['account_id'] = $account->id;
-                    $order_detail['product_id'] = $product_id;
-                    $order_detail['volume'] = $volume;
-                    $order_detail['quantity'] = $volume_detail['quantity'];
-                    $order_detail['price'] = order_price($product->price, $volume, $volume_detail['quantity']);
-
-                    OrderDetail::create($order_detail);
-                }
-            }
-
-            // Clear shopping cart
-            session()->forget('shoppingCart');
-            // Remove user receipts from cache
-            Cache::forget('receipts-id-' . $account->id);
-
-            return redirect()->route('mypurchase');
-        }
-    }
-
-    public function add_to_cart(Request $request): View|Factory|JsonResponse|Application
-    {
-
-        $id = $request->id;
-        $quantity = $request->quantity;
-        $volume = $request->volume;
-
-        // kiểm tra sản phẩm theo id truyền lên.
-        $product = Product::where('status', '=', '1')->find($id);
-
-        if ($product == null)
-        {
-            return view('404');
-        }
-
-        // lấy thông tin giỏ hàng từ trong session.
-        $shopping_cart = Session::get('shoppingCart');
-
-        if ($shopping_cart == null)
-        {
-            // thì tạo mới giỏ hàng là một mảng các key và value
-            $shopping_cart = array(); // key và value
-        }
-
-        // Generate cart item
-        $cartItem = null;
-
-        if (array_key_exists($id, $shopping_cart))
-        {
-            $cartItem = $shopping_cart[$id];
-        }
-
-        // nếu không, tạo mới một cart item.
-        if ($cartItem == null)
-        {
-            $cartItem[$volume]['quantity'] = $quantity;
-        }
-        else
-        {
-            // nếu có, cộng số lượng sản phẩm thêm.
-            if (array_key_exists($volume, $shopping_cart[$id]))
-            {
-                $cartItem[$volume]['quantity'] += $quantity;
-            }
-            else
-            {
-                $cartItem[$volume]['quantity'] = $quantity;
-            }
-        }
-
-        // Generate each cart item's cost
-        $order_price = order_price($product->price, $volume, $cartItem[$volume]['quantity']);
-        $cartItem[$volume]['subprice'] = format_money($order_price);
-
-        // Add cart item to session
-        $shopping_cart[$id] = $cartItem;
-        Session::put('shoppingCart', $shopping_cart);
-        $request->session()->save();
-
-        // Remove cache to reset cart item dropdown view
-        ResponseCache::clear();
-
-        return response()->json([
-            'success'         => "Sản phẩm đã được thêm vào giỏ hàng.",
-            "cart_item_count" => count(session('shoppingCart'))]);
-    }
-
+    //section Add
     public function add(Request $request)
     {
         $id = $request->get('productId');
@@ -371,9 +251,9 @@ class ProductController extends Controller
         //        return redirect('/shopping-cart/show');
     }
 
-    public function search(Request $request)
+    //section Search
+    public function search(Request $request): Factory|View|Application
     {
-        //        dd($request);
         $keyword = $request->keyword;
 
         $product_search = Product::where('status', '=', '1')->where('slug', 'LIKE', '%' . $keyword . '%');
@@ -400,12 +280,13 @@ class ProductController extends Controller
         $female_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nữ')->get());
         $unisex_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Phi giới tính')->get());
 
-        return view('products.product_list', compact('brands', 'origins', 'male_product_amount', 'female_product_amount', 'unisex_product_amount'))
+        return view('pages.products.product_list', compact('brands', 'origins', 'male_product_amount', 'female_product_amount', 'unisex_product_amount'))
             ->with('products', $product_search)
             ->with('keyword', $keyword);
     }
 
-    public function productList(Request $request)
+    //section View products
+    public function productList(Request $request): Factory|View|Application
     {
 
         $product = Product::where('status', '=', '1');
@@ -419,69 +300,13 @@ class ProductController extends Controller
         $female_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nữ')->get());
         $unisex_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Phi giới tính')->get());
 
-        return view('products.product_list', compact('brands', 'origins', 'male_product_amount', 'female_product_amount', 'unisex_product_amount'))
+        return view('pages.products.product_list', compact('brands', 'origins', 'male_product_amount', 'female_product_amount', 'unisex_product_amount'))
             ->with('products', $product);
     }
 
-    public function male_product(Request $request)
-    {
-        $product_query = Product::where('status', '=', '1');
 
-        //        dd($products);
-        if ($request->has('origin'))
-        {
-            $product_query->where('origin_id', '=', $request->origin);
-        }
-        if ($request->has('brand'))
-        {
-            $product_query->where('brand_id', '=', $request->brand);
-        }
-        $products = $product_query->where('sex', '=', 'Nam')->paginate(9)->appends(request()->query());
-        $male_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nam')->get());
-        $brands = Brand::where('status', '=', '1')->get();
-        $origins = Origin::where('status', '=', '1')->get();
-        $brand_amount = [];
-        $origin_amount = array();
-        foreach ($brands as $brand)
-        {
-            foreach ($brand->products as $brand_product)
-            {
-                if ($brand_product->sex === "Nam")
-                {
-                    if ($brand_amount[$brand->id][$brand_product->id] = null)
-                    {
-                        $brand_amount[$brand->id][$brand_product->id] = 0;
-                    }
-                    $brand_amount[$brand->id][$brand_product->id] += 1;
-                }
-            }
-        }
-        //        dd($brand_amount);
-        //        dd(count($brand_amount));
-        foreach ($origins as $origin)
-        {
-            foreach ($origin->products as $origin_product)
-            {
-                if ($origin_product->sex == "Nam")
-                {
-                    if ($origin_amount[$origin->id][$origin_product->id] = null)
-                    {
-                        $origin_amount[$origin->id][$origin_product->id] = 0;
-                    }
-                    $origin_amount[$origin->id][$origin_product->id] += 1;
-                }
-            }
-        }
-
-        //        dd($origin_amount);
-
-        return view('products.male_product_list', compact('brands', 'origins'))
-            ->with('products', $products)
-            ->with('brand_amount', $brand_amount)
-            ->with('origin_amount', $origin_amount);
-    }
-
-    public function update(Request $request, $id)
+    //section Update
+    public function update(Request $request, $id): Redirector|Application|RedirectResponse
     {
         //        dd($request);
         $request->validate([
@@ -555,180 +380,4 @@ class ProductController extends Controller
         return redirect(route('admin_product_list'));
     }
 
-    public function female_product(Request $request): Factory|View|Application
-    {
-        $product_query = Product::where('status', '=', '1');
-
-        //        dd($products);
-        if ($request->has('origin'))
-        {
-            $product_query->where('origin_id', '=', $request->origin);
-        }
-        if ($request->has('brand'))
-        {
-            $product_query->where('brand_id', '=', $request->brand);
-        }
-        $products = $product_query->where('sex', '=', 'Nữ')->paginate(9)->appends(request()->query());
-        $female_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Nữ')->get());
-        $brands = Brand::where('status', '=', '1')->get();
-        $origins = Origin::where('status', '=', '1')->get();
-        $brand_amount = [];
-        $origin_amount = array();
-        foreach ($brands as $brand)
-        {
-            foreach ($brand->products as $brand_product)
-            {
-                if ($brand_product->sex == "Nữ")
-                {
-                    if ($brand_amount[$brand->id][$brand_product->id] = null)
-                    {
-                        $brand_amount[$brand->id][$brand_product->id] = 0;
-                    }
-                    $brand_amount[$brand->id][$brand_product->id] += 1;
-                }
-            }
-        }
-        //        dd($brand_amount);
-        //        dd(count($brand_amount));
-        foreach ($origins as $origin)
-        {
-            foreach ($origin->products as $origin_product)
-            {
-                if ($origin_product->sex == "Nữ")
-                {
-                    if ($origin_amount[$origin->id][$origin_product->id] = null)
-                    {
-                        $origin_amount[$origin->id][$origin_product->id] = 0;
-                    }
-                    $origin_amount[$origin->id][$origin_product->id] += 1;
-                }
-            }
-        }
-
-        //        dd($origin_amount);
-
-        return view('products.female_product_list', compact('brands', 'origins'))
-            ->with('products', $products)
-            ->with('brand_amount', $brand_amount)
-            ->with('origin_amount', $origin_amount);
-    }
-
-    public function unisex_product(Request $request)
-    {
-        $product_query = Product::where('status', '=', '1');
-
-        //        dd($products);
-        if ($request->has('origin'))
-        {
-            $product_query->where('origin_id', '=', $request->origin);
-        }
-        if ($request->has('brand'))
-        {
-            $product_query->where('brand_id', '=', $request->brand);
-        }
-        $products = $product_query->where('sex', '=', 'Phi giới tính')->paginate(9)->appends(request()->query());
-        $unisex_product_amount = count(Product::where('status', '=', '1')->where('sex', '=', 'Phi giới tính')->get());
-        $brands = Brand::where('status', '=', '1')->get();
-        $origins = Origin::where('status', '=', '1')->get();
-        $brand_amount = [];
-        $origin_amount = array();
-        foreach ($brands as $brand)
-        {
-            foreach ($brand->products as $brand_product)
-            {
-                if ($brand_product->sex === "Phi giới tính")
-                {
-                    if ($brand_amount[$brand->id][$brand_product->id] = null)
-                    {
-                        $brand_amount[$brand->id][$brand_product->id] = 0;
-                    }
-                    $brand_amount[$brand->id][$brand_product->id] += 1;
-                }
-            }
-        }
-        //        dd($brand_amount);
-        //        dd(count($brand_amount));
-        foreach ($origins as $origin)
-        {
-            foreach ($origin->products as $origin_product)
-            {
-                if ($origin_product->sex === "Phi giới tính")
-                {
-                    if ($origin_amount[$origin->id][$origin_product->id] = null)
-                    {
-                        $origin_amount[$origin->id][$origin_product->id] = 0;
-                    }
-                    $origin_amount[$origin->id][$origin_product->id] += 1;
-                }
-            }
-        }
-
-        return view('products.unisex_product_list', compact('brands', 'origins'))
-            ->with('products', $products)
-            ->with('brand_amount', $brand_amount)
-            ->with('origin_amount', $origin_amount);
-    }
-
-    public function cart()
-    {
-        return view('cart');
-    }
-
-    public function cart_remove(Request $request): RedirectResponse
-    {
-        $cart = Session::get('shoppingCart'); // Second argument is a default value
-        if (array_key_exists($request->id, $cart))
-        {
-            unset($cart[$request->id]);
-        }
-        Session::put('shoppingCart', $cart);
-
-        // Remove cache
-        ResponseCache::clear();
-
-        return redirect()->back()->with(['success' => 'Đã xóa sản phẩm thành công.']);
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function cart_update(Request $request): JsonResponse
-    {
-        // Convert from json to associative array then replace current cart in session
-        $parsed_data = json_decode($request->shoppingCart, true, 512, JSON_THROW_ON_ERROR);
-
-        // Filter out invalid item
-        foreach ($parsed_data as $product_id => $item)
-        {
-            // Remove item with no volume (is deleted from front-end)
-            if (empty($item))
-            {
-                unset($parsed_data[$product_id]);
-                continue;
-            }
-
-            foreach ($item as $volume => $volume_detail)
-            {
-                // Remove item with invalid quantity
-                $quantity = $volume_detail['quantity'];
-                if (!is_numeric($quantity) || $quantity === 0)
-                {
-                    unset($parsed_data[$product_id][$volume]);
-                }
-            }
-        }
-
-        session()->put('shoppingCart', $parsed_data);
-
-        // Update subprice of each item in the cart
-        $ship_fee = 200000.0;
-        $cart = update_cart_item_price();
-        $cart['total_price'] = format_money(get_cart_total_price() + $ship_fee);
-        $cart['price_no_ship'] = format_money(get_cart_total_price());
-
-        // Remove cache
-        ResponseCache::forget(route('cart'));
-
-        return response()->json(['success' => $cart]);
-    }
 }

@@ -1,11 +1,11 @@
 @props(['rate' => 0, 'isOverview' => false])
 
 @php
-    $floor_rate = floor($rate);
+    $floor_rate = floor($rate)
 @endphp
 
 <span class="rating">
-        @for ($i = 0; $i < $floor_rate; $i++)
+    @for ($i = 0; $i < $floor_rate; $i++)
         @if ($isOverview)
             <i class="icon-star voted"></i>
         @else
@@ -21,5 +21,5 @@
             @endif
         @endfor
     @endif
-        <em>{{ $rate }}/5.0</em>
+    <em>{{ $rate }}/5.0</em>
 </span>
