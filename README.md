@@ -1,23 +1,19 @@
-
 ![Logo](https://github.com/tlhoang1211/Project3_BK/blob/develop/public/assets/img/logo-3.png?raw=true)
 
-# Web application for a fragrance store
+# Fragrance Store Web Application
 
-This is an open-source web application designed to allow users to buy perfumes/fragrance from multiple brands online.  
-It was created to serve as subject Project 3 of HUST.
+This open-source web application enables users to purchase perfumes and fragrances from a variety of brands online. It was developed as part of Project 3 at HUST.
 
-## Tech Stack
+## Technical Stack
 
 - Laravel: 8
--  NodeJS
-- Developed under [WampServer](https://www.wampserver.com/en/) stack:
+- NodeJS
+- Developed using the [WampServer](https://www.wampserver.com/en/) stack:
   - Apache: 2.4.51
   - PHP: 8.0.13
   - MySQL: 8.0.27 / MariaDB: 10.6.5
-  - Window OS enviroment
+  - Windows OS environment
 - Redis
-
-
 
 ## Screenshots
 
@@ -29,15 +25,13 @@ It was created to serve as subject Project 3 of HUST.
 
 ![App Screenshot](https://github.com/tlhoang1211/Project3_BK/blob/develop/public/assets/img/screenshots/img_3.png?raw=true)
 
-
 ## Installation
 
-The application supports authentication with Google and Facebook via [Laravel Socialite](https://laravel.com/docs/8.x/socialite), which requires the website to have an SSL certificate (runs on HTTPS, not HTTP).
+This application supports authentication via Google and Facebook using [Laravel Socialite](https://laravel.com/docs/8.x/socialite), which requires an SSL certificate for the website (running on HTTPS, not HTTP).
 
-To make this possible on the Windows OS, you can use [WampServer SSL Auto Config](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config).
+To enable this on Windows OS, you may use [WampServer SSL Auto Config](https://github.com/custom-dev-tools/WampServer-SSL-Auto-Config).
 
-Next, you can follow this [video](https://youtu.be/jIckLu1cKew?t=921) to set up Laravel Socialite with your own API key and secret.
-After generating your own key and secret, place them in.env. Like this:
+Next, follow this [video](https://youtu.be/jIckLu1cKew?t=921) to set up Laravel Socialite with your own API key and secret. After generating your own key and secret, place them in .env as shown below:
 
 ```bash
   GOOGLE_CLIENT_ID="xxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com"
@@ -48,7 +42,8 @@ After generating your own key and secret, place them in.env. Like this:
   FACEBOOK_CLIENT_SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   FACEBOOK_URL_CALLBACK="https://wanderlust.test.com/login/facebook/callback"
 ```
-## Run Locally
+
+## Running Locally
 
 Clone the project
 
@@ -56,7 +51,7 @@ Clone the project
   git clone clone https://github.com/tlhoang1211/Project3_BK.git perfume-web-app
 ```
 
-Go to the project directory
+Navigate to the project directory
 
 ```bash
   cd perfume-web-app
@@ -77,7 +72,7 @@ Install dependencies
   npm install
 ```
 
-Set up the databse
+Set up the database
 
 ```bash
   php artisan migrate
@@ -86,28 +81,25 @@ Set up the databse
   php artisan db:seed
 ```
 
-
 Start the server
 
 ```bash
   php artisan serve
 ```
- 
- or you can set up a custom domain name (virtual host) for Apache server.  
- Here's a [tutorial](https://www.youtube.com/watch?v=PoBvZZmt9Hs) if your are using WampServer.
+
+Alternatively, you can set up a custom domain name (virtual host) for the Apache server. Here is a [tutorial](https://www.youtube.com/watch?v=PoBvZZmt9Hs) if you are using WampServer.
+
 ## Features
 
-- Basic e-commerce website functions:
+- Basic e-commerce website functionality:
   - View all products (with filters)
   - View product details
-  - Rate, comment
-  - Add a product to cart
-  - Place an order (create new receipt)
-  - Login, register (using email or OAuth)
+  - Rate and comment on products
+  - Add products to cart
+  - Place an order (create a new receipt)
+  - Login and register (using email or OAuth)
 
 - Caching: using Redis
-  
-
 
 ## Authors
 
@@ -117,4 +109,3 @@ Start the server
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
